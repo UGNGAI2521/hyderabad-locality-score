@@ -24,7 +24,7 @@
   "page": "https://commons.wikimedia.org/wiki/File:View_of_Apartments_at_Miyapur.jpg",
   "remote": "https://upload.wikimedia.org/wikipedia/commons/2/2f/View_of_Apartments_at_Miyapur.jpg",
   "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/2/2f/View_of_Apartments_at_Miyapur.jpg",
-  "local": false
+  "local": true
  },
  "cat-plot": {
   "file": "File:Rock formations at Miyapur.JPG",
@@ -33,7 +33,7 @@
   "page": "https://commons.wikimedia.org/wiki/File:Rock_formations_at_Miyapur.JPG",
   "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Rock_formations_at_Miyapur.JPG/960px-Rock_formations_at_Miyapur.JPG",
   "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Rock_formations_at_Miyapur.JPG/500px-Rock_formations_at_Miyapur.JPG",
-  "local": false
+  "local": true
  },
  "cat-commercial": {
   "file": "File:Hitech city hyderabad 01.jpg",
@@ -42,7 +42,7 @@
   "page": "https://commons.wikimedia.org/wiki/File:Hitech_city_hyderabad_01.jpg",
   "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Hitech_city_hyderabad_01.jpg/960px-Hitech_city_hyderabad_01.jpg",
   "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Hitech_city_hyderabad_01.jpg/500px-Hitech_city_hyderabad_01.jpg",
-  "local": false
+  "local": true
  },
  "loc-hitec-city": {
   "file": "File:Cyber Towers Madhapur Hyderabad.jpg",
@@ -69,7 +69,7 @@
   "page": "https://commons.wikimedia.org/wiki/File:Waverock_buildings_in_Financial_district_(2).jpg",
   "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Waverock_buildings_in_Financial_district_%282%29.jpg/960px-Waverock_buildings_in_Financial_district_%282%29.jpg",
   "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Waverock_buildings_in_Financial_district_%282%29.jpg/500px-Waverock_buildings_in_Financial_district_%282%29.jpg",
-  "local": false
+  "local": true
  },
  "amenity-park": {
   "file": "File:An Apartment park area in Miyapur.jpg",
@@ -78,7 +78,7 @@
   "page": "https://commons.wikimedia.org/wiki/File:An_Apartment_park_area_in_Miyapur.jpg",
   "remote": "https://upload.wikimedia.org/wikipedia/commons/8/87/An_Apartment_park_area_in_Miyapur.jpg",
   "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/8/87/An_Apartment_park_area_in_Miyapur.jpg",
-  "local": false
+  "local": true
  },
  "loc-madhapur": {
   "file": "File:Mindspace Madhapur road from a Pedestrian overpass.jpg",
