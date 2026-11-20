@@ -6,7 +6,7 @@
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Hyderabad Locality Score</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Choose where to live or work in West Hyderabad: 12 localities compared on schools, healthcare, metro access, green cover and daily needs, scored from open data.">
+<meta name="description" content="Choose where to live or work in Hyderabad: 50 localities compared on schools, healthcare, metro access, green cover and daily needs, scored from open data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Atkinson+Hyperlegible+Next:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -279,6 +279,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .loc-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 16px; }
 .locmap { position: relative; height: 380px; max-height: 60vh; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); margin-bottom: 16px; background: var(--lake-soft); }
 #locmap { position: absolute; inset: 0; }
+.lpin { padding: 4px 7px; font-size: 11px; }
 .lpin .nm { display: none; }
 .lpin:hover .nm, .lpin:focus-visible .nm, .locmap.near .lpin .nm { display: inline; }
 @media (max-width: 760px) { .pick .chips { flex-basis: 100%; } .pick .go { width: 100%; padding-block: 13px; } }
@@ -323,9 +324,9 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     <img class="poster" src="media/hero-poster.jpg" alt="">
     <video id="hero-video" muted loop playsinline preload="metadata" poster="media/hero-poster.jpg" aria-hidden="true"><source src="media/hero.mp4" type="video/mp4"></video>
     <div class="wrap">
-      <h1>Find your place in <em>West Hyderabad</em>.</h1>
+      <h1>Find your place in <em>Hyderabad</em>.</h1>
       <p class="lede lo">Flats, houses, villas, plots and workspaces to rent or buy, with a score for every locality built from open map data.</p>
-      <p class="lede co">Choosing where to live, work, buy or open a business? Compare 12 localities on schools, healthcare, metro access, green cover and daily needs, scored from open data with every source shown.</p>
+      <p class="lede co">Choosing where to live, work, buy or open a business? Compare <span class="loc-n">50</span> localities across the city on schools, healthcare, metro access, green cover and daily needs, scored from open data with every source shown.</p>
       <form class="console pick co" id="pick">
         <div class="pick-h">What matters most to you?</div>
         <div class="chips" id="pri-hero"></div>
@@ -355,7 +356,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
         <button type="button" data-preset="plots">Plots under ₹2 Cr</button>
       </div>
       <div class="facts">
-        <div><b class="num">12</b>localities scored</div>
+        <div><b class="num loc-n">50</b>localities scored, in 5 zones</div>
         <div><b class="num">5</b>open-data measures per locality</div>
         <div class="co"><b class="num">3</b>open data sources, each cited</div>
         <div class="lo"><b class="num" id="fact-listings">26</b><span id="fact-listings-label">example listings to explore</span></div>
@@ -408,6 +409,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     <div class="wrap">
       <div class="head"><div><h2 id="loc-h">Know the neighbourhood first</h2><p>Every locality gets a score out of 100 from five measures within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery.</p></div></div>
       <div class="loc-tools"><span class="fine">Ranked for what matters to you:</span><div class="chips" id="pri-locs"></div></div>
+      <div class="loc-tools"><span class="fine">Zone:</span><div class="chips" id="zones"></div><span class="fine num" id="zone-n" aria-live="polite"></span></div>
       <div class="locmap"><div id="locmap" role="region" aria-label="Map of localities with their scores"></div></div>
       <div class="locs" id="locs"></div>
     </div>
@@ -422,7 +424,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       </div>
       <div>
         <h2 id="what-h" style="font-size:clamp(28px,3.6vw,42px)">What we do</h2>
-        <p style="color:var(--muted);margin-top:10px;font-size:17px">We help you choose the right area to live, work or buy property in West Hyderabad, whether it's a flat, an independent house or a commercial space. The right area matters more than the right flat.</p>
+        <p style="color:var(--muted);margin-top:10px;font-size:17px">We help you choose the right area to live, work or buy property in Hyderabad, whether it's a flat, an independent house or a commercial space. The right area matters more than the right flat.</p>
         <div class="points">
           <div class="point lo"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></div><div><h3>Every kind of property</h3><p>Flats, independent houses, villas, plots, offices and shops. Rent or buy, filtered by budget, rate per sq ft, bedrooms, locality and locality score.</p></div></div>
           <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div><div><h3>A score for every locality</h3><p>See how a neighbourhood compares on schools, healthcare, transport, parks and daily needs before you visit.</p></div></div>
@@ -460,8 +462,8 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
   <div class="wrap cols">
     <div>
       <h3>Locality Score, Hyderabad</h3>
-      <p class="co">Helps you choose where to live or work in West Hyderabad, with locality scores built from open data. Every number shows its source.</p>
-      <p class="lo">A broker-free property search for West Hyderabad. Owners list directly, and every listing is checked before it goes live. Listings marked Example are not real offers, and their prices are illustrative.</p>
+      <p class="co">Helps you choose where to live or work in Hyderabad, with locality scores built from open data. Every number shows its source.</p>
+      <p class="lo">A broker-free property search for Hyderabad. Owners list directly, and every listing is checked before it goes live. Listings marked Example are not real offers, and their prices are illustrative.</p>
     </div>
     <div>
       <h3>Data</h3>
@@ -469,7 +471,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
         <li>Places: <a href="https://overturemaps.org" target="_blank" rel="noopener">Overture Maps</a>, release of 18 Nov 2026 (CDLA Permissive 2.0)</li>
         <li>Metro and rail stations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL)</li>
         <li>Green cover: <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (CC BY 4.0)</li>
-        <li>Map tiles: © <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a></li>
+        <li>Base map: roads, lakes and metro lines from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>, via Overture Maps</li>
         <li>Scores cover 5 of 21 planned components</li>
       </ul>
     </div>
@@ -591,7 +593,13 @@ function rank() {
 function drawPri() {
   $("pri-hero").innerHTML = $("pri-locs").innerHTML = Object.entries(FACTORS).map(([k, f]) => `<button class="chip" type="button" data-pri="${k}" aria-pressed="${PRI.has(k)}">${f.label}</button>`).join("");
 }
-let locMap = null;
+let locMap = null, ZONE = "All";
+const ZONES = ["All", "West", "Central", "North", "East", "South"];
+function drawZones() {
+  $("zones").innerHTML = ZONES.map(z => `<button class="chip" type="button" data-zone="${z}" aria-pressed="${z === ZONE}">${z === "All" ? "All zones" : z}</button>`).join("");
+  const n = Object.values(locs).filter(L => ZONE === "All" || L.zone === ZONE).length;
+  $("zone-n").textContent = ZONE === "All" ? `${n} localities` : `${n} in the ${ZONE} zone`;
+}
 function initLocMap() {
   if (locMap || !window.maplibregl) return;
   const rows = Object.values(locs), b = rows.reduce((b, r) => b.extend([r.lon, r.lat]), new maplibregl.LngLatBounds());
@@ -606,7 +614,7 @@ function initLocMap() {
   drawPins();
 }
 function drawPins() {
-  for (const r of Object.values(locs)) if (r.pin) { r.pin.innerHTML = `${r.score}<span class="nm"> ${esc(r.name)}</span>`; r.pin.setAttribute("aria-label", `${r.name}, score ${r.score}, rank ${r.rank} of ${Object.keys(locs).length}`); }
+  for (const r of Object.values(locs)) if (r.pin) { r.pin.style.display = ZONE === "All" || r.zone === ZONE ? "" : "none"; r.pin.innerHTML = `${r.score}<span class="nm"> ${esc(r.name)}</span>`; r.pin.setAttribute("aria-label", `${r.name}, score ${r.score}, rank ${r.rank} of ${Object.keys(locs).length}`); }
 }
 
 /* ---------- filtering ---------- */
@@ -681,11 +689,19 @@ function goExplore() { $("explore").scrollIntoView({ behavior: calm ? "auto" : "
 
 /* ---------- map ---------- */
 const dark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+// The map draws its own roads, lakes and metro lines from data/basemap.geojson (scripts/build_basemap.py), so no tile service is needed.
 function mapStyle() {
-  return { version: 8, sources: { base: { type: "raster", tileSize: 256, maxzoom: 19,
-      tiles: ["a", "b", "c"].map(s => `https://${s}.basemaps.cartocdn.com/${dark() ? "dark_all" : "light_all"}/{z}/{x}/{y}@2x.png`),
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · © <a href="https://carto.com/attributions">CARTO</a>' } },
-    layers: [{ id: "bg", type: "background", paint: { "background-color": dark() ? "#13201e" : "#dcefec" } }, { id: "base", type: "raster", source: "base" }] };
+  const v = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const line = (k, w, color, opacity, extra = {}) => ({ id: k, type: "line", source: "base", filter: ["==", ["get", "k"], k], layout: { "line-cap": "round", "line-join": "round" },
+    paint: { "line-color": color, "line-opacity": opacity, "line-width": ["interpolate", ["linear"], ["zoom"], 10, w[0], 16, w[1]], ...extra } });
+  return { version: 8, sources: { base: { type: "geojson", data: "data/basemap.geojson",
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, via <a href="https://overturemaps.org">Overture Maps</a>' } },
+    layers: [{ id: "bg", type: "background", paint: { "background-color": v("--paper") } },
+      { id: "water", type: "fill", source: "base", filter: ["==", ["get", "k"], "water"], paint: { "fill-color": v("--lake"), "fill-opacity": 0.28 } },
+      line("secondary", [0.4, 2.5], v("--muted"), 0.28), line("primary", [0.7, 4], v("--muted"), 0.45),
+      line("trunk", [1, 5], v("--muted"), 0.6), line("motorway", [1.4, 6], v("--ink"), 0.55),
+      line("rail", [0.8, 2], v("--muted"), 0.7, { "line-dasharray": [3, 2] }),
+      line("metro", [2.4, 6], v("--marigold"), 0.95)] };
 }
 function initMap() {
   if (map || !window.maplibregl || !listings.length) return;
@@ -948,7 +964,7 @@ async function setState(id, to) {
 function drawCounts() {
   $("cats").innerHTML = CATS.map(c => { const n = listings.filter(l => c.types.includes(l.type)).length;
     return `<button class="cat" type="button" data-cat="${c.key}">${art(c.types[0])}${imgTag(c.img, "", true, true)}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
-  $("locs").innerHTML = Object.values(locs).sort((a, b) => a.rank - b.rank).map(L => { const key = LOC_IMG[L.name], n = listings.filter(l => l.locality === L.name).length;
+  $("locs").innerHTML = Object.values(locs).filter(L => ZONE === "All" || L.zone === ZONE).sort((a, b) => a.rank - b.rank).map(L => { const key = LOC_IMG[L.name], n = listings.filter(l => l.locality === L.name).length;
     return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
       <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Strongest: ${FACTORS[L.best].label.toLowerCase()} · ${LISTINGS ? `${n} ${n === 1 ? "listing" : "listings"}` : `metro ${L.metro.km.toFixed(1)} km`}</small></span></button>`; }).join("");
 }
@@ -998,6 +1014,7 @@ document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   const d = t.dataset;
   if (d.heart) return toggleShort(d.heart);
+  if (d.zone) { ZONE = d.zone; drawZones(); drawCounts(); drawPins(); return; }
   if (d.pri) { PRI.has(d.pri) ? PRI.delete(d.pri) : PRI.add(d.pri); rank(); drawPri(); drawCounts(); drawPins(); return; }
   if (t.hasAttribute("data-signin")) return openSignIn();
   if (t.hasAttribute("data-account")) { closeLayers(); return setTimeout(openAccount, 280); }
@@ -1075,7 +1092,8 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   }
   const ctaKey = ["amenity-park", "loc-gachibowli", "loc-raidurg"].find(k => HAVE.has(k));
   if (ctaKey) $("cta-media").innerHTML = imgTag(ctaKey, "", false, true);
-  drawHow(LISTINGS ? "seek" : "choose"); drawPri();
+  drawHow(LISTINGS ? "seek" : "choose"); drawPri(); drawZones();
+  document.querySelectorAll(".loc-n").forEach(e => e.textContent = Object.keys(locs).length);
   drawCounts(); render();
   if (LISTINGS && matchMedia("(min-width: 1181px)").matches) initMap();
   initLocMap();

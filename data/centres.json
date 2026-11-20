@@ -1,0 +1,352 @@
+[
+ {
+  "name": "Gachibowli",
+  "lat": 17.4436222,
+  "lon": 78.3519638,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Madhapur",
+  "lat": 17.4408924,
+  "lon": 78.3916304,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Kondapur",
+  "lat": 17.4587912,
+  "lon": 78.3730556,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "HITEC City",
+  "lat": 17.4490055,
+  "lon": 78.3831376,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Financial District",
+  "lat": 17.4199667,
+  "lon": 78.3286906,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Nanakramguda",
+  "lat": 17.4217796,
+  "lon": 78.3379784,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Manikonda",
+  "lat": 17.3999951,
+  "lon": 78.3861689,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Narsingi",
+  "lat": 17.3915187,
+  "lon": 78.3598924,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Kokapet",
+  "lat": 17.3948624,
+  "lon": 78.3365214,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Raidurg",
+  "lat": 17.4141743,
+  "lon": 78.3907158,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Miyapur",
+  "lat": 17.4981608,
+  "lon": 78.3567628,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Nallagandla",
+  "lat": 17.4774828,
+  "lon": 78.3060359,
+  "match": "carried over",
+  "zone": "West"
+ },
+ {
+  "name": "Chandanagar",
+  "lat": 17.493609,
+  "lon": 78.324643,
+  "match": "suburb: Chandanagar, Ward 109 Hafeezpet, Greater Hyderabad Municipal Corporation West Zone, Hydera",
+  "zone": "West"
+ },
+ {
+  "name": "Kukatpally",
+  "lat": 17.493084,
+  "lon": 78.405441,
+  "match": "suburb: Kukatpally, Ward 122 Vivekananda Nagar Colony, Greater Hyderabad Municipal Corporation Wes",
+  "zone": "West"
+ },
+ {
+  "name": "KPHB Colony",
+  "lat": 17.492207,
+  "lon": 78.397364,
+  "match": "suburb: KPHB Colony, Ward 115 Balaji Nagar, Greater Hyderabad Municipal Corporation West Zone, Hyd",
+  "zone": "West"
+ },
+ {
+  "name": "Nizampet",
+  "lat": 17.515397,
+  "lon": 78.381716,
+  "match": "suburb: Nizampet, Bachupally mandal, Medchal\u2013Malkajgiri, Telangana, 500090, India",
+  "zone": "West"
+ },
+ {
+  "name": "Jubilee Hills",
+  "lat": 17.430836,
+  "lon": 78.410288,
+  "match": "suburb: Jubilee Hills, Ward 95 Jubilee Hills, Greater Hyderabad Municipal Corporation Central Zone",
+  "zone": "West"
+ },
+ {
+  "name": "Banjara Hills",
+  "lat": 17.417746,
+  "lon": 78.439901,
+  "match": "suburb: Banjara Hills, Ward 92 Venkateshwara Colony, Greater Hyderabad Municipal Corporation Centr",
+  "zone": "West"
+ },
+ {
+  "name": "Tolichowki",
+  "lat": 17.40029,
+  "lon": 78.411805,
+  "match": "suburb: Tolichowki, Ward 94 Shaikpet, Greater Hyderabad Municipal Corporation Central Zone, Hydera",
+  "zone": "West"
+ },
+ {
+  "name": "Ameerpet",
+  "lat": 17.437501,
+  "lon": 78.448251,
+  "match": "suburb: Ameerpet, Ward 98 Ameerpet, Greater Hyderabad Municipal Corporation Central Zone, Hyderaba",
+  "zone": "Central"
+ },
+ {
+  "name": "Begumpet",
+  "lat": 17.446195,
+  "lon": 78.463016,
+  "match": "suburb: Begumpet, Ward 149 Begumpet, Greater Hyderabad Municipal Corporation North Zone, Hyderabad",
+  "zone": "Central"
+ },
+ {
+  "name": "Somajiguda",
+  "lat": 17.425505,
+  "lon": 78.45852,
+  "match": "suburb: Somajiguda, Ward 97 Somajiguda, Greater Hyderabad Municipal Corporation Central Zone, Hyde",
+  "zone": "Central"
+ },
+ {
+  "name": "Khairatabad",
+  "lat": 17.411771,
+  "lon": 78.4622,
+  "match": "suburb: Khairatabad, Ward 91 Khairatabad, Greater Hyderabad Municipal Corporation Central Zone, Hy",
+  "zone": "Central"
+ },
+ {
+  "name": "Himayatnagar",
+  "lat": 17.403982,
+  "lon": 78.488194,
+  "match": "administrative: Himayatnagar mandal, Hyderabad, Telangana, India",
+  "zone": "Central"
+ },
+ {
+  "name": "Abids",
+  "lat": 17.389478,
+  "lon": 78.477182,
+  "match": "suburb: Abids, Ward 77 Jambagh, Greater Hyderabad Municipal Corporation Central Zone, Hyderabad, N",
+  "zone": "Central"
+ },
+ {
+  "name": "Mehdipatnam",
+  "lat": 17.394263,
+  "lon": 78.434251,
+  "match": "suburb: Mehdipatnam, Ward 70 Mehdipatnam, Greater Hyderabad Municipal Corporation Central Zone, Hy",
+  "zone": "Central"
+ },
+ {
+  "name": "Panjagutta",
+  "lat": 17.425424,
+  "lon": 78.451752,
+  "match": "suburb: Panjagutta, Ward 91 Khairatabad, Greater Hyderabad Municipal Corporation Central Zone, Hyd",
+  "zone": "Central"
+ },
+ {
+  "name": "Secunderabad",
+  "lat": 17.433725,
+  "lon": 78.500683,
+  "match": "city: Secunderabad, Hyderabad, Telangana, 500003, India",
+  "zone": "North"
+ },
+ {
+  "name": "Kompally",
+  "lat": 17.5447,
+  "lon": 78.4918,
+  "match": "hand-picked from OSM bus stop 'Kompally', Nizamabad Road",
+  "zone": "North"
+ },
+ {
+  "name": "Alwal",
+  "lat": 17.502229,
+  "lon": 78.508858,
+  "match": "suburb: Alwal, Ward 134 Alwal, Greater Hyderabad Municipal Corporation North Zone, Hyderabad, Alwa",
+  "zone": "North"
+ },
+ {
+  "name": "Bowenpally",
+  "lat": 17.465169,
+  "lon": 78.472938,
+  "match": "bus_stop: Bowenpally, Nizamabad Road, Vayu Nagar, Rasoolpura, Tirumalagiri mandal, Hyderabad, Telang",
+  "zone": "North"
+ },
+ {
+  "name": "Sainikpuri",
+  "lat": 17.489215,
+  "lon": 78.542489,
+  "match": "suburb: Sainikpuri, Ward 1 Kapra, Greater Hyderabad Municipal Corporation East Zone, Hyderabad, Ka",
+  "zone": "North"
+ },
+ {
+  "name": "Malkajgiri",
+  "lat": 17.451176,
+  "lon": 78.5369,
+  "match": "town: Malkajgiri, Hyderabad, Malkajgiri mandal, Medchal\u2013Malkajgiri, Telangana, 500047, India",
+  "zone": "North"
+ },
+ {
+  "name": "Tarnaka",
+  "lat": 17.4285,
+  "lon": 78.5379,
+  "match": "hand-picked from OSM: Tarnaka, Hanuman Nagar Colony",
+  "zone": "North"
+ },
+ {
+  "name": "Bachupally",
+  "lat": 17.5366,
+  "lon": 78.3645,
+  "match": "hand-picked from OSM: Nizampet Road, Bachupally",
+  "zone": "North"
+ },
+ {
+  "name": "Uppal",
+  "lat": 17.402509,
+  "lon": 78.561256,
+  "match": "suburb: Uppal, Ward 7 Chilka Nagar, Greater Hyderabad Municipal Corporation East Zone, Hyderabad, ",
+  "zone": "East"
+ },
+ {
+  "name": "LB Nagar",
+  "lat": 17.350162,
+  "lon": 78.551094,
+  "match": "suburb: LB Nagar, Ward 18 Lingojiguda, Greater Hyderabad Municipal Corporation East Zone, Hyderaba",
+  "zone": "East"
+ },
+ {
+  "name": "Dilsukhnagar",
+  "lat": 17.368781,
+  "lon": 78.524091,
+  "match": "bus_stop: Dilsukhnagar, Vijaywada Highway, Madhurapuri, Gaddiannaram, Ward 25 Moosarambagh, Greater ",
+  "zone": "East"
+ },
+ {
+  "name": "Habsiguda",
+  "lat": 17.415476,
+  "lon": 78.542692,
+  "match": "suburb: Habsiguda, Ward 8 Habsiguda, Greater Hyderabad Municipal Corporation East Zone, Hyderabad,",
+  "zone": "East"
+ },
+ {
+  "name": "Nagole",
+  "lat": 17.377531,
+  "lon": 78.560123,
+  "match": "suburb: Nagole, Ward 11 Nagole, Greater Hyderabad Municipal Corporation East Zone, Hyderabad, Uppa",
+  "zone": "East"
+ },
+ {
+  "name": "Vanasthalipuram",
+  "lat": 17.330318,
+  "lon": 78.568278,
+  "match": "suburb: Vanasthalipuram, Hayathnagar mandal, Greater Hyderabad Municipal Corporation East Zone, Hy",
+  "zone": "East"
+ },
+ {
+  "name": "Boduppal",
+  "lat": 17.420075,
+  "lon": 78.582784,
+  "match": "suburb: Boduppal, Medipally mandal, Medchal\u2013Malkajgiri, Telangana, 500092, India",
+  "zone": "East"
+ },
+ {
+  "name": "Saroornagar",
+  "lat": 17.361165,
+  "lon": 78.538744,
+  "match": "administrative: Ward 19 Saroornagar, Greater Hyderabad Municipal Corporation East Zone, Hyderabad, Saroorn",
+  "zone": "East"
+ },
+ {
+  "name": "Attapur",
+  "lat": 17.367224,
+  "lon": 78.430728,
+  "match": "suburb: Attapur, Ward 61 Attapur, Greater Hyderabad Municipal Corporation South Zone, Hyderabad, R",
+  "zone": "South"
+ },
+ {
+  "name": "Rajendranagar",
+  "lat": 17.3203,
+  "lon": 78.4018,
+  "match": "hand-picked from OSM: Community Health Centre Rajendranagar, Ward 60",
+  "zone": "South"
+ },
+ {
+  "name": "Shamshabad",
+  "lat": 17.261144,
+  "lon": 78.393194,
+  "match": "village: Shamshabad, Shamshabad mandal, Ranga Reddy, Telangana, 501218, India",
+  "zone": "South"
+ },
+ {
+  "name": "Charminar",
+  "lat": 17.3616,
+  "lon": 78.4746,
+  "match": "hand-picked from OSM monument: Charminar",
+  "zone": "South"
+ },
+ {
+  "name": "Santosh Nagar",
+  "lat": 17.347712,
+  "lon": 78.50437,
+  "match": "neighbourhood: Santosh Nagar, Ward 39 Santhosh Nagar, Greater Hyderabad Municipal Corporation South Zone,",
+  "zone": "South"
+ },
+ {
+  "name": "Chandrayangutta",
+  "lat": 17.324696,
+  "lon": 78.481356,
+  "match": "suburb: Chandrayangutta, Ward 43 Chandrayangutta, Greater Hyderabad Municipal Corporation South Zo",
+  "zone": "South"
+ },
+ {
+  "name": "Malakpet",
+  "lat": 17.373671,
+  "lon": 78.499648,
+  "match": "suburb: Malakpet, Ward 27 Akbarbagh, Greater Hyderabad Municipal Corporation South Zone, Hyderabad",
+  "zone": "South"
+ }
+]

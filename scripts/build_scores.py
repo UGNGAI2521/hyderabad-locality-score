@@ -4,7 +4,7 @@ Sources (fetched once into .cache/, re-run with --refresh to fetch again):
 - Overture Maps places (schools, healthcare, daily needs), release REL, CDLA Permissive 2.0
 - Overture Maps base/infrastructure, i.e. OpenStreetMap stations (metro, MMTS), ODbL
 - ESA WorldCover 2021 v200, 10 m land cover (green cover), CC BY 4.0
-Locality centres come from the existing data/localities.json (OpenStreetMap Nominatim geocodes).
+Locality centres and zones come from data/centres.json (scripts/geocode.py, OpenStreetMap Nominatim).
 Needs: pip install pyarrow rasterio numpy
 shortcut: equal 2 km circles, not official boundaries; switch when GHMC publishes the 300-ward map.
 """
@@ -15,7 +15,7 @@ import rasterio
 from rasterio.windows import from_bounds
 
 REL = "2026-11-18.0"
-W, S, E, N = 78.22, 17.30, 78.48, 17.59  # West Hyderabad box, wider than every 2 km circle
+W, S, E, N = 78.20, 17.15, 78.75, 17.65  # Hyderabad box, wider than every 2 km circle
 R_KM = 2.0
 MIN_CONFIDENCE = 0.5  # Overture places below this are often stale or duplicate listings
 CACHE = ".cache"
@@ -35,7 +35,7 @@ def km(lat1, lon1, lat2, lon2):
 
 
 def overture(theme, typ, columns, refresh):
-    path = f"{CACHE}/{theme}-{typ}.parquet"
+    path = f"{CACHE}/{theme}-{typ}-{W}-{S}-{E}-{N}.parquet"  # a new box never reuses an old cache
     if refresh or not os.path.exists(path):
         os.environ.setdefault("AWS_CA_BUNDLE", CA if os.path.exists(CA) else "")
         s3 = fs.S3FileSystem(anonymous=True, region="us-west-2", proxy_options=os.environ.get("HTTPS_PROXY") or None, scheme="https")
@@ -46,7 +46,7 @@ def overture(theme, typ, columns, refresh):
 
 
 def worldcover(refresh):
-    path = f"{CACHE}/worldcover.tif"
+    path = f"{CACHE}/worldcover-{W}-{S}-{E}-{N}.tif"
     if refresh or not os.path.exists(path):
         os.environ.setdefault("CURL_CA_BUNDLE", CA if os.path.exists(CA) else "")
         if os.environ.get("HTTPS_PROXY"):
@@ -63,7 +63,7 @@ def worldcover(refresh):
 
 def main(refresh=False):
     os.makedirs(CACHE, exist_ok=True)
-    centres = [{k: d[k] for k in ("name", "lat", "lon")} for d in json.load(open("data/localities.json"))]
+    centres = [{k: d[k] for k in ("name", "zone", "lat", "lon")} for d in json.load(open("data/centres.json"))]
 
     places = [p for p in overture("places", "place", ["names", "taxonomy", "confidence", "operating_status", "bbox"], refresh)
               if p["confidence"] >= MIN_CONFIDENCE and p["operating_status"] not in ("permanently_closed", "temporarily_closed")]
@@ -74,13 +74,15 @@ def main(refresh=False):
     def label(n): return n.title() if n.islower() else n
     def cat(p): return (p["taxonomy"] or {}).get("primary") or ""
     # Durgam Cheruvu is a metro station that OpenStreetMap tags as a railway station
+    # "(u/c)" marks Old City extension stations still under construction; they don't serve anyone yet
     metro = [(label(r["names"]["primary"]), *where(r["bbox"])) for r in infra
-             if r["class"] == "subway_station" or (r["class"] == "railway_station" and (r["names"] or {}).get("primary") == "Durgam Cheruvu")]
-    rail = [(r["names"]["primary"], *where(r["bbox"])) for r in infra if r["class"] == "railway_station" and r["names"]["primary"] not in {m[0] for m in metro}]
+             if (r["class"] == "subway_station" or (r["class"] == "railway_station" and (r["names"] or {}).get("primary") == "Durgam Cheruvu"))
+             and "(u/c)" not in (r["names"] or {}).get("primary", "")]
+    rail = [(r["names"]["primary"], *where(r["bbox"])) for r in infra if r["class"] == "railway_station" and r["names"]["primary"] not in {m[0] for m in metro}
+            and "(u/c)" not in r["names"]["primary"] and r["names"]["primary"] != "Durgam Cheruvu"]
     assert len(metro) >= 20 and len(rail) >= 5, (len(metro), len(rail))
 
-    rows, cols = np.indices(cover.shape)
-    lons, lats = tr * (cols + 0.5, rows + 0.5)
+    px_deg, inv = tr.a, ~tr
     out = []
     for c in centres:
         near = [p for p in places if km(c["lat"], c["lon"], *where(p["bbox"])) <= R_KM]
@@ -89,8 +91,12 @@ def main(refresh=False):
             n, la, lo = min(pts, key=lambda s: km(c["lat"], c["lon"], s[1], s[2]))
             return {"name": n, "km": round(km(c["lat"], c["lon"], la, lo), 2)}
         # equirectangular distance is exact enough at 2 km for a pixel mask
-        mask = ((lats - c["lat"]) * 111.2) ** 2 + ((lons - c["lon"]) * 111.2 * math.cos(math.radians(c["lat"]))) ** 2 <= R_KM ** 2
-        px = cover[mask]
+        col, row = (int(v) for v in inv * (c["lon"], c["lat"]))
+        h = int(R_KM / 111.2 / px_deg) + 2  # half-width of a window that holds the circle
+        win = cover[row - h:row + h, col - h:col + h]
+        rr, cc = np.indices(win.shape)
+        lons, lats = tr * (cc + col - h + 0.5, rr + row - h + 0.5)
+        px = win[((lats - c["lat"]) * 111.2) ** 2 + ((lons - c["lon"]) * 111.2 * math.cos(math.radians(c["lat"]))) ** 2 <= R_KM ** 2]
         out.append({**c,
                     "counts": {"schools": count(SCHOOLS.__contains__), "healthcare": count(HEALTH.__contains__),
                                "daily": count(lambda t: t in DAILY or t.endswith("grocery_store"))},
