@@ -6,7 +6,7 @@
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Hyderabad Locality Score</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Search flats, houses, villas, plots and commercial spaces to rent or buy in West Hyderabad, with an open-data score for every locality.">
+<meta name="description" content="Choose where to live or work in West Hyderabad: 12 localities compared on schools, healthcare, metro access, green cover and daily needs, scored from open data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Atkinson+Hyperlegible+Next:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -80,12 +80,12 @@ button { cursor: pointer; }
 .tabs { display: flex; gap: 4px; padding: 4px 4px 10px; flex-wrap: wrap; }
 .tabs button { border: none; background: none; padding: 8px 14px; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--muted); }
 .tabs button[aria-selected="true"] { background: var(--ink); color: var(--surface); }
-.fields { display: grid; grid-template-columns: 1.3fr 1fr 1fr auto; gap: 8px; }
+.fields { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr auto; gap: 8px; }
 .field { display: grid; gap: 2px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); min-width: 0; }
 .field label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
 .field select { border: none; background: none; padding: 0; font-weight: 500; font-size: 15px; width: 100%; outline: none; }
 .console .go { border-radius: 12px; padding-inline: 26px; font-size: 15px; }
-@media (max-width: 760px) { .fields { grid-template-columns: 1fr 1fr; } .field:first-child { grid-column: 1 / -1; } .console .go { grid-column: 1 / -1; padding-block: 13px; } }
+@media (max-width: 760px) { .fields { grid-template-columns: 1fr 1fr; } .console .go { grid-column: 1 / -1; padding-block: 13px; } }
 .quick { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .quick span { font-size: 13px; opacity: .85; }
 .quick button { border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.1); color: var(--on-media); padding: 6px 13px; border-radius: 999px; font-size: 13px; backdrop-filter: blur(6px); }
@@ -270,6 +270,18 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
 .thumbs img { width: 84px; height: 64px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
 .sheet .foot { display: flex; justify-content: space-between; gap: 8px; }
+/* property search ships later: .lo shows only with data-listings="on", .co only without */
+:root:not([data-listings="on"]) .lo, :root[data-listings="on"] .co { display: none !important; }
+.pick { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px; }
+.pick-h { font-weight: 600; font-size: 15px; width: 100%; }
+.pick .chips { flex: 1; min-width: 0; }
+.pick .chip { font-size: 14px; padding: 8px 14px; }
+.loc-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 16px; }
+.locmap { position: relative; height: 380px; max-height: 60vh; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); margin-bottom: 16px; background: var(--lake-soft); }
+#locmap { position: absolute; inset: 0; }
+.lpin .nm { display: none; }
+.lpin:hover .nm, .lpin:focus-visible .nm, .locmap.near .lpin .nm { display: inline; }
+@media (max-width: 760px) { .pick .chips { flex-basis: 100%; } .pick .go { width: 100%; padding-block: 13px; } }
 .err { color: var(--ink); background: var(--marigold-soft); border-radius: 8px; padding: 8px 10px; font-size: 13px; }
 .inp textarea { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); font-weight: 400; font-size: 15px; width: 100%; resize: vertical; }
 .state { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); }
@@ -290,30 +302,36 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <span>Locality Score</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#explore" data-quick="buy">Buy</a>
-      <a href="#explore" data-quick="rent">Rent</a>
-      <a href="#explore" data-quick="commercial">Commercial</a>
-      <a href="#explore" data-quick="plots">Plots</a>
+      <a class="lo" href="#explore" data-quick="buy">Buy</a>
+      <a class="lo" href="#explore" data-quick="rent">Rent</a>
+      <a class="lo" href="#explore" data-quick="commercial">Commercial</a>
+      <a class="lo" href="#explore" data-quick="plots">Plots</a>
       <a href="#localities">Localities</a>
       <a href="#what">What we do</a>
     </nav>
     <div class="actions">
       <button class="iconbtn" type="button" id="theme" aria-label="Switch light or dark"><svg class="icon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="iconbtn" type="button" id="open-account" aria-label="Sign in"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
-      <button class="iconbtn" type="button" id="open-short" aria-label="Shortlist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge num" id="short-count" hidden>0</span></button>
-      <button class="btn primary list-btn" type="button" id="open-list"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>List property</span></button>
+      <button class="iconbtn lo" type="button" id="open-account" aria-label="Sign in"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
+      <button class="iconbtn lo" type="button" id="open-short" aria-label="Shortlist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge num" id="short-count" hidden>0</span></button>
+      <button class="btn primary list-btn lo" type="button" id="open-list"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>List property</span></button>
     </div>
   </div>
 </header>
 
 <main id="top">
-  <section class="hero" aria-label="Search">
+  <section class="hero" aria-label="Choose a locality">
     <img class="poster" src="media/hero-poster.jpg" alt="">
     <video id="hero-video" muted loop playsinline preload="metadata" poster="media/hero-poster.jpg" aria-hidden="true"><source src="media/hero.mp4" type="video/mp4"></video>
     <div class="wrap">
       <h1>Find your place in <em>West Hyderabad</em>.</h1>
-      <p class="lede">Flats, houses, villas, plots and workspaces to rent or buy, with a score for every locality built from open map data.</p>
-      <form class="console" id="console">
+      <p class="lede lo">Flats, houses, villas, plots and workspaces to rent or buy, with a score for every locality built from open map data.</p>
+      <p class="lede co">Compare 12 localities on schools, healthcare, metro access, green cover and daily needs. Every score is built from open data, with its source.</p>
+      <form class="console pick co" id="pick">
+        <div class="pick-h">What matters most to you?</div>
+        <div class="chips" id="pri-hero"></div>
+        <button class="btn primary go" type="submit">Rank localities</button>
+      </form>
+      <form class="console lo" id="console">
         <div class="tabs" role="tablist" aria-label="What are you looking for">
           <button type="button" role="tab" data-tab="buy" aria-selected="true">Buy</button>
           <button type="button" role="tab" data-tab="rent" aria-selected="false">Rent</button>
@@ -321,36 +339,39 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
           <button type="button" role="tab" data-tab="plots" aria-selected="false">Plots</button>
         </div>
         <div class="fields">
+          
           <div class="field"><label for="c-loc">Locality</label><select id="c-loc"><option>All 12 localities</option></select></div>
           <div class="field"><label for="c-type">Property type</label><select id="c-type"><option>Any home</option></select></div>
           <div class="field"><label for="c-budget">Budget</label><select id="c-budget"><option>Any budget</option></select></div>
+          <div class="field"><label for="c-rate">Rate per sq ft</label><select id="c-rate"><option>Any rate</option></select></div>
           <button class="btn primary go" type="submit"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>Search</button>
         </div>
       </form>
-      <div class="quick">
+      <div class="quick lo">
         <span>Popular:</span>
-        <button type="button" data-preset="metro">2 BHK in top-scored areas</button>
-        <button type="button" data-preset="villas">Villas in Kokapet</button>
-        <button type="button" data-preset="office">Offices in HITEC City</button>
+        <button type="button" data-preset="rentflat">Flats to rent under ₹25k</button>
+        <button type="button" data-preset="villas">Villas for sale</button>
+        <button type="button" data-preset="office">Offices to rent</button>
         <button type="button" data-preset="plots">Plots under ₹2 Cr</button>
       </div>
       <div class="facts">
         <div><b class="num">12</b>localities scored</div>
         <div><b class="num">5</b>open-data measures per locality</div>
-        <div><b class="num" id="fact-listings">26</b><span id="fact-listings-label">example listings to explore</span></div>
+        <div class="co"><b class="num">3</b>open data sources, each cited</div>
+        <div class="lo"><b class="num" id="fact-listings">26</b><span id="fact-listings-label">example listings to explore</span></div>
       </div>
     </div>
     <span class="credit-tag" id="hero-credit"></span>
   </section>
 
-  <section class="band" aria-labelledby="cats-h">
+  <section class="band lo" aria-labelledby="cats-h">
     <div class="wrap">
       <div class="head"><div><h2 id="cats-h">What are you looking for?</h2><p>Pick a kind of property to start. You can change everything in the filters.</p></div></div>
       <div class="cats" id="cats"></div>
     </div>
   </section>
 
-  <section class="band" id="explore" aria-labelledby="explore-h" style="padding-top:0">
+  <section class="band lo" id="explore" aria-labelledby="explore-h" style="padding-top:0">
     <div class="wrap">
       <div class="head"><div><h2 id="explore-h">Explore properties</h2><p id="explore-sub">These are example listings that show how search works. The first owner listings appear here once they're approved.</p></div></div>
       <div class="explore" id="explore-grid">
@@ -360,9 +381,9 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
           <div class="fgroup"><div class="lbl">Property type</div><div class="chips" id="f-type"></div></div>
           <div class="fgroup"><div class="lbl">Bedrooms</div><div class="chips" id="f-bhk"></div></div>
           <div class="fgroup"><label class="lbl" for="f-budget">Budget</label><select id="f-budget"></select></div>
+          <div class="fgroup"><label class="lbl" for="f-rate">Rate per sq ft</label><select id="f-rate"></select></div>
           <div class="fgroup"><label class="lbl" for="f-loc">Locality</label><select id="f-loc"></select></div>
           <div class="fgroup"><div class="lbl"><label for="f-score">Locality score at least</label><output id="o-score" class="num" for="f-score">0</output></div><input type="range" id="f-score" min="0" max="90" step="10" value="0"></div>
-          <label class="check"><input type="checkbox" id="f-ready"> Ready to move only</label>
           <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="f-reset">Reset</button><button class="btn lake mobile-only" type="button" id="f-done">Show results</button></div>
         </aside>
         <div class="listcol">
@@ -371,7 +392,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
             <button class="btn mobile-only" type="button" id="open-filters"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filters</button>
             <button class="btn map-toggle" type="button" id="map-toggle" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24"><path d="m9 4-6 2v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/></svg>Map</button>
             <label class="sr" for="sort">Sort</label>
-            <select id="sort"><option value="new">Recommended</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="score">Locality score</option></select>
+            <select id="sort"><option value="new">Recommended</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="rate">Rate per sq ft: low to high</option><option value="score">Locality score</option></select>
           </div>
           <div class="cards" id="cards"></div>
         </div>
@@ -383,9 +404,11 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     </div>
   </section>
 
-  <section class="band" id="localities" aria-labelledby="loc-h" style="padding-top:0">
+  <section class="band" id="localities" aria-labelledby="loc-h">
     <div class="wrap">
       <div class="head"><div><h2 id="loc-h">Know the neighbourhood first</h2><p>Every locality gets a score out of 100 from five measures within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery.</p></div></div>
+      <div class="loc-tools"><span class="fine">Ranked for what matters to you:</span><div class="chips" id="pri-locs"></div></div>
+      <div class="locmap"><div id="locmap" role="region" aria-label="Map of localities with their scores"></div></div>
       <div class="locs" id="locs"></div>
     </div>
   </section>
@@ -399,11 +422,12 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       </div>
       <div>
         <h2 id="what-h" style="font-size:clamp(28px,3.6vw,42px)">What we do</h2>
-        <p style="color:var(--muted);margin-top:10px;font-size:17px">We help you choose where to live or work in West Hyderabad, then find the right place there.</p>
+        <p style="color:var(--muted);margin-top:10px;font-size:17px">We help you choose where to live or work in West Hyderabad.</p>
         <div class="points">
-          <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></div><div><h3>Every kind of property</h3><p>Flats, independent houses, villas, plots, offices and shops. Rent or buy, filtered by budget, bedrooms and how ready it is.</p></div></div>
+          <div class="point lo"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></div><div><h3>Every kind of property</h3><p>Flats, independent houses, villas, plots, offices and shops. Rent or buy, filtered by budget, rate per sq ft, bedrooms, locality and locality score.</p></div></div>
           <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div><div><h3>A score for every locality</h3><p>See how a neighbourhood compares on schools, healthcare, transport, parks and daily needs before you visit.</p></div></div>
-          <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10M9 20v-6h6v6"/></svg></div><div><h3>Straight from owners</h3><p>Owners list directly. No broker calls, no spam.</p></div></div>
+          <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><div><h3>Ranked on what matters to you</h3><p>Tell us what you care about most, from schools to metro access, and the ranking changes to match.</p></div></div>
+          <div class="point lo"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10M9 20v-6h6v6"/></svg></div><div><h3>Straight from owners</h3><p>Owners list directly. No broker calls, no spam.</p></div></div>
           <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div><div><h3>Sources on every number</h3><p>Each figure shows where it came from and when. Where we have no reliable source, we say "not enough data" instead of guessing.</p></div></div>
         </div>
       </div>
@@ -413,12 +437,12 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
   <section class="band" aria-labelledby="how-h">
     <div class="wrap">
       <div class="head"><div><h2 id="how-h">How it works</h2></div>
-        <div class="seg" id="how-seg"><button type="button" data-v="seek" aria-pressed="true">Looking for a place</button><button type="button" data-v="own" aria-pressed="false">Listing a property</button></div></div>
+        <div class="seg lo" id="how-seg"><button type="button" data-v="seek" aria-pressed="true">Looking for a place</button><button type="button" data-v="own" aria-pressed="false">Listing a property</button></div></div>
       <div class="steps" id="steps"></div>
     </div>
   </section>
 
-  <section class="band" style="padding-top:0" aria-labelledby="cta-h">
+  <section class="band lo" style="padding-top:0" aria-labelledby="cta-h">
     <div class="wrap">
       <div class="cta">
         <span id="cta-media"></span>
@@ -436,7 +460,8 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
   <div class="wrap cols">
     <div>
       <h3>Locality Score, Hyderabad</h3>
-      <p>A broker-free property search for West Hyderabad. Owners list directly, and every listing is checked before it goes live. Listings marked Example are not real offers, and their prices are illustrative.</p>
+      <p class="co">Helps you choose where to live or work in West Hyderabad, with locality scores built from open data. Every number shows its source.</p>
+      <p class="lo">A broker-free property search for West Hyderabad. Owners list directly, and every listing is checked before it goes live. Listings marked Example are not real offers, and their prices are illustrative.</p>
     </div>
     <div>
       <h3>Data</h3>
@@ -469,6 +494,9 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "
 const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Property search (listings, sign-in, posting) is built and tested but switched off until launch; set true to bring it back.
+const LISTINGS = true;
+if (LISTINGS) document.documentElement.dataset.listings = "on";
 
 const TYPES = { flat: "Flat", house: "Independent house", villa: "Villa", plot: "Plot", office: "Office", shop: "Shop" };
 const CATS = [
@@ -504,9 +532,16 @@ const BUDGETS = {
   rent: [["any", "Any rent"], ["0-25000", "Under ₹25k / month"], ["25000-50000", "₹25k – 50k / month"], ["50000-100000", "₹50k – 1 L / month"], ["100000-", "₹1 L + / month"]],
   any: [["any", "Any budget"]],
 };
+// rupees per sq ft (per month when renting); plots are priced per sq yd, so their area is converted (1 sq yd = 9 sq ft)
+const RATES = {
+  buy: [["any", "Any rate"], ["0-6000", "Under ₹6,000"], ["6000-9000", "₹6,000 – 9,000"], ["9000-12000", "₹9,000 – 12,000"], ["12000-16000", "₹12,000 – 16,000"], ["16000-", "₹16,000 +"]],
+  rent: [["any", "Any rate"], ["0-30", "Under ₹30 a month"], ["30-45", "₹30 – 45 a month"], ["45-70", "₹45 – 70 a month"], ["70-", "₹70 + a month"]],
+  any: [["any", "Pick buy or rent first"]],
+};
+const rateOf = l => l.price / (l.unit === "sqyd" ? l.area * 9 : l.area);
 
 let listings = [], locs = {}, map = null, markers = {}, hot = null, CREDITS = {}, HAVE = new Set();
-const S = { mode: "any", types: new Set(), bhk: new Set(), budget: "any", loc: "any", minScore: 0, ready: false, sort: "new" };
+const S = { mode: "any", types: new Set(), bhk: new Set(), budget: "any", rate: "any", loc: "any", minScore: 0, sort: "new" };
 const shortlist = new Set(store.get("shortlist", []));
 
 /* ---------- formatting ---------- */
@@ -520,7 +555,7 @@ const shortPrice = l => (n => n >= 1e7 ? trim((n / 1e7).toFixed(1)) + " Cr" : n 
 const priceLine = l => l.mode === "rent" ? `${inr(l.price)}<small> / month</small>` : inr(l.price);
 const unitName = l => l.unit === "sqyd" ? "sq yd" : "sq ft";
 const areaLine = l => `${l.area.toLocaleString("en-IN")} ${unitName(l)}`;
-const perUnit = l => l.mode === "buy" ? `₹${Math.round(l.price / l.area).toLocaleString("en-IN")} / ${unitName(l)}` : `₹${Math.round(l.price / l.area)} / sq ft a month`;
+const perUnit = l => `₹${Math.round(rateOf(l)).toLocaleString("en-IN")} / sq ft${l.mode === "rent" ? " a month" : ""}${l.unit === "sqyd" ? ` (₹${Math.round(l.price / l.area).toLocaleString("en-IN")} / sq yd)` : ""}`;
 const typeName = l => l.bhk ? `${l.bhk} BHK ${TYPES[l.type].toLowerCase()}` : TYPES[l.type];
 const img = (key, sm) => { if (/^https:/.test(key || "")) return key; const p = CREDITS[key]; return !p ? "" : p.local ? `media/${key}${sm ? "-sm" : ""}.jpg` : (sm ? p.remote_sm : p.remote); };
 const imgTag = (key, alt, sm, lazy) => { const s = img(key, sm); return s ? `<img src="${esc(s)}" alt="${esc(alt)}" data-fb${lazy ? ' loading="lazy"' : ""}>` : ""; };
@@ -542,25 +577,46 @@ function scoreLocalities(raw) {
   const part = (k, v) => { const f = FACTORS[k], x = f.score ? f.score(v, max[k]) : max[k] ? Math.log1p(v) / Math.log1p(max[k]) : 0; return Math.round(100 * Math.min(1, Math.max(0, x))); };
   for (const r of rows) {
     r.parts = Object.fromEntries(Object.keys(FACTORS).map(k => [k, part(k, r.vals[k])]));
-    r.score = Math.round(Object.values(r.parts).reduce((a, b) => a + b, 0) / Object.keys(FACTORS).length);
     r.best = Object.entries(r.parts).sort((a, b) => b[1] - a[1])[0][0];
   }
-  rows.sort((a, b) => b.score - a.score).forEach((r, i) => r.rank = i + 1);
   return Object.fromEntries(rows.map(r => [r.name, r]));
+}
+// a measure the visitor picked counts three times as much as the others
+const PRI = new Set();
+function rank() {
+  const w = k => PRI.has(k) ? 3 : 1, keys = Object.keys(FACTORS), total = keys.reduce((t, k) => t + w(k), 0), rows = Object.values(locs);
+  for (const r of rows) r.score = Math.round(keys.reduce((t, k) => t + r.parts[k] * w(k), 0) / total);
+  rows.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)).forEach((r, i) => r.rank = i + 1);
+}
+function drawPri() {
+  $("pri-hero").innerHTML = $("pri-locs").innerHTML = Object.entries(FACTORS).map(([k, f]) => `<button class="chip" type="button" data-pri="${k}" aria-pressed="${PRI.has(k)}">${f.label}</button>`).join("");
+}
+let locMap = null;
+function initLocMap() {
+  if (locMap || !window.maplibregl) return;
+  const rows = Object.values(locs), b = rows.reduce((b, r) => b.extend([r.lon, r.lat]), new maplibregl.LngLatBounds());
+  locMap = new maplibregl.Map({ container: "locmap", style: mapStyle(), bounds: b, fitBoundsOptions: { padding: 60 }, attributionControl: { compact: true }, cooperativeGestures: true });
+  locMap.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+  for (const r of rows) {
+    r.pin = Object.assign(document.createElement("button"), { type: "button", className: "pin lpin num", onclick: () => openLocality(r.name) });
+    new maplibregl.Marker({ element: r.pin }).setLngLat([r.lon, r.lat]).addTo(locMap);
+  }
+  // names would overlap at the city-wide zoom, so they appear once the visitor zooms in
+  locMap.on("zoom", () => $("locmap").parentElement.classList.toggle("near", locMap.getZoom() >= 13));
+  drawPins();
+}
+function drawPins() {
+  for (const r of Object.values(locs)) if (r.pin) { r.pin.innerHTML = `${r.score}<span class="nm"> ${esc(r.name)}</span>`; r.pin.setAttribute("aria-label", `${r.name}, score ${r.score}, rank ${r.rank} of ${Object.keys(locs).length}`); }
 }
 
 /* ---------- filtering ---------- */
-function inBudget(l) {
-  if (S.budget === "any") return true;
-  const [lo, hi] = S.budget.split("-");
-  return l.price >= +lo && (hi === "" || l.price <= +hi);
-}
+const inRange = (v, range) => { if (range === "any") return true; const [lo, hi] = range.split("-"); return v >= +lo && (hi === "" || v <= +hi); };
 function filtered() {
   const out = listings.filter(l =>
     (S.mode === "any" || l.mode === S.mode) && (!S.types.size || S.types.has(l.type)) &&
-    (!S.bhk.size || S.bhk.has(Math.min(l.bhk, 4))) && inBudget(l) && (S.loc === "any" || l.locality === S.loc) &&
-    locs[l.locality].score >= S.minScore && (!S.ready || l.status !== "Under construction"));
-  const by = { low: (a, b) => a.price - b.price, high: (a, b) => b.price - a.price, score: (a, b) => locs[b.locality].score - locs[a.locality].score, new: () => 0 };
+    inRange(l.price, S.budget) && inRange(rateOf(l), S.rate) && (!S.bhk.size || S.bhk.has(Math.min(l.bhk, 4))) &&
+    (S.loc === "any" || l.locality === S.loc) && locs[l.locality].score >= S.minScore);
+  const by = { low: (a, b) => a.price - b.price, high: (a, b) => b.price - a.price, rate: (a, b) => rateOf(a) - rateOf(b), score: (a, b) => locs[b.locality].score - locs[a.locality].score, new: () => 0 };
   return out.sort(by[S.sort]);
 }
 
@@ -574,7 +630,7 @@ function cardHTML(l) {
       <span class="price num">${priceLine(l)}</span>
       <h3>${esc(l.title)}</h3>
       <span class="where"><span>${esc(l.locality)}</span><span class="score" title="Locality score out of 100">${L.score}</span></span>
-      <span class="meta num">${l.bhk ? `<span><b>${l.bhk}</b> BHK</span>` : `<span><b>${TYPES[l.type]}</b></span>`}${l.baths ? `<span><b>${l.baths}</b> bath</span>` : ""}<span><b>${areaLine(l)}</b></span><span>${l.status}</span></span>
+      <span class="meta num">${l.bhk ? `<span><b>${l.bhk}</b> BHK</span>` : `<span><b>${TYPES[l.type]}</b></span>`}${l.baths ? `<span><b>${l.baths}</b> bath</span>` : ""}<span><b>${areaLine(l)}</b></span><span>₹${Math.round(rateOf(l)).toLocaleString("en-IN")}/sq ft${l.mode === "rent" ? "/mo" : ""}</span></span>
     </button></article>`;
 }
 function render() {
@@ -591,7 +647,8 @@ function syncControls() {
   document.querySelectorAll("#f-type .chip").forEach(b => b.setAttribute("aria-pressed", S.types.has(b.dataset.v)));
   document.querySelectorAll("#f-bhk .chip").forEach(b => b.setAttribute("aria-pressed", S.bhk.has(+b.dataset.v)));
   fillSelect($("f-budget"), BUDGETS[S.mode], S.budget);
-  $("f-loc").value = S.loc; $("f-score").value = S.minScore; $("o-score").textContent = S.minScore; $("f-ready").checked = S.ready; $("sort").value = S.sort;
+  fillSelect($("f-rate"), RATES[S.mode], S.rate); $("f-rate").disabled = S.mode === "any";
+  $("f-loc").value = S.loc; $("f-score").value = S.minScore; $("o-score").textContent = S.minScore; $("sort").value = S.sort;
   const n = shortlist.size; $("short-count").hidden = !n; $("short-count").textContent = n;
 }
 function fillSelect(sel, opts, val) {
@@ -612,10 +669,11 @@ function setTab(t) {
   document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === t));
   fillSelect($("c-type"), TAB[t].types, "");
   fillSelect($("c-budget"), BUDGETS[TAB[t].budget], "any");
+  fillSelect($("c-rate"), RATES[TAB[t].budget], "any"); $("c-rate").disabled = TAB[t].budget === "any";
 }
-function runSearch(t, type, budget, loc) {
+function runSearch(t, type, budget, rate, loc) {
   resetFilters(true);
-  S.mode = TAB[t].mode; S.budget = budget || "any"; S.loc = loc || "any";
+  S.mode = TAB[t].mode; S.budget = budget || "any"; S.rate = rate || "any"; S.loc = loc || "any";
   S.types = new Set(type ? [type] : TAB[t].all);
   render(); goExplore();
 }
@@ -699,7 +757,7 @@ function openListing(id) {
       <div class="kv num">
         <div><span>Type</span><b>${TYPES[l.type]}</b></div><div><span>For</span><b>${l.mode === "rent" ? "Rent" : "Sale"}</b></div>
         ${l.bhk ? `<div><span>Bedrooms</span><b>${l.bhk} BHK</b></div>` : ""}${l.baths ? `<div><span>Bathrooms</span><b>${l.baths}</b></div>` : ""}
-        <div><span>Area</span><b>${areaLine(l)}</b></div><div><span>Price per area</span><b>${perUnit(l)}</b></div>
+        <div><span>Area</span><b>${areaLine(l)}</b></div><div><span>Rate per sq ft</span><b>${perUnit(l)}</b></div>
         ${l.furnishing ? `<div><span>Furnishing</span><b>${l.furnishing}</b></div>` : ""}<div><span>Status</span><b>${l.status}</b></div>
       </div>
       ${l.features?.length ? `<div style="display:grid;gap:8px"><div class="fine" style="font-weight:600;color:var(--ink)">Features</div><div class="chips">${l.features.map(f => `<span class="chip">${esc(f)}</span>`).join("")}</div></div>` : ""}
@@ -890,9 +948,9 @@ async function setState(id, to) {
 function drawCounts() {
   $("cats").innerHTML = CATS.map(c => { const n = listings.filter(l => c.types.includes(l.type)).length;
     return `<button class="cat" type="button" data-cat="${c.key}">${art(c.types[0])}${imgTag(c.img, "", true, true)}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
-  $("locs").innerHTML = Object.values(locs).map(L => { const key = LOC_IMG[L.name], n = listings.filter(l => l.locality === L.name).length;
+  $("locs").innerHTML = Object.values(locs).sort((a, b) => a.rank - b.rank).map(L => { const key = LOC_IMG[L.name], n = listings.filter(l => l.locality === L.name).length;
     return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
-      <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Strongest: ${FACTORS[L.best].label.toLowerCase()} · ${n} ${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
+      <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Strongest: ${FACTORS[L.best].label.toLowerCase()} · ${LISTINGS ? `${n} ${n === 1 ? "listing" : "listings"}` : `metro ${L.metro.km.toFixed(1)} km`}</small></span></button>`; }).join("");
 }
 function fromRow(r) {
   const L = locs[r.locality], h = parseInt(r.id.slice(0, 8), 16);
@@ -914,7 +972,8 @@ async function loadLive() {
 
 /* ---------- how it works ---------- */
 const HOW = {
-  seek: [["Search", "Pick buy or rent, the kind of property, your budget and the localities you like."], ["Compare localities", "Check each locality's score and what's within 2 km before you shortlist."], ["Contact the owner", "Message owners directly and arrange a visit. No broker in between."]],
+  choose: [["Pick what matters", "Choose the measures you care about most: schools, healthcare, metro access, green cover or daily needs."], ["Compare localities", "The ranking updates straight away, and the map shows every locality with its score."], ["Check the details", "Open a locality for its numbers: schools and clinics within 2 km, the nearest metro, how green it is, and where each figure comes from."]],
+  seek: [["Search", "Pick buy or rent and the kind of property, then filter by budget, rate per sq ft, bedrooms, locality and locality score."], ["Compare localities", "Check each locality's score and what's within 2 km before you shortlist."], ["Contact the owner", "Message owners directly and arrange a visit. No broker in between."]],
   own: [["Describe your property", "Type, locality, size and price. It takes a few minutes."], ["Add photos", "Clear photos of every room get far more enquiries."], ["Hear from people", "Enquiries come straight to you from people looking in your locality."]],
 };
 function drawHow(k) {
@@ -934,11 +993,12 @@ function toggleShort(id) {
 }
 
 /* ---------- events ---------- */
-function resetFilters(quiet) { Object.assign(S, { mode: "any", budget: "any", loc: "any", minScore: 0, ready: false, sort: "new", types: new Set(), bhk: new Set() }); if (!quiet) render(); }
+function resetFilters(quiet) { Object.assign(S, { mode: "any", budget: "any", rate: "any", loc: "any", minScore: 0, sort: "new", types: new Set(), bhk: new Set() }); if (!quiet) render(); }
 document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   const d = t.dataset;
   if (d.heart) return toggleShort(d.heart);
+  if (d.pri) { PRI.has(d.pri) ? PRI.delete(d.pri) : PRI.add(d.pri); rank(); drawPri(); drawCounts(); drawPins(); return; }
   if (t.hasAttribute("data-signin")) return openSignIn();
   if (t.hasAttribute("data-account")) { closeLayers(); return setTimeout(openAccount, 280); }
   if (t.hasAttribute("data-list")) { closeLayers(); return setTimeout(openList, 280); }
@@ -954,9 +1014,9 @@ document.addEventListener("click", e => {
   if (d.quick) { e.preventDefault(); setTab(d.quick); return runSearch(d.quick); }
   if (d.preset) {
     resetFilters(true);
-    if (d.preset === "metro") { S.types = new Set(["flat"]); S.bhk = new Set([2]); S.minScore = 70; S.sort = "score"; }
-    if (d.preset === "villas") { S.types = new Set(["villa"]); S.loc = "Kokapet"; }
-    if (d.preset === "office") { S.types = new Set(["office"]); S.loc = "HITEC City"; }
+    if (d.preset === "rentflat") { S.types = new Set(["flat"]); S.mode = "rent"; S.budget = "0-25000"; }
+    if (d.preset === "villas") { S.types = new Set(["villa"]); S.mode = "buy"; }
+    if (d.preset === "office") { S.types = new Set(["office"]); S.mode = "rent"; }
     if (d.preset === "plots") { S.types = new Set(["plot"]); S.mode = "buy"; S.budget = "0-20000000"; }
     render(); return goExplore();
   }
@@ -964,14 +1024,15 @@ document.addEventListener("click", e => {
 $("scrim").onclick = closeLayers;
 addEventListener("keydown", e => { if (e.key === "Escape" && !$("scrim").hidden) closeLayers(); });
 document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => setTab(b.dataset.tab));
-$("console").onsubmit = e => { e.preventDefault(); runSearch(tab, $("c-type").value, $("c-budget").value, $("c-loc").value); };
-$("f-mode").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.mode = b.dataset.v; S.budget = "any"; render(); };
+$("pick").onsubmit = e => { e.preventDefault(); $("localities").scrollIntoView({ behavior: calm ? "auto" : "smooth" }); };
+$("console").onsubmit = e => { e.preventDefault(); runSearch(tab, $("c-type").value, $("c-budget").value, $("c-rate").value, $("c-loc").value); };
+$("f-mode").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.mode = b.dataset.v; S.budget = S.rate = "any"; render(); };
 $("f-type").onclick = e => { const b = e.target.closest("button"); if (!b) return; const v = b.dataset.v; S.types.has(v) ? S.types.delete(v) : S.types.add(v); render(); };
-$("f-bhk").onclick = e => { const b = e.target.closest("button"); if (!b) return; const v = +b.dataset.v; S.bhk.has(v) ? S.bhk.delete(v) : S.bhk.add(v); render(); };
 $("f-budget").onchange = e => { S.budget = e.target.value; render(); };
+$("f-rate").onchange = e => { S.rate = e.target.value; render(); };
+$("f-bhk").onclick = e => { const b = e.target.closest("button"); if (!b) return; const v = +b.dataset.v; S.bhk.has(v) ? S.bhk.delete(v) : S.bhk.add(v); render(); };
 $("f-loc").onchange = e => { S.loc = e.target.value; render(); };
 $("f-score").oninput = e => { S.minScore = +e.target.value; render(); };
-$("f-ready").onchange = e => { S.ready = e.target.checked; render(); };
 $("sort").onchange = e => { S.sort = e.target.value; render(); };
 $("f-reset").onclick = () => resetFilters();
 $("open-filters").onclick = () => $("filters").classList.add("open");
@@ -984,7 +1045,7 @@ $("open-short").onclick = openShortlist;
 $("open-list").onclick = openList; $("cta-list").onclick = openList; $("open-account").onclick = openAccount;
 document.addEventListener("submit", e => { if (e.target.id === "enq") { e.preventDefault(); sendEnquiry(e.target); } });
 $("how-seg").onclick = e => { const b = e.target.closest("button"); if (b) drawHow(b.dataset.v); };
-$("theme").onclick = () => { document.documentElement.dataset.theme = dark() ? "light" : "dark"; map?.setStyle(mapStyle()); };
+$("theme").onclick = () => { document.documentElement.dataset.theme = dark() ? "light" : "dark"; map?.setStyle(mapStyle()); locMap?.setStyle(mapStyle()); };
 
 /* videos play only while on screen, and never when the viewer prefers less motion */
 const vio = new IntersectionObserver(es => es.forEach(en => { const v = en.target; if (calm) return; if (en.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }), { threshold: .15 });
@@ -993,14 +1054,14 @@ const vio = new IntersectionObserver(es => es.forEach(en => { const v = en.targe
 /* ---------- boot ---------- */
 Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/listings.json").then(r => r.json()), fetch("data/photos.json").then(r => r.ok ? r.json() : {}).catch(() => ({}))])
 .then(([raw, ls, credits]) => {
-  locs = scoreLocalities(raw); listings = EXAMPLES = ls.map(l => ({ ...l, example: true })); CREDITS = credits; HAVE = new Set(Object.keys(credits).filter(k => !k.startsWith("_")));
+  locs = scoreLocalities(raw); rank(); listings = EXAMPLES = ls.map(l => ({ ...l, example: true })); CREDITS = credits; HAVE = new Set(Object.keys(credits).filter(k => !k.startsWith("_")));
   $("fact-listings").textContent = ls.length;
   const names = Object.keys(locs).sort();
   fillSelect($("c-loc"), [["any", `All ${names.length} localities`], ...names.map(n => [n, `${n} · score ${locs[n].score}`])], "any");
   fillSelect($("f-loc"), [["any", "All localities"], ...names.map(n => [n, n])], "any");
+  $("f-bhk").innerHTML = [1, 2, 3, 4].map(n => `<button class="chip num" type="button" data-v="${n}" aria-pressed="false">${n === 4 ? "4+" : n} BHK</button>`).join("");
   setTab("buy");
   $("f-type").innerHTML = Object.entries(TYPES).map(([v, t]) => `<button class="chip" type="button" data-v="${v}" aria-pressed="false">${t}</button>`).join("");
-  $("f-bhk").innerHTML = [1, 2, 3, 4].map(n => `<button class="chip num" type="button" data-v="${n}" aria-pressed="false">${n === 4 ? "4+" : n} BHK</button>`).join("");
   const list = Object.entries(credits).filter(([k]) => !k.startsWith("_"));
   if (list.length) $("credits").innerHTML = list.map(([, c]) => `<li>${esc(c.file.replace(/^File:/, "").replace(/\.\w+$/, ""))}: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a></li>`).join("");
   if (credits["loc-raidurg"]) $("hero-credit").textContent = `Durgam Cheruvu cable bridge at night, Raidurg. Photo: ${credits["loc-raidurg"].author || "Unknown"}, ${credits["loc-raidurg"].license}, via Wikimedia Commons.`;
@@ -1014,10 +1075,11 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   }
   const ctaKey = ["amenity-park", "loc-gachibowli", "loc-raidurg"].find(k => HAVE.has(k));
   if (ctaKey) $("cta-media").innerHTML = imgTag(ctaKey, "", false, true);
-  drawHow("seek");
+  drawHow(LISTINGS ? "seek" : "choose"); drawPri();
   drawCounts(); render();
-  if (matchMedia("(min-width: 1181px)").matches) initMap();
-  if (sb) {
+  if (LISTINGS && matchMedia("(min-width: 1181px)").matches) initMap();
+  initLocMap();
+  if (sb && LISTINGS) {
     sb.auth.onAuthStateChange((ev, session) => { me = session?.user ?? null; syncAccount(); if (ev === "SIGNED_IN" && /access_token/.test(location.hash)) { history.replaceState(null, "", location.pathname); toast("Signed in"); } });
     loadLive();
   }
