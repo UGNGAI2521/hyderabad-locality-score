@@ -76,6 +76,11 @@ drop policy if exists "owners upload listing photos to their folder" on storage.
 create policy "owners upload listing photos to their folder" on storage.objects
   for insert to authenticated with check (bucket_id = 'listing-photos' and (storage.foldername(name))[1] = auth.uid()::text);
 
+-- Storage only deletes files the caller can also select, so owners need to see their own folder.
+drop policy if exists "owners see their listing photos" on storage.objects;
+create policy "owners see their listing photos" on storage.objects
+  for select to authenticated using (bucket_id = 'listing-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+
 drop policy if exists "owners delete their listing photos" on storage.objects;
 create policy "owners delete their listing photos" on storage.objects
   for delete to authenticated using (bucket_id = 'listing-photos' and (storage.foldername(name))[1] = auth.uid()::text);

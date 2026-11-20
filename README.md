@@ -2,7 +2,13 @@
 
 A property search for West Hyderabad: flats, houses, villas, plots, offices and shops to rent or buy, with an open-data score for every locality.
 
-This is a preview. The 26 listings are clearly marked examples with illustrative prices. Owner listings are not open yet; the "List your property" form saves a draft in the visitor's own browser only.
+Owners sign in by email and post listings with photos; buyers send enquiries that only the owner can read. Every new or edited listing waits for the admin's approval before it goes live. Until the first listing is approved, the site shows 26 clearly marked example listings.
+
+## Running the marketplace
+
+- **Approve listings:** open the [Supabase table editor](https://supabase.com/dashboard/project/neqonqsxpejbzcumuylp/editor), pick `listings`, and change `status` from `pending` to `live`. Set it to `closed` to take a listing down.
+- **Sign-in emails:** Supabase's built-in email only reaches the project's team members and sends 2 emails an hour. Before opening to the public, add an SMTP provider under Authentication → Emails → SMTP Settings (for example Brevo's free plan, 300 emails a day), then raise the email rate limit under Authentication → Rate Limits.
+- **Database rules** live in `supabase/schema.sql` (safe to re-run). `supabase/config.js` holds the project URL and publishable key, which are meant to be public; row-level security protects the data.
 
 ## What's in the repo
 
@@ -11,7 +17,9 @@ This is a preview. The 26 listings are clearly marked examples with illustrative
 | `src/page.html` | The site source (HTML, CSS and JS in one file), written for the claude.ai artifact viewer |
 | `index.html` | Standalone build of `src/page.html` for any static host. Regenerate with `python3 scripts/build_site.py` |
 | `data/localities.json` | Measures for 12 localities: place counts, nearest metro and MMTS station, green cover |
-| `data/listings.json` | Example listings (every record has `example: true`) |
+| `data/listings.json` | Example listings, shown only while no owner listing is live |
+| `supabase/schema.sql` | Tables, row-level security and photo storage for owner listings and enquiries |
+| `supabase/config.js` | Supabase project URL and publishable key |
 | `data/photos.json` | Each photo's author, licence, Wikimedia address, and whether a local copy exists |
 | `media/` | Web-sized photos and the two looping videos |
 | `vendor/maplibre-gl.css` | Map library stylesheet |

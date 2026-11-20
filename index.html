@@ -271,6 +271,12 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .thumbs img { width: 84px; height: 64px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
 .sheet .foot { display: flex; justify-content: space-between; gap: 8px; }
 .err { color: var(--ink); background: var(--marigold-soft); border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+.inp textarea { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); font-weight: 400; font-size: 15px; width: 100%; resize: vertical; }
+.state { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); }
+.state.live { background: var(--lake-soft); color: var(--lake); border-color: var(--lake); }
+.state.pending { background: var(--marigold-soft); }
+.mine { border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 8px; }
+.enq { border-top: 1px solid var(--line); padding-top: 8px; font-size: 14px; display: grid; gap: 2px; }
 @media (max-width: 520px) { .formgrid { grid-template-columns: 1fr; } .barrow { grid-template-columns: 96px 1fr 40px; } }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); translate: -50% 0; z-index: 100; background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 999px; font-size: 14px; box-shadow: var(--shadow); white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
@@ -293,6 +299,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     </nav>
     <div class="actions">
       <button class="iconbtn" type="button" id="theme" aria-label="Switch light or dark"><svg class="icon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="iconbtn" type="button" id="open-account" aria-label="Sign in"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
       <button class="iconbtn" type="button" id="open-short" aria-label="Shortlist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge num" id="short-count" hidden>0</span></button>
       <button class="btn primary list-btn" type="button" id="open-list"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>List property</span></button>
     </div>
@@ -330,7 +337,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <div class="facts">
         <div><b class="num">12</b>localities scored</div>
         <div><b class="num">5</b>open-data measures per locality</div>
-        <div><b class="num" id="fact-listings">26</b>example listings to explore</div>
+        <div><b class="num" id="fact-listings">26</b><span id="fact-listings-label">example listings to explore</span></div>
       </div>
     </div>
     <span class="credit-tag" id="hero-credit"></span>
@@ -345,7 +352,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 
   <section class="band" id="explore" aria-labelledby="explore-h" style="padding-top:0">
     <div class="wrap">
-      <div class="head"><div><h2 id="explore-h">Explore properties</h2><p>These are example listings that show how search works. Owner listings open soon.</p></div></div>
+      <div class="head"><div><h2 id="explore-h">Explore properties</h2><p id="explore-sub">These are example listings that show how search works. The first owner listings appear here once they're approved.</p></div></div>
       <div class="explore" id="explore-grid">
         <aside class="filters" id="filters" aria-label="Filters">
           <div class="fgroup"><div class="lbl">Looking to</div>
@@ -429,7 +436,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
   <div class="wrap cols">
     <div>
       <h3>Locality Score, Hyderabad</h3>
-      <p>A preview of a broker-free property search for West Hyderabad. Listings shown are examples, not real offers, and their prices are illustrative.</p>
+      <p>A broker-free property search for West Hyderabad. Owners list directly, and every listing is checked before it goes live. Listings marked Example are not real offers, and their prices are illustrative.</p>
     </div>
     <div>
       <h3>Data</h3>
@@ -454,6 +461,8 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="supabase/config.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -513,11 +522,12 @@ const unitName = l => l.unit === "sqyd" ? "sq yd" : "sq ft";
 const areaLine = l => `${l.area.toLocaleString("en-IN")} ${unitName(l)}`;
 const perUnit = l => l.mode === "buy" ? `₹${Math.round(l.price / l.area).toLocaleString("en-IN")} / ${unitName(l)}` : `₹${Math.round(l.price / l.area)} / sq ft a month`;
 const typeName = l => l.bhk ? `${l.bhk} BHK ${TYPES[l.type].toLowerCase()}` : TYPES[l.type];
-const img = (key, sm) => { const p = CREDITS[key]; return !p ? "" : p.local ? `media/${key}${sm ? "-sm" : ""}.jpg` : (sm ? p.remote_sm : p.remote); };
+const img = (key, sm) => { if (/^https:/.test(key || "")) return key; const p = CREDITS[key]; return !p ? "" : p.local ? `media/${key}${sm ? "-sm" : ""}.jpg` : (sm ? p.remote_sm : p.remote); };
 const imgTag = (key, alt, sm, lazy) => { const s = img(key, sm); return s ? `<img src="${esc(s)}" alt="${esc(alt)}" data-fb${lazy ? ' loading="lazy"' : ""}>` : ""; };
 // an image that can't load (e.g. outside images blocked) is removed, uncovering the drawing beneath it
 document.addEventListener("error", e => { if (e.target.tagName === "IMG" && e.target.hasAttribute("data-fb")) e.target.remove(); }, true);
 function photosFor(l) {
+  if (l.photos?.length) return l.photos.map((u, i) => ({ src: u, note: `Photo ${i + 1} of ${l.photos.length} from the owner` }));
   const out = [], area = LOC_IMG[l.locality];
   if (l.type === "flat" && img(area)) out.push({ src: area, note: `Area photo: ${l.locality}` });
   if (img(TYPE_IMG[l.type])) out.push({ src: TYPE_IMG[l.type], note: "Illustrative photo, not this property" });
@@ -558,7 +568,7 @@ function filtered() {
 function cardHTML(l) {
   const p = photosFor(l)[0], L = locs[l.locality], saved = shortlist.has(l.id);
   return `<article class="card" data-id="${l.id}">
-    <div class="ph">${art(l.type)}${imgTag(p.src, p.note, true, true)}<span class="pill">Example</span>
+    <div class="ph">${art(l.type)}${imgTag(p.src, p.note, true, true)}${l.example ? '<span class="pill">Example</span>' : ""}
       <button class="heart" type="button" data-heart="${l.id}" aria-pressed="${saved}" aria-label="Save ${esc(typeName(l))} in ${esc(l.locality)}"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button></div>
     <button class="open" type="button" data-open="${l.id}">
       <span class="price num">${priceLine(l)}</span>
@@ -684,18 +694,18 @@ function openListing(id) {
     <div class="dbody">
       <div style="display:grid;gap:6px"><div class="price num" style="font-size:30px">${priceLine(l)}</div><h2 style="font-size:24px">${esc(l.title)}</h2>
         <div class="where"><span>${esc(l.locality)}, Hyderabad</span><span class="score">${L.score}</span></div></div>
-      <div class="notice"><b>Example listing.</b> This shows how a listing will look. It is not a real offer, and the price is illustrative.</div>
+      ${l.example ? '<div class="notice"><b>Example listing.</b> This shows how a listing will look. It is not a real offer, and the price is illustrative.</div>' : ""}
+      ${l.description ? `<p style="white-space:pre-line">${esc(l.description)}</p>` : ""}
       <div class="kv num">
         <div><span>Type</span><b>${TYPES[l.type]}</b></div><div><span>For</span><b>${l.mode === "rent" ? "Rent" : "Sale"}</b></div>
         ${l.bhk ? `<div><span>Bedrooms</span><b>${l.bhk} BHK</b></div>` : ""}${l.baths ? `<div><span>Bathrooms</span><b>${l.baths}</b></div>` : ""}
         <div><span>Area</span><b>${areaLine(l)}</b></div><div><span>Price per area</span><b>${perUnit(l)}</b></div>
         ${l.furnishing ? `<div><span>Furnishing</span><b>${l.furnishing}</b></div>` : ""}<div><span>Status</span><b>${l.status}</b></div>
       </div>
-      <div style="display:grid;gap:8px"><div class="fine" style="font-weight:600;color:var(--ink)">Features</div><div class="chips">${l.features.map(f => `<span class="chip">${esc(f)}</span>`).join("")}</div></div>
+      ${l.features?.length ? `<div style="display:grid;gap:8px"><div class="fine" style="font-weight:600;color:var(--ink)">Features</div><div class="chips">${l.features.map(f => `<span class="chip">${esc(f)}</span>`).join("")}</div></div>` : ""}
       ${scorePanel(L)}
-      <div class="panel"><h3>Contact the owner</h3><p class="fine">Example listings have no owner to contact. On a real listing you'll message the owner directly, without a broker.</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" disabled style="opacity:.55;cursor:not-allowed">Message owner</button>
-        <button class="btn" type="button" data-heart="${l.id}" aria-pressed="${saved}">${saved ? "Saved to shortlist" : "Save to shortlist"}</button></div></div>
+      <div class="panel" id="contact"><h3>Contact the owner</h3>${contactHTML(l)}
+        <div><button class="btn" type="button" data-heart="${l.id}" aria-pressed="${saved}">${saved ? "Saved to shortlist" : "Save to shortlist"}</button></div></div>
       <p class="fine" id="g-credit">${creditLine(g0.src)}</p>
     </div>`;
   openLayer($("drawer"));
@@ -709,7 +719,7 @@ function openLocality(name) {
   $("drawer").innerHTML = `<div class="bar"><b>${esc(name)}</b>${closeBtn}</div>
     ${img(key) ? `<div class="gallery">${imgTag(key, name)}</div>` : ""}
     <div class="dbody">${scorePanel(L)}
-      <button class="btn primary" type="button" data-see="${esc(name)}">See ${n} example ${n === 1 ? "listing" : "listings"} in ${esc(name)}</button>
+      <button class="btn primary" type="button" data-see="${esc(name)}">See ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"} in ${esc(name)}</button>
       <p class="fine">${creditLine(key)}</p></div>`;
   openLayer($("drawer"));
 }
@@ -721,51 +731,186 @@ function openShortlist() {
   openLayer($("drawer"));
 }
 
-/* ---------- list your property (multi-step) ---------- */
-const LSTEPS = ["What", "Where", "Details", "Photos", "Contact"];
-const draft = Object.assign({ mode: "sell", type: "flat", locality: "Gachibowli", bhk: "2", area: "", price: "", name: "", phone: "" }, store.get("draft", {}));
-let lstep = 0, photoURLs = [];
-function openList() { lstep = 0; drawList(); openLayer($("modal")); }
-function drawList() {
-  const names = Object.keys(locs).sort(), rent = draft.mode === "rent";
-  const body = [
-    `<div class="formgrid"><label class="inp full">I want to<select id="d-mode"><option value="sell">Sell</option><option value="rent">Rent it out</option></select></label>
-      <label class="inp full">Property type<select id="d-type">${Object.entries(TYPES).map(([v, t]) => `<option value="${v}">${t}</option>`).join("")}</select></label></div>`,
-    `<div class="formgrid"><label class="inp full">Locality<select id="d-locality">${names.map(n => `<option>${esc(n)}</option>`).join("")}</select></label>
-      <p class="fine full">Your locality's score shows on the listing so people can compare areas.</p></div>`,
-    `<div class="formgrid"><label class="inp">Bedrooms<select id="d-bhk">${[0, 1, 2, 3, 4, 5].map(n => `<option value="${n}">${n ? n + " BHK" : "Not applicable"}</option>`).join("")}</select></label>
-      <label class="inp">Area (${draft.type === "plot" ? "sq yd" : "sq ft"})<input id="d-area" inputmode="numeric" placeholder="e.g. ${draft.type === "plot" ? "240" : "1250"}"></label>
-      <label class="inp full">${rent ? "Monthly rent (₹)" : "Asking price (₹)"}<input id="d-price" inputmode="numeric" placeholder="${rent ? "e.g. 35000" : "e.g. 12500000"}"></label>
-      <p class="fine full" id="d-price-words" aria-live="polite"></p></div>`,
-    `<div class="formgrid"><label class="inp full">Add photos<input id="d-photos" type="file" accept="image/*" multiple></label>
-      <div class="thumbs full" id="d-thumbs"></div><p class="fine full">In this preview, photos stay on your device. Nothing is uploaded.</p></div>`,
-    `<div class="formgrid"><label class="inp">Your name<input id="d-name" autocomplete="name"></label><label class="inp">Mobile number<input id="d-phone" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile"></label>
-      <p class="full err" id="d-err" hidden></p></div>`,
-  ][lstep];
-  $("sheet").innerHTML = `<div class="in"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2 id="m-title" style="font-size:24px">List your property</h2>${closeBtn}</div>
-    <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="${LSTEPS.length}" aria-valuenow="${lstep + 1}" aria-label="Step ${lstep + 1} of ${LSTEPS.length}">${LSTEPS.map((_, i) => `<i class="${i <= lstep ? "on" : ""}"></i>`).join("")}</div>
-    <div class="fine">Step ${lstep + 1} of ${LSTEPS.length}: ${LSTEPS[lstep]}</div>${body}
-    <div class="foot"><button class="btn" type="button" id="d-back" ${lstep ? "" : "disabled"}>Back</button><button class="btn primary" type="button" id="d-next">${lstep === LSTEPS.length - 1 ? "Save draft" : "Continue"}</button></div></div>`;
-  for (const k of ["mode", "type", "locality", "bhk", "area", "price", "name", "phone"]) { const el = $("d-" + k); if (el) el.value = draft[k]; }
-  const words = () => { const v = +String($("d-price")?.value || "").replace(/\D/g, ""); if ($("d-price-words")) $("d-price-words").textContent = v ? `That's ${inr(v)}${rent ? " a month" : ""}.` : ""; };
-  $("d-price")?.addEventListener("input", words); words();
-  if ($("d-photos")) { $("d-photos").onchange = e => { photoURLs.forEach(u => URL.revokeObjectURL(u)); photoURLs = [...e.target.files].slice(0, 8).map(f => URL.createObjectURL(f)); drawThumbs(); }; drawThumbs(); }
-  $("d-back").onclick = () => { collect(); lstep--; drawList(); };
-  $("d-next").onclick = () => {
-    collect();
-    if (lstep < LSTEPS.length - 1) { lstep++; drawList(); return; }
-    const phone = draft.phone.replace(/\D/g, "").slice(-10);
-    if (!draft.name.trim() || !/^[6-9]\d{9}$/.test(phone)) { $("d-err").hidden = false; $("d-err").textContent = "Add your name and a 10-digit Indian mobile number starting with 6, 7, 8 or 9."; return; }
-    store.set("draft", draft);
-    $("sheet").innerHTML = `<div class="in"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2 id="m-title" style="font-size:24px">Draft saved</h2>${closeBtn}</div>
-      <p>Your ${esc(TYPES[draft.type].toLowerCase())} in ${esc(draft.locality)} is saved as a draft on this device.</p>
-      <div class="notice">Owner listings aren't open yet in this preview, so nobody else can see your draft. It will be here when you come back on this device.</div>
-      <div class="foot"><span></span><button class="btn primary" type="button" data-close>Done</button></div></div>`;
-    $("sheet").querySelector("[data-close]").focus();
+/* ---------- owner accounts (Supabase) ---------- */
+// Absent in the claude.ai preview, whose sandbox blocks the database; the site then shows examples only.
+let sb = window.supabase && window.SUPABASE ? window.supabase.createClient(window.SUPABASE.url, window.SUPABASE.key) : null;
+const SITE = "https://ugngai2521.github.io/hyderabad-locality-score/";
+let me = null, REAL = false;
+const sheet = (title, body) => { $("sheet").innerHTML = `<div class="in"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2 id="m-title" style="font-size:24px">${title}</h2>${closeBtn}</div>${body}</div>`; if ($("modal").hidden) openLayer($("modal")); };
+const offline = what => sheet(what, `<p>This works on the live site, where owners sign in and post listings.</p><p><a href="${SITE}" target="_blank" rel="noopener">Open the live site</a></p>`);
+const friendly = e => /rate limit|seconds/i.test(e?.message || "") ? "Too many sign-in emails were sent just now. Wait a few minutes and try again." : (e?.message || "Something went wrong. Check your connection and try again.");
+
+function syncAccount() {
+  $("open-account").setAttribute("aria-label", me ? "My listings" : "Sign in");
+  $("open-account").title = me ? `Signed in as ${me.email}` : "Sign in";
+}
+function openSignIn(why) {
+  if (!sb) return offline("Sign in");
+  sheet("Sign in", `<p>${esc(why || "Sign in to list a property or contact owners.")} We'll email you a link. No password needed.</p>
+    <form id="si" class="formgrid"><label class="inp full">Email<input id="si-email" type="email" autocomplete="email" required></label>
+    <p class="full err" id="si-err" hidden></p><div class="full foot"><span></span><button class="btn primary" type="submit">Email me a sign-in link</button></div></form>`);
+  $("si").onsubmit = async e => {
+    e.preventDefault();
+    const btn = $("si").querySelector("button"); btn.disabled = true; btn.textContent = "Sending…";
+    const { error } = await sb.auth.signInWithOtp({ email: $("si-email").value.trim(), options: { emailRedirectTo: location.origin + location.pathname } });
+    if (error) { $("si-err").hidden = false; $("si-err").textContent = friendly(error); btn.disabled = false; btn.textContent = "Email me a sign-in link"; return; }
+    sheet("Check your email", `<p>We sent a sign-in link to <b>${esc($("si-email")?.value || "your inbox")}</b>. Open it on this device to finish signing in.</p><p class="fine">No email after a few minutes? Check spam, then try again.</p>`);
   };
 }
+
+/* ---------- contacting an owner ---------- */
+function contactHTML(l) {
+  if (l.example) return `<p class="fine">Example listings have no owner to contact.</p>`;
+  if (!sb) return `<p class="fine">Contact owners on the <a href="${SITE}" target="_blank" rel="noopener">live site</a>.</p>`;
+  if (!me) return `<p class="fine">Owners get your name, number and message. Sign in first so they know it's really you.</p><div><button class="btn primary" type="button" data-signin>Sign in to contact the owner</button></div>`;
+  if (me.id === l.owner_id) return `<p class="fine">This is your listing. Enquiries appear under My listings.</p>`;
+  return `<form id="enq" class="formgrid"><label class="inp">Your name<input id="e-name" autocomplete="name" required maxlength="80"></label>
+    <label class="inp">Mobile number<input id="e-phone" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile" required></label>
+    <label class="inp full">Message<textarea id="e-msg" rows="3" maxlength="1000" placeholder="When can I visit?"></textarea></label>
+    <p class="full err" id="e-err" hidden></p><div class="full"><button class="btn primary" type="submit" data-listing="${l.id}">Send enquiry</button></div></form>`;
+}
+async function sendEnquiry(form) {
+  const phone = $("e-phone").value.replace(/\D/g, "").slice(-10), err = $("e-err");
+  if (!/^[6-9]\d{9}$/.test(phone)) { err.hidden = false; err.textContent = "Enter a 10-digit Indian mobile number starting with 6, 7, 8 or 9."; return; }
+  const btn = form.querySelector("button"); btn.disabled = true;
+  const { error } = await sb.from("enquiries").insert({ listing_id: btn.dataset.listing, name: $("e-name").value.trim(), phone, message: $("e-msg").value.trim() });
+  if (error) { err.hidden = false; err.textContent = friendly(error); btn.disabled = false; return; }
+  form.outerHTML = `<p><b>Enquiry sent.</b> The owner has your name and number and will contact you.</p>`;
+}
+
+/* ---------- list your property (multi-step) ---------- */
+const LSTEPS = ["What", "Where", "Details", "Describe", "Photos"];
+const blank = { mode: "buy", type: "flat", locality: "Gachibowli", bhk: "2", baths: "2", area: "", price: "", furnishing: "Semi-furnished", ready: "Ready to move", title: "", description: "" };
+const draft = Object.assign({}, blank, store.get("draft2", {}));
+const FIELDS = Object.keys(blank);
+let lstep = 0, photoFiles = [], photoURLs = [];
+function openList() {
+  if (!sb) return offline("List your property");
+  if (!me) return openSignIn("Sign in to list your property.");
+  lstep = 0; drawList(); openLayer($("modal"));
+}
+const opts = (list, label = x => x) => list.map(v => `<option value="${esc(v)}">${esc(label(v))}</option>`).join("");
+function drawList(errMsg) {
+  const names = Object.keys(locs).sort(), rent = draft.mode === "rent", plot = draft.type === "plot";
+  if (!draft.title) draft.title = `${+draft.bhk && !plot ? draft.bhk + " BHK " : ""}${TYPES[draft.type].toLowerCase()} in ${draft.locality}`.replace(/^./, c => c.toUpperCase());
+  const body = [
+    `<div class="formgrid"><label class="inp full">I want to<select id="d-mode"><option value="buy">Sell</option><option value="rent">Rent it out</option></select></label>
+      <label class="inp full">Property type<select id="d-type">${opts(Object.keys(TYPES), t => TYPES[t])}</select></label></div>`,
+    `<div class="formgrid"><label class="inp full">Locality<select id="d-locality">${opts(names)}</select></label>
+      <p class="fine full">Your locality's score shows on the listing so people can compare areas.</p></div>`,
+    `<div class="formgrid">${plot ? "" : `<label class="inp">Bedrooms<select id="d-bhk">${opts(["0", "1", "2", "3", "4", "5", "6"], n => +n ? n + " BHK" : "Not applicable")}</select></label>
+      <label class="inp">Bathrooms<select id="d-baths">${opts(["0", "1", "2", "3", "4", "5", "6"], n => +n ? n : "None")}</select></label>`}
+      <label class="inp">Area (${plot ? "sq yd" : "sq ft"})<input id="d-area" inputmode="numeric" placeholder="e.g. ${plot ? "240" : "1250"}"></label>
+      <label class="inp">${rent ? "Monthly rent (₹)" : "Asking price (₹)"}<input id="d-price" inputmode="numeric" placeholder="${rent ? "e.g. 35000" : "e.g. 12500000"}"></label>
+      <p class="fine full" id="d-price-words" aria-live="polite"></p>
+      ${plot ? "" : `<label class="inp">Furnishing<select id="d-furnishing">${opts(["Unfurnished", "Semi-furnished", "Fully furnished", "Bare shell"])}</select></label>`}
+      <label class="inp">Status<select id="d-ready">${opts(plot ? ["Ready to register"] : ["Ready to move", "Under construction"])}</select></label></div>`,
+    `<div class="formgrid"><label class="inp full">Title<input id="d-title" maxlength="120"></label>
+      <label class="inp full">Description<textarea id="d-description" rows="5" maxlength="2000" placeholder="Floor, facing, parking, amenities, nearby schools and offices…"></textarea></label></div>`,
+    `<div class="formgrid"><label class="inp full">Add up to 8 photos<input id="d-photos" type="file" accept="image/jpeg,image/png,image/webp" multiple></label>
+      <div class="thumbs full" id="d-thumbs"></div><p class="fine full">Every listing is checked before it goes live, usually within a day.</p></div>`,
+  ][lstep];
+  const last = lstep === LSTEPS.length - 1;
+  sheet("List your property", `<div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="${LSTEPS.length}" aria-valuenow="${lstep + 1}" aria-label="Step ${lstep + 1} of ${LSTEPS.length}">${LSTEPS.map((_, i) => `<i class="${i <= lstep ? "on" : ""}"></i>`).join("")}</div>
+    <div class="fine">Step ${lstep + 1} of ${LSTEPS.length}: ${LSTEPS[lstep]}</div>${body}<p class="err" id="d-err" ${errMsg ? "" : "hidden"}>${esc(errMsg || "")}</p>
+    <div class="foot"><button class="btn" type="button" id="d-back" ${lstep ? "" : "disabled"}>Back</button><button class="btn primary" type="button" id="d-next">${last ? "Submit for review" : "Continue"}</button></div>`);
+  if (plot) Object.assign(draft, { bhk: "0", baths: "0", furnishing: "", ready: "Ready to register" });
+  else if (draft.ready === "Ready to register") draft.ready = "Ready to move";
+  for (const k of FIELDS) { const el = $("d-" + k); if (el) el.value = draft[k]; }
+  const words = () => { const v = +String($("d-price")?.value || "").replace(/\D/g, ""); if ($("d-price-words")) $("d-price-words").textContent = v ? `That's ${inr(v)}${rent ? " a month" : ""}.` : ""; };
+  $("d-price")?.addEventListener("input", words); words();
+  if ($("d-photos")) { $("d-photos").onchange = e => { photoFiles = [...e.target.files].slice(0, 8); photoURLs.forEach(u => URL.revokeObjectURL(u)); photoURLs = photoFiles.map(f => URL.createObjectURL(f)); drawThumbs(); }; drawThumbs(); }
+  $("d-back").onclick = () => { collect(); lstep--; drawList(); };
+  $("d-next").onclick = () => { collect(); const bad = check(lstep); if (bad) return drawList(bad); if (!last) { lstep++; return drawList(); } submitListing(); };
+}
+function check(step) {
+  const n = k => +String(draft[k]).replace(/\D/g, "");
+  if (step === 2 && !(n("area") > 0)) return "Enter the area as a number.";
+  if (step === 2 && !(n("price") > 0)) return draft.mode === "rent" ? "Enter the monthly rent in rupees." : "Enter the asking price in rupees.";
+  if (step === 3 && draft.title.trim().length < 5) return "Give the listing a title of at least 5 characters.";
+  return "";
+}
+// phone photos are often over the 5 MB limit; send at most 1600 px JPEGs
+async function shrink(file) {
+  const bmp = await createImageBitmap(file), k = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+  const c = Object.assign(document.createElement("canvas"), { width: Math.round(bmp.width * k), height: Math.round(bmp.height * k) });
+  c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+  return new Promise((ok, no) => c.toBlob(b => b ? ok(b) : no(new Error("Couldn't read one of the photos.")), "image/jpeg", 0.82));
+}
+async function submitListing() {
+  const btn = $("d-next"), err = $("d-err"); btn.disabled = true;
+  try {
+    const photos = [];
+    for (const [i, f] of photoFiles.entries()) {
+      btn.textContent = `Uploading photo ${i + 1} of ${photoFiles.length}…`;
+      const path = `${me.id}/${crypto.randomUUID()}.jpg`;
+      const { error } = await sb.storage.from("listing-photos").upload(path, await shrink(f), { contentType: "image/jpeg" });
+      if (error) throw error;
+      photos.push(sb.storage.from("listing-photos").getPublicUrl(path).data.publicUrl);
+    }
+    btn.textContent = "Submitting…";
+    const num = k => +String(draft[k]).replace(/\D/g, "");
+    const { error } = await sb.from("listings").insert({ mode: draft.mode, type: draft.type, locality: draft.locality, title: draft.title.trim(), description: draft.description.trim(),
+      bhk: num("bhk"), baths: num("baths"), area: num("area"), unit: draft.type === "plot" ? "sqyd" : "sqft", price: num("price"), furnishing: draft.furnishing, ready: draft.ready, photos });
+    if (error) throw error;
+  } catch (e) { err.hidden = false; err.textContent = friendly(e); btn.disabled = false; btn.textContent = "Submit for review"; return; }
+  store.set("draft2", {}); Object.assign(draft, blank); photoFiles = [];
+  sheet("Submitted for review", `<p>Thanks. We check every listing before it goes live, usually within a day. You can follow it under My listings.</p><div class="foot"><span></span><button class="btn primary" type="button" data-account>Go to My listings</button></div>`);
+}
 function drawThumbs() { $("d-thumbs").innerHTML = photoURLs.map((u, i) => `<img src="${u}" alt="Selected photo ${i + 1}">`).join(""); }
-function collect() { for (const k of ["mode", "type", "locality", "bhk", "area", "price", "name", "phone"]) { const el = $("d-" + k); if (el) draft[k] = el.value; } store.set("draft", draft); }
+function collect() { for (const k of FIELDS) { const el = $("d-" + k); if (el) draft[k] = el.value; } store.set("draft2", draft); }
+
+/* ---------- my listings ---------- */
+const STATE = { pending: "Waiting for review", live: "Live", closed: "Closed" };
+async function openAccount() {
+  if (!sb) return offline("My listings");
+  if (!me) return openSignIn();
+  $("drawer").innerHTML = `<div class="bar"><b>My listings</b>${closeBtn}</div><div class="dbody" id="mine"><p class="fine">Loading…</p></div>`;
+  if ($("drawer").hidden) openLayer($("drawer"));
+  const [{ data: rows, error }, { data: enqs }] = await Promise.all([
+    sb.from("listings").select("*").eq("owner_id", me.id).order("created_at", { ascending: false }),
+    sb.from("enquiries").select("*").order("created_at", { ascending: false })]);
+  if (error) { $("mine").innerHTML = `<p class="err">${esc(friendly(error))}</p>`; return; }
+  $("mine").innerHTML = `<p class="fine">Signed in as ${esc(me.email)}</p>
+    ${rows.length ? rows.map(l => { const mine = (enqs || []).filter(e => e.listing_id === l.id);
+      return `<div class="mine"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap"><b>${esc(l.title)}</b><span class="state ${l.status}">${STATE[l.status]}</span></div>
+        <div class="fine num">${priceLine(l)} · ${esc(l.locality)} · ${areaLine(l)}</div>
+        ${mine.map(e => `<div class="enq"><b>${esc(e.name)}</b><span class="num">${esc(e.phone)}</span>${e.message ? `<span>${esc(e.message)}</span>` : ""}<span class="fine">${new Date(e.created_at).toLocaleString("en-IN")}</span></div>`).join("") || `<p class="fine">No enquiries yet.</p>`}
+        <div><button class="btn" type="button" data-setstate="${l.id}" data-to="${l.status === "closed" ? "pending" : "closed"}">${l.status === "closed" ? "Reopen (goes back for review)" : "Close listing"}</button></div></div>`; }).join("")
+    : `<div class="empty"><b style="color:var(--ink)">No listings yet</b><button class="btn primary" type="button" data-list>List your property</button></div>`}
+    <div><button class="btn" type="button" data-signout>Sign out</button></div>`;
+}
+async function setState(id, to) {
+  const { error } = await sb.from("listings").update({ status: to }).eq("id", id);
+  if (error) return toast(friendly(error));
+  toast(to === "closed" ? "Listing closed" : "Sent back for review"); openAccount(); loadLive();
+}
+
+/* ---------- live listings ---------- */
+function drawCounts() {
+  $("cats").innerHTML = CATS.map(c => { const n = listings.filter(l => c.types.includes(l.type)).length;
+    return `<button class="cat" type="button" data-cat="${c.key}">${art(c.types[0])}${imgTag(c.img, "", true, true)}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
+  $("locs").innerHTML = Object.values(locs).map(L => { const key = LOC_IMG[L.name], n = listings.filter(l => l.locality === L.name).length;
+    return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
+      <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Strongest: ${FACTORS[L.best].label.toLowerCase()} · ${n} ${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
+}
+function fromRow(r) {
+  const L = locs[r.locality], h = parseInt(r.id.slice(0, 8), 16);
+  // shortcut: pins sit at a stable random spot near the locality centre, add a map picker for exact positions
+  return { ...r, approval: r.status, status: r.ready, features: [], example: false,
+    lat: (L?.lat ?? 17.44) + ((h % 1000) / 1000 - 0.5) * 0.012, lon: (L?.lon ?? 78.38) + ((h >> 10) % 1000 / 1000 - 0.5) * 0.012 };
+}
+let EXAMPLES = [];
+async function loadLive() {
+  let rows = [];
+  if (sb) { const { data, error } = await sb.from("listings").select("*").eq("status", "live").order("created_at", { ascending: false }).limit(500); if (!error) rows = data.filter(r => locs[r.locality]).map(fromRow); else if (/fetch/i.test(error.message)) sb = null; } // unreachable (e.g. the preview sandbox): fall back to examples and point to the live site
+  REAL = rows.length > 0; listings = REAL ? rows : EXAMPLES;
+  $("fact-listings").textContent = listings.length;
+  $("fact-listings-label").textContent = REAL ? `${listings.length === 1 ? "listing" : "listings"} from owners` : "example listings to explore";
+  $("explore-sub").textContent = REAL ? "Every listing comes straight from its owner and was checked before going live." : "These are example listings that show how search works. The first owner listings appear here once they're approved.";
+  if (map) { Object.values(markers).forEach(m => m.remove()); markers = {}; const m = map; map = null; m.remove(); initMap(); }
+  drawCounts(); render();
+}
 
 /* ---------- how it works ---------- */
 const HOW = {
@@ -794,6 +939,11 @@ document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   const d = t.dataset;
   if (d.heart) return toggleShort(d.heart);
+  if (t.hasAttribute("data-signin")) return openSignIn();
+  if (t.hasAttribute("data-account")) { closeLayers(); return setTimeout(openAccount, 280); }
+  if (t.hasAttribute("data-list")) { closeLayers(); return setTimeout(openList, 280); }
+  if (t.hasAttribute("data-signout")) { closeLayers(); return sb.auth.signOut().then(() => toast("Signed out")); }
+  if (d.setstate) return setState(d.setstate, d.to);
   if (d.open) return openListing(d.open);
   if (d.g) return stepGallery(+d.g);
   if (t.hasAttribute("data-close")) return closeLayers();
@@ -831,7 +981,8 @@ $("map-close").onclick = () => showMap(false);
 $("cards").addEventListener("mouseover", e => { const c = e.target.closest(".card"); if (c && c.dataset.id !== hot) setHot(c.dataset.id); });
 $("cards").addEventListener("mouseleave", () => setHot(null));
 $("open-short").onclick = openShortlist;
-$("open-list").onclick = openList; $("cta-list").onclick = openList;
+$("open-list").onclick = openList; $("cta-list").onclick = openList; $("open-account").onclick = openAccount;
+document.addEventListener("submit", e => { if (e.target.id === "enq") { e.preventDefault(); sendEnquiry(e.target); } });
 $("how-seg").onclick = e => { const b = e.target.closest("button"); if (b) drawHow(b.dataset.v); };
 $("theme").onclick = () => { document.documentElement.dataset.theme = dark() ? "light" : "dark"; map?.setStyle(mapStyle()); };
 
@@ -842,7 +993,7 @@ const vio = new IntersectionObserver(es => es.forEach(en => { const v = en.targe
 /* ---------- boot ---------- */
 Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/listings.json").then(r => r.json()), fetch("data/photos.json").then(r => r.ok ? r.json() : {}).catch(() => ({}))])
 .then(([raw, ls, credits]) => {
-  locs = scoreLocalities(raw); listings = ls; CREDITS = credits; HAVE = new Set(Object.keys(credits).filter(k => !k.startsWith("_")));
+  locs = scoreLocalities(raw); listings = EXAMPLES = ls.map(l => ({ ...l, example: true })); CREDITS = credits; HAVE = new Set(Object.keys(credits).filter(k => !k.startsWith("_")));
   $("fact-listings").textContent = ls.length;
   const names = Object.keys(locs).sort();
   fillSelect($("c-loc"), [["any", `All ${names.length} localities`], ...names.map(n => [n, `${n} · score ${locs[n].score}`])], "any");
@@ -850,11 +1001,6 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   setTab("buy");
   $("f-type").innerHTML = Object.entries(TYPES).map(([v, t]) => `<button class="chip" type="button" data-v="${v}" aria-pressed="false">${t}</button>`).join("");
   $("f-bhk").innerHTML = [1, 2, 3, 4].map(n => `<button class="chip num" type="button" data-v="${n}" aria-pressed="false">${n === 4 ? "4+" : n} BHK</button>`).join("");
-  $("cats").innerHTML = CATS.map(c => { const n = ls.filter(l => c.types.includes(l.type)).length;
-    return `<button class="cat" type="button" data-cat="${c.key}">${art(c.types[0])}${imgTag(c.img, "", true, true)}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} examples</small></span></button>`; }).join("");
-  $("locs").innerHTML = Object.values(locs).map(L => { const key = LOC_IMG[L.name], n = ls.filter(l => l.locality === L.name).length;
-    return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
-      <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Strongest: ${FACTORS[L.best].label.toLowerCase()} · ${n} ${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
   const list = Object.entries(credits).filter(([k]) => !k.startsWith("_"));
   if (list.length) $("credits").innerHTML = list.map(([, c]) => `<li>${esc(c.file.replace(/^File:/, "").replace(/\.\w+$/, ""))}: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a></li>`).join("");
   if (credits["loc-raidurg"]) $("hero-credit").textContent = `Durgam Cheruvu cable bridge at night, Raidurg. Photo: ${credits["loc-raidurg"].author || "Unknown"}, ${credits["loc-raidurg"].license}, via Wikimedia Commons.`;
@@ -869,8 +1015,12 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   const ctaKey = ["amenity-park", "loc-gachibowli", "loc-raidurg"].find(k => HAVE.has(k));
   if (ctaKey) $("cta-media").innerHTML = imgTag(ctaKey, "", false, true);
   drawHow("seek");
-  render();
+  drawCounts(); render();
   if (matchMedia("(min-width: 1181px)").matches) initMap();
+  if (sb) {
+    sb.auth.onAuthStateChange((ev, session) => { me = session?.user ?? null; syncAccount(); if (ev === "SIGNED_IN" && /access_token/.test(location.hash)) { history.replaceState(null, "", location.pathname); toast("Signed in"); } });
+    loadLive();
+  }
 }).catch(() => { $("cards").innerHTML = `<div class="empty"><b>Listings could not load</b><span>Refresh the page to try again.</span></div>`; });
 </script>
 </body>
