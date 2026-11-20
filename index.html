@@ -329,7 +329,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       </div>
       <div class="facts">
         <div><b class="num">12</b>localities scored</div>
-        <div><b class="num">5</b>open-data signals per locality</div>
+        <div><b class="num">5</b>open-data measures per locality</div>
         <div><b class="num" id="fact-listings">26</b>example listings to explore</div>
       </div>
     </div>
@@ -378,7 +378,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 
   <section class="band" id="localities" aria-labelledby="loc-h" style="padding-top:0">
     <div class="wrap">
-      <div class="head"><div><h2 id="loc-h">Know the neighbourhood first</h2><p>Every locality gets a score out of 100 from schools, healthcare, public transport, green space and daily needs within about 2 km, counted from OpenStreetMap.</p></div></div>
+      <div class="head"><div><h2 id="loc-h">Know the neighbourhood first</h2><p>Every locality gets a score out of 100 from five measures within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery.</p></div></div>
       <div class="locs" id="locs"></div>
     </div>
   </section>
@@ -434,7 +434,9 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     <div>
       <h3>Data</h3>
       <ul>
-        <li>Locality counts: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), collected 20 Nov 2026</li>
+        <li>Places: <a href="https://overturemaps.org" target="_blank" rel="noopener">Overture Maps</a>, release of 18 Nov 2026 (CDLA Permissive 2.0)</li>
+        <li>Metro and rail stations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL)</li>
+        <li>Green cover: <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (CC BY 4.0)</li>
         <li>Map tiles: © <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a></li>
         <li>Scores cover 5 of 21 planned components</li>
       </ul>
@@ -478,8 +480,15 @@ const art = t => `<span class="art" aria-hidden="true"><svg viewBox="0 0 64 64">
 const TYPE_IMG = { flat: "cat-flat", house: "", villa: "", plot: "cat-plot", office: "cat-commercial", shop: "cat-commercial" };
 const LOC_IMG = { "HITEC City": "loc-hitec-city", Madhapur: "loc-madhapur", Gachibowli: "loc-gachibowli", "Financial District": "loc-financial-district",
   Kokapet: "loc-kokapet", Nanakramguda: "loc-nanakramguda", Manikonda: "loc-manikonda", Miyapur: "loc-miyapur", Raidurg: "loc-raidurg", Narsingi: "loc-narsingi" };
-const FACTORS = { schools: "Schools", healthcare: "Healthcare", transport: "Public transport", green: "Green space", daily: "Daily needs" };
-const FROM_OSM = { schools: c => c.schools, healthcare: c => c.hospitals, transport: c => c.metro_transit, green: c => c.parks, daily: c => c.shopping + c.food + c.banks };
+// counts score on a log scale against the best locality; metro gets full marks within 500 m and none beyond 5 km; green cover scales against the greenest
+const FACTORS = {
+  schools: { label: "Schools", value: d => d.counts.schools, show: v => v },
+  healthcare: { label: "Healthcare", value: d => d.counts.healthcare, show: v => v },
+  daily: { label: "Daily needs", value: d => d.counts.daily, show: v => v },
+  transport: { label: "Metro access", value: d => d.metro.km, show: v => v.toFixed(1) + " km", score: v => (5 - v) / 4.5 },
+  green: { label: "Green cover", value: d => d.green_pct, show: v => Math.round(v) + "%", score: (v, max) => v / max },
+};
+const SOURCES = 'Places: <a href="https://overturemaps.org" target="_blank" rel="noopener">Overture Maps</a> release of 18 Nov 2026 (CDLA Permissive 2.0). Stations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), via Overture. Green cover: <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a>, 10 m satellite land cover (CC BY 4.0).';
 const NO_DATA = ["Water", "Power", "Traffic", "Safety", "Flooding", "Cost of living", "Price & yield", "Noise", "Construction dust", "Legal & title risk", "Apartment quality", "Internet & mobile", "Jobs nearby", "Air quality", "Sewage & lakes", "Future infrastructure"];
 const BUDGETS = {
   buy: [["any", "Any budget"], ["0-5000000", "Under ₹50 L"], ["5000000-10000000", "₹50 L – ₹1 Cr"], ["10000000-20000000", "₹1 – 2 Cr"], ["20000000-50000000", "₹2 – 5 Cr"], ["50000000-", "₹5 Cr +"]],
@@ -518,10 +527,11 @@ function photosFor(l) {
 
 /* ---------- locality scores (log scale so one huge count doesn't flatten the rest) ---------- */
 function scoreLocalities(raw) {
-  const rows = raw.map(d => ({ ...d, counts: Object.fromEntries(Object.entries(FROM_OSM).map(([k, f]) => [k, f(d.counts)])) }));
-  const max = Object.fromEntries(Object.keys(FACTORS).map(k => [k, Math.max(...rows.map(r => r.counts[k]))]));
+  const rows = raw.map(d => ({ ...d, vals: Object.fromEntries(Object.entries(FACTORS).map(([k, f]) => [k, f.value(d)])) }));
+  const max = Object.fromEntries(Object.keys(FACTORS).map(k => [k, Math.max(...rows.map(r => r.vals[k]))]));
+  const part = (k, v) => { const f = FACTORS[k], x = f.score ? f.score(v, max[k]) : max[k] ? Math.log1p(v) / Math.log1p(max[k]) : 0; return Math.round(100 * Math.min(1, Math.max(0, x))); };
   for (const r of rows) {
-    r.parts = Object.fromEntries(Object.keys(FACTORS).map(k => [k, max[k] ? Math.round(100 * Math.log1p(r.counts[k]) / Math.log1p(max[k])) : 0]));
+    r.parts = Object.fromEntries(Object.keys(FACTORS).map(k => [k, part(k, r.vals[k])]));
     r.score = Math.round(Object.values(r.parts).reduce((a, b) => a + b, 0) / Object.keys(FACTORS).length);
     r.best = Object.entries(r.parts).sort((a, b) => b[1] - a[1])[0][0];
   }
@@ -654,8 +664,9 @@ const closeBtn = `<button class="iconbtn" type="button" data-close aria-label="C
 function scorePanel(L) {
   return `<div class="panel"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
       <h3>${esc(L.name)} locality score</h3><span class="price num" style="color:var(--lake)">${L.score}<small> / 100</small></span></div>
-    <div class="bars">${Object.entries(FACTORS).map(([k, t]) => `<div class="barrow"><span>${t}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span><span class="num">${L.counts[k]}</span></div>`).join("")}</div>
-    <p class="fine">Numbers are places counted within about 2 km of the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>). Source: OpenStreetMap via Nominatim, collected 20 Nov 2026. Rank ${L.rank} of ${Object.keys(locs).length}. OpenStreetMap is volunteer-mapped, so some places may be missing.</p>
+    <div class="bars">${Object.entries(FACTORS).map(([k, f]) => `<div class="barrow"><span>${f.label}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span><span class="num">${f.show(L.vals[k])}</span></div>`).join("")}</div>
+    <p class="fine">Within 2 km of the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools; ${L.counts.healthcare} hospitals and clinics; ${L.counts.daily} groceries, pharmacies, banks and ATMs. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Rank ${L.rank} of ${Object.keys(locs).length}.</p>
+    <p class="fine">${SOURCES} Places listed with low confidence are left out.</p>
     <div class="fine" style="font-weight:600;color:var(--ink)">Not enough data yet</div><div class="nd">${NO_DATA.map(n => `<span>${n}</span>`).join("")}</div></div>`;
 }
 function creditLine(key) {
@@ -843,7 +854,7 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
     return `<button class="cat" type="button" data-cat="${c.key}">${art(c.types[0])}${imgTag(c.img, "", true, true)}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} examples</small></span></button>`; }).join("");
   $("locs").innerHTML = Object.values(locs).map(L => { const key = LOC_IMG[L.name], n = ls.filter(l => l.locality === L.name).length;
     return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
-      <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Strongest: ${FACTORS[L.best].toLowerCase()} · ${n} ${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
+      <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Strongest: ${FACTORS[L.best].label.toLowerCase()} · ${n} ${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
   const list = Object.entries(credits).filter(([k]) => !k.startsWith("_"));
   if (list.length) $("credits").innerHTML = list.map(([, c]) => `<li>${esc(c.file.replace(/^File:/, "").replace(/\.\w+$/, ""))}: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a></li>`).join("");
   if (credits["loc-raidurg"]) $("hero-credit").textContent = `Durgam Cheruvu cable bridge at night, Raidurg. Photo: ${credits["loc-raidurg"].author || "Unknown"}, ${credits["loc-raidurg"].license}, via Wikimedia Commons.`;
