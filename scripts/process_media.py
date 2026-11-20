@@ -1,12 +1,13 @@
 """Turn downloaded Wikimedia photos into web images and the two looping background videos.
-Usage: python3 scripts/process_media.py <raw_dir> <credits.json>
-Writes media/*.jpg, media/hero.mp4, media/what.mp4 and data/credits.json."""
+Usage: python3 scripts/process_media.py <raw_dir>
+Reads the photo catalogue in data/photos.json, writes media/*.jpg, media/hero.mp4, media/what.mp4,
+and marks which photos and videos now exist locally (photos without a local copy load from Wikimedia)."""
 import json, os, subprocess, sys
 from PIL import Image
 
-RAW, CREDITS_IN = sys.argv[1], sys.argv[2]
+RAW = sys.argv[1]
 os.makedirs("media", exist_ok=True)
-credits = json.load(open(CREDITS_IN))
+credits = json.load(open("data/photos.json"))
 
 
 def save(img, path, width, q):
@@ -17,9 +18,9 @@ def save(img, path, width, q):
 
 
 have = {}
-for key in credits:
+for key in [k for k in credits if not k.startswith("_")]:
     src = os.path.join(RAW, key + ".jpg")
-    if not os.path.exists(src) or key == "hero-pano":
+    if not os.path.exists(src):
         continue
     with Image.open(src) as im:
         save(im, f"media/{key}.jpg", 1280, 80)
@@ -53,12 +54,15 @@ bridge, kokapet = os.path.join(RAW, "loc-raidurg.jpg"), os.path.join(RAW, "loc-k
 if os.path.exists(bridge):
     loop_zoom(bridge, "media/hero.mp4", "crop=iw:iw*9/16:0:30", "1280x720", ay=0.3)
     ffmpeg("-i", "media/hero.mp4", "-frames:v", "1", "-q:v", "3", "media/hero-poster.jpg")
-    have["hero"] = {**credits["loc-raidurg"], "caption": "Durgam Cheruvu cable bridge at night, Raidurg."}
 if os.path.exists(kokapet):
     loop_pan(kokapet, "media/what.mp4")
     ffmpeg("-i", "media/what.mp4", "-frames:v", "1", "-q:v", "3", "media/what-poster.jpg")
 
-json.dump(have, open("data/credits.json", "w"), indent=1)
+for key in credits:
+    if not key.startswith("_"):
+        credits[key]["local"] = os.path.exists(f"media/{key}.jpg")
+credits["_videos"] = {"hero": os.path.exists("media/hero.mp4"), "what": os.path.exists("media/what.mp4")}
+json.dump(credits, open("data/photos.json", "w"), indent=1)
 sizes = {f: os.path.getsize("media/" + f) // 1024 for f in sorted(os.listdir("media"))}
 print(json.dumps(sizes))
 assert all(v < 15000 for v in sizes.values()), "a file is over the 15 MB artifact limit"

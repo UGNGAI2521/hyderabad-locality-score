@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Hyderabad Locality Score</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Search flats, houses, villas, plots and commercial spaces to rent or buy in West Hyderabad, with an open-data score for every locality.">
@@ -97,7 +103,7 @@ section.band { padding-block: clamp(48px, 7vw, 88px); }
 /* categories */
 .cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .cat { position: relative; border: none; padding: 0; border-radius: var(--r); overflow: hidden; aspect-ratio: 4 / 5; max-width: 100%; text-align: left; color: var(--on-media); background: linear-gradient(160deg, color-mix(in srgb, var(--lake) 70%, var(--night)), var(--night)); }
-.cat img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; display: block; }
+.cat img { transition: transform .6s ease; }
 .cat:hover img { transform: scale(1.05); }
 .cat .cap { position: absolute; inset: auto 0 0 0; padding: 18px; background: linear-gradient(0deg, var(--scrim), transparent); display: grid; gap: 2px; }
 .cat b { font-family: var(--display); font-size: 22px; font-weight: 600; }
@@ -126,11 +132,11 @@ button.chip:hover { border-color: var(--lake); }
 .toolbar select { padding: 8px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: 13px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .mobile-only { display: none; }
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 16px; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow .2s, transform .2s, border-color .2s; }
 .card:hover, .card.hot { box-shadow: var(--shadow); transform: translateY(-2px); border-color: color-mix(in srgb, var(--lake) 40%, var(--line)); }
 .card .ph { position: relative; aspect-ratio: 4 / 3; max-width: 100%; background: linear-gradient(160deg, var(--lake-soft), var(--line)); }
-.card .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card .ph img, .cat img, .gallery img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .art { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(120% 90% at 20% 10%, color-mix(in srgb, var(--lake) 75%, var(--night)), var(--night)); color: var(--on-media); }
 .art svg { width: 42%; max-width: 120px; height: auto; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
 .pill { position: absolute; top: 10px; left: 10px; background: var(--marigold-soft); color: var(--ink); border: 1px solid color-mix(in srgb, var(--marigold) 50%, transparent); font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; }
@@ -175,6 +181,7 @@ button.chip:hover { border-color: var(--lake); }
 .loc:hover { box-shadow: var(--shadow); }
 .loc .ph { aspect-ratio: 16 / 10; max-width: 100%; width: 100%; background: linear-gradient(135deg, color-mix(in srgb, var(--lake) 70%, var(--night)), var(--night)); position: relative; display: grid; place-items: center; }
 .loc .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.gallery .art { z-index: 0; } .gallery img { z-index: 0; }
 .loc .ph .init { font-family: var(--display); font-size: 40px; font-weight: 700; color: var(--on-media); opacity: .9; }
 .loc .body { padding: 12px 14px 14px; display: grid; gap: 4px; width: 100%; }
 .loc .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
@@ -230,7 +237,6 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .drawer .bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--line); }
 .drawer .bar b { font-weight: 600; font-size: 14px; }
 .gallery { position: relative; aspect-ratio: 3 / 2; max-width: 100%; background: linear-gradient(160deg, var(--lake-soft), var(--line)); }
-.gallery img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .gallery .nav-btn { position: absolute; top: 50%; translate: 0 -50%; width: 40px; height: 40px; border-radius: 999px; border: none; background: color-mix(in srgb, var(--surface) 90%, transparent); display: grid; place-items: center; }
 .gallery .prev { left: 12px; } .gallery .next { right: 12px; }
 .gallery .note { position: absolute; left: 12px; bottom: 12px; font-size: 12px; color: var(--on-media); background: var(--scrim); padding: 4px 9px; border-radius: 999px; }
@@ -269,7 +275,8 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); translate: -50% 0; z-index: 100; background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 999px; font-size: 14px; box-shadow: var(--shadow); white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
 </style>
-
+</head>
+<body>
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Hyderabad Locality Score, home">
@@ -455,7 +462,7 @@ const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const TYPES = { flat: "Flat", house: "Independent house", villa: "Villa", plot: "Plot", office: "Office", shop: "Shop" };
 const CATS = [
   { key: "homes", label: "Flats", sub: "Apartments in gated communities and towers", types: ["flat"], img: "cat-flat" },
-  { key: "houses", label: "Houses & villas", sub: "Independent homes with room to grow", types: ["house", "villa"], img: "cat-house" },
+  { key: "houses", label: "Houses & villas", sub: "Independent homes with room to grow", types: ["house", "villa"], img: "" },
   { key: "plots", label: "Plots", sub: "Land priced per square yard", types: ["plot"], img: "cat-plot" },
   { key: "commercial", label: "Commercial", sub: "Offices, co-working and shops", types: ["office", "shop"], img: "cat-commercial" },
 ];
@@ -468,7 +475,7 @@ const ART = {
   shop: '<path d="M8 24 12 12h40l4 12zM8 24c0 4 3 6 6 6s6-2 6-6c0 4 3 6 6 6s6-2 6-6c0 4 3 6 6 6s6-2 6-6c0 4 3 6 6 6s6-2 6-6M12 30v28h40V30M26 58V42h12v16M6 58h52"/>',
 };
 const art = t => `<span class="art" aria-hidden="true"><svg viewBox="0 0 64 64">${ART[t] || ART.flat}</svg></span>`;
-const TYPE_IMG = { flat: "cat-flat", house: "cat-house", villa: "cat-house", plot: "cat-plot", office: "cat-commercial", shop: "cat-commercial" };
+const TYPE_IMG = { flat: "cat-flat", house: "", villa: "", plot: "cat-plot", office: "cat-commercial", shop: "cat-commercial" };
 const LOC_IMG = { "HITEC City": "loc-hitec-city", Madhapur: "loc-madhapur", Gachibowli: "loc-gachibowli", "Financial District": "loc-financial-district",
   Kokapet: "loc-kokapet", Nanakramguda: "loc-nanakramguda", Manikonda: "loc-manikonda", Miyapur: "loc-miyapur", Raidurg: "loc-raidurg", Narsingi: "loc-narsingi" };
 const FACTORS = { schools: "Schools", healthcare: "Healthcare", transport: "Public transport", green: "Green space", daily: "Daily needs" };
@@ -497,8 +504,10 @@ const unitName = l => l.unit === "sqyd" ? "sq yd" : "sq ft";
 const areaLine = l => `${l.area.toLocaleString("en-IN")} ${unitName(l)}`;
 const perUnit = l => l.mode === "buy" ? `₹${Math.round(l.price / l.area).toLocaleString("en-IN")} / ${unitName(l)}` : `₹${Math.round(l.price / l.area)} / sq ft a month`;
 const typeName = l => l.bhk ? `${l.bhk} BHK ${TYPES[l.type].toLowerCase()}` : TYPES[l.type];
-const img = (key, sm) => key && HAVE.has(key) ? `media/${key}${sm ? "-sm" : ""}.jpg` : "";
-const imgTag = (key, alt, sm, lazy) => { const s = img(key, sm); return s ? `<img src="${s}" alt="${esc(alt)}"${lazy ? ' loading="lazy"' : ""}>` : ""; };
+const img = (key, sm) => { const p = CREDITS[key]; return !p ? "" : p.local ? `media/${key}${sm ? "-sm" : ""}.jpg` : (sm ? p.remote_sm : p.remote); };
+const imgTag = (key, alt, sm, lazy) => { const s = img(key, sm); return s ? `<img src="${esc(s)}" alt="${esc(alt)}" data-fb${lazy ? ' loading="lazy"' : ""}>` : ""; };
+// an image that can't load (e.g. outside images blocked) is removed, uncovering the drawing beneath it
+document.addEventListener("error", e => { if (e.target.tagName === "IMG" && e.target.hasAttribute("data-fb")) e.target.remove(); }, true);
 function photosFor(l) {
   const out = [], area = LOC_IMG[l.locality];
   if (l.type === "flat" && img(area)) out.push({ src: area, note: `Area photo: ${l.locality}` });
@@ -539,7 +548,7 @@ function filtered() {
 function cardHTML(l) {
   const p = photosFor(l)[0], L = locs[l.locality], saved = shortlist.has(l.id);
   return `<article class="card" data-id="${l.id}">
-    <div class="ph">${imgTag(p.src, p.note, true, true) || art(l.type)}<span class="pill">Example</span>
+    <div class="ph">${art(l.type)}${imgTag(p.src, p.note, true, true)}<span class="pill">Example</span>
       <button class="heart" type="button" data-heart="${l.id}" aria-pressed="${saved}" aria-label="Save ${esc(typeName(l))} in ${esc(l.locality)}"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button></div>
     <button class="open" type="button" data-open="${l.id}">
       <span class="price num">${priceLine(l)}</span>
@@ -659,7 +668,7 @@ function openListing(id) {
   gal = { list: photosFor(l), i: 0 };
   const g0 = gal.list[0];
   $("drawer").innerHTML = `<div class="bar"><b>${esc(typeName(l))} · ${esc(l.locality)}</b>${closeBtn}</div>
-    <div class="gallery">${imgTag(g0.src, g0.note).replace("<img", '<img id="g-img"') || art(l.type)}${g0.note ? `<span class="note" id="g-note">${esc(g0.note)}</span>` : ""}
+    <div class="gallery">${art(l.type)}${imgTag(g0.src, g0.note).replace("<img", '<img id="g-img"')}${g0.note ? `<span class="note" id="g-note">${esc(g0.note)}</span>` : ""}
       ${gal.list.length > 1 ? `<button class="nav-btn prev" type="button" data-g="-1" aria-label="Previous photo"><svg class="icon" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button><button class="nav-btn next" type="button" data-g="1" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>` : ""}</div>
     <div class="dbody">
       <div style="display:grid;gap:6px"><div class="price num" style="font-size:30px">${priceLine(l)}</div><h2 style="font-size:24px">${esc(l.title)}</h2>
@@ -682,7 +691,7 @@ function openListing(id) {
 }
 function stepGallery(d) {
   gal.i = (gal.i + d + gal.list.length) % gal.list.length;
-  const p = gal.list[gal.i]; if (!$("g-img")) return; $("g-img").src = img(p.src); $("g-img").alt = p.note; $("g-note").textContent = p.note; $("g-credit").innerHTML = creditLine(p.src);
+  const p = gal.list[gal.i]; if (!$("g-img")) { $("drawer").querySelector(".gallery").insertAdjacentHTML("beforeend", imgTag(p.src, p.note).replace("<img", '<img id="g-img"')); } else $("g-img").src = img(p.src); $("g-img").alt = p.note; $("g-note").textContent = p.note; $("g-credit").innerHTML = creditLine(p.src);
 }
 function openLocality(name) {
   const L = locs[name], n = listings.filter(l => l.locality === name).length, key = LOC_IMG[name];
@@ -820,9 +829,9 @@ const vio = new IntersectionObserver(es => es.forEach(en => { const v = en.targe
 ["hero-video", "what-video"].forEach(id => vio.observe($(id)));
 
 /* ---------- boot ---------- */
-Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/listings.json").then(r => r.json()), fetch("data/credits.json").then(r => r.ok ? r.json() : {}).catch(() => ({}))])
+Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/listings.json").then(r => r.json()), fetch("data/photos.json").then(r => r.ok ? r.json() : {}).catch(() => ({}))])
 .then(([raw, ls, credits]) => {
-  locs = scoreLocalities(raw); listings = ls; CREDITS = credits; HAVE = new Set(Object.keys(credits));
+  locs = scoreLocalities(raw); listings = ls; CREDITS = credits; HAVE = new Set(Object.keys(credits).filter(k => !k.startsWith("_")));
   $("fact-listings").textContent = ls.length;
   const names = Object.keys(locs).sort();
   fillSelect($("c-loc"), [["any", `All ${names.length} localities`], ...names.map(n => [n, `${n} · score ${locs[n].score}`])], "any");
@@ -831,25 +840,27 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   $("f-type").innerHTML = Object.entries(TYPES).map(([v, t]) => `<button class="chip" type="button" data-v="${v}" aria-pressed="false">${t}</button>`).join("");
   $("f-bhk").innerHTML = [1, 2, 3, 4].map(n => `<button class="chip num" type="button" data-v="${n}" aria-pressed="false">${n === 4 ? "4+" : n} BHK</button>`).join("");
   $("cats").innerHTML = CATS.map(c => { const n = ls.filter(l => c.types.includes(l.type)).length;
-    return `<button class="cat" type="button" data-cat="${c.key}">${imgTag(c.img, "", true, true) || art(c.types[0])}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} examples</small></span></button>`; }).join("");
+    return `<button class="cat" type="button" data-cat="${c.key}">${art(c.types[0])}${imgTag(c.img, "", true, true)}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} examples</small></span></button>`; }).join("");
   $("locs").innerHTML = Object.values(locs).map(L => { const key = LOC_IMG[L.name], n = ls.filter(l => l.locality === L.name).length;
-    return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph">${imgTag(key, "", true, true) || `<span class="init">${esc(L.name.slice(0, 2))}</span>`}</span>
+    return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
       <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Strongest: ${FACTORS[L.best].toLowerCase()} · ${n} ${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
-  const list = Object.entries(credits).filter(([k]) => k !== "hero");
+  const list = Object.entries(credits).filter(([k]) => !k.startsWith("_"));
   if (list.length) $("credits").innerHTML = list.map(([, c]) => `<li>${esc(c.file.replace(/^File:/, "").replace(/\.\w+$/, ""))}: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a></li>`).join("");
-  if (credits.hero) $("hero-credit").textContent = `${credits.hero.caption || ""} Photo: ${credits.hero.author || "Unknown"}, ${credits.hero.license}, via Wikimedia Commons.`.trim();
+  if (credits["loc-raidurg"]) $("hero-credit").textContent = `Durgam Cheruvu cable bridge at night, Raidurg. Photo: ${credits["loc-raidurg"].author || "Unknown"}, ${credits["loc-raidurg"].license}, via Wikimedia Commons.`;
   // use the Kokapet video when its photo is licensed and present, else the bridge photo
-  const whatKey = credits["loc-kokapet"] ? "loc-kokapet" : credits["loc-raidurg"] ? "loc-raidurg" : "";
+  const whatKey = credits._videos?.what ? "loc-kokapet" : credits["loc-raidurg"] ? "loc-raidurg" : "";
   if (whatKey) {
     const kok = whatKey === "loc-kokapet", c = credits[whatKey];
-    $("what-media").innerHTML = `<img src="${kok ? "media/what-poster.jpg" : img(whatKey)}" alt="${kok ? "High-rise towers in Kokapet after sunset" : "The cable bridge over Durgam Cheruvu lit up at night"}">`;
+    $("what-media").innerHTML = `<img data-fb src="${kok ? "media/what-poster.jpg" : img(whatKey)}" alt="${kok ? "High-rise towers in Kokapet after sunset" : "The cable bridge over Durgam Cheruvu lit up at night"}">`;
     if (kok) { const v = $("what-video"); v.poster = "media/what-poster.jpg"; v.innerHTML = '<source src="media/what.mp4" type="video/mp4">'; v.hidden = false; v.load(); }
     $("what-credit").textContent = `${kok ? "High-rises in Kokapet after sunset" : "Durgam Cheruvu cable bridge, between Madhapur and Raidurg"}. Photo: ${c.author || "Unknown"}, ${c.license}.`;
   }
   const ctaKey = ["amenity-park", "loc-gachibowli", "loc-raidurg"].find(k => HAVE.has(k));
-  if (ctaKey) $("cta-media").innerHTML = `<img src="${img(ctaKey, true)}" alt="">`;
+  if (ctaKey) $("cta-media").innerHTML = imgTag(ctaKey, "", false, true);
   drawHow("seek");
   render();
   if (matchMedia("(min-width: 1181px)").matches) initMap();
 }).catch(() => { $("cards").innerHTML = `<div class="empty"><b>Listings could not load</b><span>Refresh the page to try again.</span></div>`; });
 </script>
+</body>
+</html>
