@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "pulsing-dot",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-20T10:42:02.715Z",
+        "reason": "Claude: index.html has no animation; the pulse rule is MapLibre's unused user-location dot in bundled vendor/maplibre-gl.css"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-20T11:33:11.753Z",
+        "reason": "Claude: section gutters come from .wrap padding max(16px, env(safe-area-inset)), which the static check does not resolve"
+      }
+    ]
+  }
+}
