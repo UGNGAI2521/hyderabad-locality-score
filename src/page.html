@@ -254,6 +254,13 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .method p, .method li { color: var(--muted); }
 .method b { color: var(--ink); }
 .nd { font-size: 12px; color: var(--muted); border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; }
+.wbox { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; background: var(--surface); }
+.wbox summary { cursor: pointer; font-weight: 600; } .wbox[open] summary { margin-bottom: 6px; }
+#wt { display: grid; gap: 4px; margin-top: 8px; }
+.wrow { display: grid; grid-template-columns: 110px 1fr 44px; gap: 10px; align-items: center; font-size: 13px; }
+.wrow input { width: 100%; accent-color: var(--lake); min-height: 28px; } .wrow output { text-align: right; color: var(--muted); }
+.wfoot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-top: 6px; }
+.wfoot .btn[disabled] { opacity: .5; cursor: default; }
 .acts { display: flex; flex-wrap: wrap; gap: 8px; }
 .cmp-tray { position: fixed; left: 50%; translate: -50% 0; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 75; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
   max-width: calc(100% - 32px); background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 8px 10px; box-shadow: var(--shadow); }
@@ -429,6 +436,8 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     <div class="wrap">
       <div class="head"><div><h2 id="loc-h">Know the neighbourhood first</h2><p>Every locality gets an early score out of 100 from 5 of the 21 measures we plan, counted within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery. <a href="#method">How the score works</a>.</p></div></div>
       <div class="loc-tools"><span class="fine">Ranked for what matters to you:</span><div class="chips" id="pri-locs"></div></div>
+      <details class="wbox"><summary>Set your own weights</summary>
+        <p class="fine">Drag a slider to say how much each measure matters to you. The ranking, the map and the scores update as you drag.</p><div id="wt"></div></details>
       <div class="loc-tools"><span class="fine">Zone:</span><div class="chips" id="zones"></div><span class="fine num" id="zone-n" aria-live="polite"></span></div>
       <div class="locmap"><div id="locmap" role="region" aria-label="Map of localities with their early scores"></div>
         <div class="legend" aria-hidden="true"><span>Early score:</span><span><i class="b1"></i>top third</span><span><i class="b2"></i>middle third</span><span><i></i>bottom third</span></div></div>
@@ -474,7 +483,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
         <li><b>Counts</b> use a log scale against the locality with the most, so one very large count doesn't flatten the rest. The best locality gets 100.</li>
         <li><b>Metro access</b> gets 100 within 500 m of a station, falling in a straight line to 0 at 5 km or more.</li>
         <li><b>Green cover</b> is scaled against the greenest locality, which gets 100.</li>
-        <li><b>The score</b> is the average of the five. Every measure weighs the same, and a measure you pick under "What matters to you" counts three times. These weights are <b>provisional, awaiting the owner's approval</b>.</li>
+        <li><b>The score</b> is the average of the five. By default every measure weighs the same. Picking a measure under "What matters to you" counts it three times, and the sliders under "Set your own weights" let you choose any mix. The default weights are <b>provisional, awaiting the owner's approval</b>.</li>
       </ul>
       <p>Scores are relative: each locality is compared with the others on this site, so adding a locality can change everyone's numbers. Metro distance moves the ranking a lot. Localities far from an operating station, such as Kokapet and Financial District, score low mainly for that reason. Planned lines aren't counted because Metro Phase 2 isn't approved yet.</p>
     </div>
@@ -650,11 +659,21 @@ function scoreLocalities(raw) {
 }
 // a measure the visitor picked counts three times as much as the others
 const PRI = new Set();
+// the visitor's weights, 0 to 100 per measure; equal by default. A chip sets 60 against 20; the sliders set any mix.
+const WT = Object.fromEntries(Object.keys(FACTORS).map(k => [k, 20]));
+const EQUAL = () => Object.values(WT).every(v => v === 20);
 function rank() {
-  const w = k => PRI.has(k) ? 3 : 1, keys = Object.keys(FACTORS), total = keys.reduce((t, k) => t + w(k), 0), rows = Object.values(locs);
+  const keys = Object.keys(FACTORS), all0 = keys.every(k => WT[k] === 0), w = k => all0 ? 1 : WT[k], total = keys.reduce((t, k) => t + w(k), 0), rows = Object.values(locs);
   for (const r of rows) r.score = Math.round(keys.reduce((t, k) => t + r.parts[k] * w(k), 0) / total);
   rows.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)).forEach((r, i) => r.rank = i + 1);
 }
+const pct = k => { const t = Object.values(WT).reduce((a, b) => a + b, 0); return t ? Math.round(100 * WT[k] / t) : 20; };
+function drawWeights() {
+  $("wt").innerHTML = Object.entries(FACTORS).map(([k, f]) => `<div class="wrow"><label for="w-${k}">${f.label}</label>
+    <input id="w-${k}" type="range" min="0" max="100" step="5" value="${WT[k]}" data-w="${k}" aria-describedby="w-${k}-v"><output id="w-${k}-v" class="num">${pct(k)}%</output></div>`).join("")
+    + `<div class="wfoot"><span class="fine">Shares are normalised to 100%. ${EQUAL() ? "Equal weights (the default)." : "Your own mix."}</span><button class="btn" type="button" data-wreset ${EQUAL() ? "disabled" : ""}>Reset to equal</button></div>`;
+}
+function weightsChanged() { rank(); drawPri(); drawWeights(); drawCounts(); drawPins(); }
 function drawPri() {
   $("pri-hero").innerHTML = $("pri-locs").innerHTML = Object.entries(FACTORS).map(([k, f]) => `<button class="chip" type="button" data-pri="${k}" aria-pressed="${PRI.has(k)}">${f.label}</button>`).join("");
 }
@@ -1139,7 +1158,8 @@ document.addEventListener("click", e => {
   const d = t.dataset;
   if (d.heart) return toggleShort(d.heart);
   if (d.zone) { ZONE = d.zone; drawZones(); drawCounts(); drawPins(); locMap?.fitBounds(zoneBounds(ZONE), { padding: MAP_PAD, maxZoom: 13.5, duration: calm ? 0 : 600 }); return; }
-  if (d.pri) { PRI.has(d.pri) ? PRI.delete(d.pri) : PRI.add(d.pri); rank(); drawPri(); drawCounts(); drawPins(); return; }
+  if (d.pri) { PRI.has(d.pri) ? PRI.delete(d.pri) : PRI.add(d.pri); for (const k in WT) WT[k] = PRI.has(k) ? 60 : 20; return weightsChanged(); }
+  if (t.hasAttribute("data-wreset")) { PRI.clear(); for (const k in WT) WT[k] = 20; return weightsChanged(); }
   if (t.hasAttribute("data-signin")) return openSignIn();
   if (t.hasAttribute("data-account")) { closeLayers(); return setTimeout(openAccount, 280); }
   if (t.hasAttribute("data-list")) { closeLayers(); return setTimeout(openList, 280); }
@@ -1177,6 +1197,13 @@ $("f-budget").onchange = e => { S.budget = e.target.value; render(); };
 $("f-rate").onchange = e => { S.rate = e.target.value; render(); };
 $("f-bhk").onclick = e => { const b = e.target.closest("button"); if (!b) return; const v = +b.dataset.v; S.bhk.has(v) ? S.bhk.delete(v) : S.bhk.add(v); render(); };
 $("f-loc").onchange = e => { S.loc = e.target.value; render(); };
+document.addEventListener("input", e => {
+  const k = e.target.dataset?.w; if (!k) return;
+  WT[k] = +e.target.value; PRI.clear(); rank(); drawPri(); drawCounts(); drawPins();
+  // update the readouts in place so the slider being dragged keeps focus
+  for (const j in WT) { const o = $(`w-${j}-v`); if (o) o.textContent = pct(j) + "%"; }
+  const f = document.querySelector("#wt .wfoot"); if (f) { f.querySelector("span").textContent = `Shares are normalised to 100%. ${EQUAL() ? "Equal weights (the default)." : "Your own mix."}`; f.querySelector("button").disabled = EQUAL(); }
+});
 $("f-score").oninput = e => { S.minScore = +e.target.value; render(); };
 $("sort").onchange = e => { S.sort = e.target.value; render(); };
 $("f-reset").onclick = () => resetFilters();
@@ -1220,7 +1247,7 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   }
   const ctaKey = ["amenity-park", "loc-gachibowli", "loc-raidurg"].find(k => HAVE.has(k));
   if (ctaKey) $("cta-media").innerHTML = imgTag(ctaKey, "", false, true);
-  drawHow(LISTINGS ? "seek" : "choose"); drawPri(); drawZones();
+  drawHow(LISTINGS ? "seek" : "choose"); drawPri(); drawWeights(); drawZones();
   document.querySelectorAll(".loc-n").forEach(e => e.textContent = Object.keys(locs).length);
   drawCounts(); render();
   if (LISTINGS && matchMedia("(min-width: 1181px)").matches) initMap();
