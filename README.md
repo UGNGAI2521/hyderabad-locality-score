@@ -2,7 +2,7 @@
 
 Helps people choose the right area to live, work or buy property anywhere in Hyderabad, using honest open data. For now the site is locality comparison only: property search, owner posting and enquiries are built and tested but switched off with `LISTINGS = false` in `src/page.html`.
 
-Owners sign in by email and post listings with photos; buyers send enquiries that only the owner can read. Every new or edited listing waits for the admin's approval before it goes live. Until the first listing is approved, the site shows 26 clearly marked example listings.
+When `LISTINGS` is on, owners sign in by email and post listings with photos; buyers send enquiries that only the owner can read. Every new or edited listing waits for the admin's approval before it goes live. Until the first listing is approved, the site shows 26 clearly marked example listings.
 
 ## Running the marketplace
 
@@ -26,7 +26,6 @@ Owners sign in by email and post listings with photos; buyers send enquiries tha
 | `media/` | Web-sized photos and the two looping videos |
 | `vendor/maplibre-gl.css` | Map library stylesheet |
 | `scripts/build_scores.py` | Builds `data/localities.json` from Overture Maps, OpenStreetMap stations and ESA WorldCover |
-| `scripts/scrape_osm.py` | Earlier Nominatim scraper; still the source of the locality centre points |
 | `scripts/make_examples.py` | Builds the example listings |
 | `scripts/process_media.py` | Resizes photos and renders the videos with ffmpeg |
 | `scripts/build_site.py` | Builds `index.html` from `src/page.html` |

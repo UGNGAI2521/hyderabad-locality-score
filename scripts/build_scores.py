@@ -93,6 +93,7 @@ def main(refresh=False):
         # equirectangular distance is exact enough at 2 km for a pixel mask
         col, row = (int(v) for v in inv * (c["lon"], c["lat"]))
         h = int(R_KM / 111.2 / px_deg) + 2  # half-width of a window that holds the circle
+        assert h <= row and h <= col and row + h <= cover.shape[0] and col + h <= cover.shape[1], f"{c['name']} is too close to the data box edge; widen W, S, E, N"
         win = cover[row - h:row + h, col - h:col + h]
         rr, cc = np.indices(win.shape)
         lons, lats = tr * (cc + col - h + 0.5, rr + row - h + 0.5)

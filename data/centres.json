@@ -309,9 +309,9 @@
  },
  {
   "name": "Rajendranagar",
-  "lat": 17.3203,
-  "lon": 78.4018,
-  "match": "hand-picked from OSM: Community Health Centre Rajendranagar, Ward 60",
+  "lat": 17.330592,
+  "lon": 78.404764,
+  "match": "centroid of OSM relation 7848844, old GHMC Ward 60 Rajendra Nagar",
   "zone": "South"
  },
  {

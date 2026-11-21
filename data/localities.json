@@ -926,23 +926,23 @@
  {
   "name": "Rajendranagar",
   "zone": "South",
-  "lat": 17.3203,
-  "lon": 78.4018,
+  "lat": 17.330592,
+  "lon": 78.404764,
   "counts": {
-   "schools": 10,
-   "healthcare": 7,
-   "daily": 13
+   "schools": 14,
+   "healthcare": 12,
+   "daily": 20
   },
   "metro": {
    "name": "Gandhi Bhavan",
-   "km": 10.53
+   "km": 9.52
   },
   "rail": {
    "name": "Budvel",
-   "km": 2.72
+   "km": 3.15
   },
-  "green_pct": 64.6,
-  "built_pct": 21.2
+  "green_pct": 53.9,
+  "built_pct": 28.6
  },
  {
   "name": "Shamshabad",

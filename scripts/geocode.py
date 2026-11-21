@@ -38,9 +38,6 @@ def inside(x):
 
 def main():
     known = {c["name"]: c for c in json.load(open(OUT))} if os.path.exists(OUT) else {}
-    # the first 12 centres were checked by hand in the earlier West Hyderabad release
-    if not known and os.path.exists("data/localities.json"):
-        known = {d["name"]: {"name": d["name"], "lat": d["lat"], "lon": d["lon"], "match": "carried over"} for d in json.load(open("data/localities.json"))}
     out = []
     for zone, names in ZONES.items():
         for name in names:
