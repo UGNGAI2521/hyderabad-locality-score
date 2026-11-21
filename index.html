@@ -547,8 +547,8 @@ const ART = {
 };
 const art = t => `<span class="art" aria-hidden="true"><svg viewBox="0 0 64 64">${ART[t] || ART.flat}</svg></span>`;
 const TYPE_IMG = { flat: "cat-flat", house: "", villa: "", plot: "cat-plot", office: "cat-commercial", shop: "cat-commercial" };
-const LOC_IMG = { "HITEC City": "loc-hitec-city", Madhapur: "loc-madhapur", Gachibowli: "loc-gachibowli", "Financial District": "loc-financial-district",
-  Kokapet: "loc-kokapet", Nanakramguda: "loc-nanakramguda", Manikonda: "loc-manikonda", Miyapur: "loc-miyapur", Raidurg: "loc-raidurg", Narsingi: "loc-narsingi" };
+// every locality photo is keyed "loc-<name in lower case, dashes>" in data/photos.json
+const locImg = name => "loc-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 // counts score on a log scale against the best locality; metro gets full marks within 500 m and none beyond 5 km; green cover scales against the greenest
 const FACTORS = {
   schools: { label: "Schools", value: d => d.counts.schools, show: v => v },
@@ -596,7 +596,7 @@ const imgTag = (key, alt, sm, lazy) => { const s = img(key, sm); return s ? `<im
 document.addEventListener("error", e => { if (e.target.tagName === "IMG" && e.target.hasAttribute("data-fb")) e.target.remove(); }, true);
 function photosFor(l) {
   if (l.photos?.length) return l.photos.map((u, i) => ({ src: u, note: `Photo ${i + 1} of ${l.photos.length} from the owner` }));
-  const out = [], area = LOC_IMG[l.locality];
+  const out = [], area = locImg(l.locality);
   if (l.type === "flat" && img(area)) out.push({ src: area, note: `Area photo: ${l.locality}` });
   if (img(TYPE_IMG[l.type])) out.push({ src: TYPE_IMG[l.type], note: "Illustrative photo, not this property" });
   if (l.type !== "flat" && img(area)) out.push({ src: area, note: `Area photo: ${l.locality}` });
@@ -788,7 +788,7 @@ function scorePanel(L) {
 }
 function creditLine(key) {
   const c = CREDITS[key];
-  return c ? `Photo: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a>, via Wikimedia Commons.` : "";
+  return c ? `${c.caption ? esc(c.caption) + ". " : ""}Photo: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a>, via Wikimedia Commons.` : "";
 }
 let gal = { list: [], i: 0 };
 function openListing(id) {
@@ -822,9 +822,9 @@ function stepGallery(d) {
   const p = gal.list[gal.i]; if (!$("g-img")) { $("drawer").querySelector(".gallery").insertAdjacentHTML("beforeend", imgTag(p.src, p.note).replace("<img", '<img id="g-img"')); } else $("g-img").src = img(p.src); $("g-img").alt = p.note; $("g-note").textContent = p.note; $("g-credit").innerHTML = creditLine(p.src);
 }
 function openLocality(name) {
-  const L = locs[name], n = listings.filter(l => l.locality === name).length, key = LOC_IMG[name];
+  const L = locs[name], n = listings.filter(l => l.locality === name).length, key = locImg(name);
   $("drawer").innerHTML = `<div class="bar"><b>${esc(name)}</b>${closeBtn}</div>
-    ${img(key) ? `<div class="gallery">${imgTag(key, name)}</div>` : ""}
+    ${img(key) ? `<div class="gallery">${imgTag(key, CREDITS[key].caption || name)}</div>` : ""}
     <div class="dbody">${scorePanel(L)}
       <button class="btn primary lo" type="button" data-see="${esc(name)}">See ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"} in ${esc(name)}</button>
       <p class="fine">${creditLine(key)}</p></div>`;
@@ -997,7 +997,7 @@ async function setState(id, to) {
 function drawCounts() {
   $("cats").innerHTML = CATS.map(c => { const n = listings.filter(l => c.types.includes(l.type)).length;
     return `<button class="cat" type="button" data-cat="${c.key}">${art(c.types[0])}${imgTag(c.img, "", true, true)}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
-  $("locs").innerHTML = Object.values(locs).filter(L => ZONE === "All" || L.zone === ZONE).sort((a, b) => a.rank - b.rank).map(L => { const key = LOC_IMG[L.name], n = listings.filter(l => l.locality === L.name).length;
+  $("locs").innerHTML = Object.values(locs).filter(L => ZONE === "All" || L.zone === ZONE).sort((a, b) => a.rank - b.rank).map(L => { const key = locImg(L.name), n = listings.filter(l => l.locality === L.name).length;
     return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
       <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Early score, ${PARTIAL} · strongest: ${FACTORS[L.best].label.toLowerCase()} · ${LISTINGS ? `${n} ${n === 1 ? "listing" : "listings"}` : `metro ${L.metro.km.toFixed(1)} km`}</small></span></button>`; }).join("");
 }
