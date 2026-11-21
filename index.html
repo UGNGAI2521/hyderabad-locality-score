@@ -260,6 +260,18 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .method p, .method li { color: var(--muted); }
 .method b { color: var(--ink); }
 .nd { font-size: 12px; color: var(--muted); border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; }
+.acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.cmp-tray { position: fixed; left: 50%; translate: -50% 0; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 75; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
+  max-width: calc(100% - 32px); background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 8px 10px; box-shadow: var(--shadow); }
+.cmp-tray .btn[disabled] { opacity: .6; cursor: default; filter: none; }
+.cmp-wrap { overflow-x: auto; }
+.cmp { width: 100%; border-collapse: collapse; font-size: 13px; }
+.cmp th, .cmp td { text-align: left; vertical-align: top; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+.cmp thead th { font-size: 14px; } .cmp th small, .cmp td small { display: block; color: var(--muted); font-weight: 400; font-size: 11px; }
+.cmp tbody th { color: var(--muted); font-weight: 500; white-space: nowrap; }
+.cmp td.best { background: var(--lake-soft); font-weight: 600; }
+.cmp .track { display: block; height: 4px; margin-top: 5px; background: var(--line); border-radius: 2px; overflow: hidden; } .cmp .track i { display: block; height: 100%; background: var(--lake); }
+.linkish { all: unset; cursor: pointer; font-weight: 600; color: var(--lake); text-decoration: underline; text-underline-offset: 2px; } .linkish:focus-visible { outline: 2px solid var(--lake); }
 .nd summary { cursor: pointer; font-weight: 600; color: var(--ink); }
 .nd ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 5px; }
 .nd b { color: var(--ink); font-weight: 600; }
@@ -525,6 +537,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" aria-label="Details" hidden></aside>
 <div class="modal" id="modal" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="m-title" id="sheet"></div></div>
+<div class="cmp-tray" id="cmp-tray" role="region" aria-label="Localities to compare" hidden></div>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
@@ -804,6 +817,7 @@ function openLayer(el) {
 }
 function closeLayers() {
   if (SEL) { SEL = null; drawPins(); }
+  if (/^#(loc|compare)=/.test(location.hash)) setHash("");
   for (const el of [$("drawer"), $("modal"), $("scrim")]) el.classList.remove("on");
   setTimeout(() => { $("drawer").hidden = true; $("modal").hidden = true; $("scrim").hidden = true; }, 260);
   document.body.style.overflow = "";
@@ -856,12 +870,60 @@ function stepGallery(d) {
   gal.i = (gal.i + d + gal.list.length) % gal.list.length;
   const p = gal.list[gal.i]; if (!$("g-img")) { $("drawer").querySelector(".gallery").insertAdjacentHTML("beforeend", imgTag(p.src, p.note).replace("<img", '<img id="g-img"')); } else $("g-img").src = img(p.src); $("g-img").alt = p.note; $("g-note").textContent = p.note; $("g-credit").innerHTML = creditLine(p.src);
 }
+/* ---------- compare and shareable links ---------- */
+const CMP = [];
+// the address bar names what is open (#loc=Kondapur, #compare=A,B), so it can be shared; the claude.ai preview may refuse, which is fine
+function setHash(h) { try { history.replaceState(null, "", h || location.pathname + location.search); } catch {} }
+function toggleCompare(name) {
+  const i = CMP.indexOf(name);
+  if (i >= 0) CMP.splice(i, 1); else if (CMP.length >= 3) return toast("You can compare up to 3 localities"); else CMP.push(name);
+  drawTray();
+  const b = document.querySelector(`#drawer [data-cmp="${CSS.escape(name)}"]`);
+  if (b) { b.setAttribute("aria-pressed", CMP.includes(name)); b.textContent = CMP.includes(name) ? "Remove from compare" : "Add to compare"; }
+}
+function drawTray() {
+  const t = $("cmp-tray"); t.hidden = !CMP.length;
+  t.innerHTML = `<span class="fine">Compare:</span>${CMP.map(n => `<button class="chip" type="button" data-uncmp="${esc(n)}" aria-label="Remove ${esc(n)} from compare">${esc(n)} ×</button>`).join("")}
+    <button class="btn primary" type="button" data-cmpopen ${CMP.length < 2 ? "disabled" : ""}>${CMP.length < 2 ? "Add one more" : `Compare ${CMP.length}`}</button>`;
+}
+function openCompare() {
+  const rows = CMP.map(n => locs[n]), best = (f, hi = true) => { const v = rows.map(f); return hi ? Math.max(...v) : Math.min(...v); };
+  const cell = (L, f, show, hi = true) => `<td${rows.length > 1 && f(L) === best(f, hi) ? ' class="best"' : ""}>${show(L)}</td>`;
+  const line = (label, f, show, hi) => `<tr><th scope="row">${label}</th>${rows.map(L => cell(L, f, show, hi)).join("")}</tr>`;
+  SEL = null; drawPins(); setHash("#compare=" + CMP.map(encodeURIComponent).join(","));
+  $("drawer").innerHTML = `<div class="bar"><b>Compare ${rows.length} localities</b>${closeBtn}</div>
+    <div class="dbody"><div class="cmp-wrap"><table class="cmp">
+      <thead><tr><th scope="col"><span class="sr">Measure</span></th>${rows.map(L => `<th scope="col"><button class="linkish" type="button" data-loc="${esc(L.name)}">${esc(L.name)}</button><small>${L.zone} zone</small></th>`).join("")}</tr></thead>
+      <tbody>${line(`Early score <small>out of 100</small>`, L => L.score, L => `<b class="num">${L.score}</b>`)}
+        ${line("Rank", L => -L.rank, L => `${L.rank} of ${Object.keys(locs).length}`)}
+        ${Object.entries(FACTORS).map(([k, f]) => line(f.label, L => L.parts[k], L => `<span class="num">${f.show(L.vals[k])}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span>`)).join("")}
+        ${line("Nearest metro", L => -L.metro.km, L => `${esc(L.metro.name)}, ${L.metro.km.toFixed(1)} km`)}</tbody></table></div>
+      <p class="fine">The best value in each row is highlighted. Counts are within 2 km of each centre and show how many places there are, not how good they are. This is an early score from ${PARTIAL}. <a href="#method" data-close>How the score works</a>.</p>
+      <p class="fine">${SOURCES}</p>
+      <div class="acts"><button class="btn" type="button" data-share>Copy link to this comparison</button></div></div>`;
+  openLayer($("drawer"));
+}
+function shareLink() {
+  const url = location.href;
+  (navigator.clipboard?.writeText(url) ?? Promise.reject()).then(() => toast("Link copied"), () => toast("Copy the link from the address bar"));
+}
+function routeFromHash() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h.startsWith("loc=") && locs[h.slice(4)]) return openLocality(h.slice(4));
+  if (h.startsWith("compare=")) {
+    CMP.length = 0; h.slice(8).split(",").filter(n => locs[n]).slice(0, 3).forEach(n => CMP.push(n)); drawTray();
+    if (CMP.length >= 2) openCompare(); else if (CMP.length) openLocality(CMP[0]);
+  }
+}
+
 function openLocality(name) {
   const L = locs[name], n = listings.filter(l => l.locality === name).length, key = locImg(name);
-  SEL = name; drawPins();
+  SEL = name; drawPins(); setHash("#loc=" + encodeURIComponent(name));
   $("drawer").innerHTML = `<div class="bar"><b>${esc(name)}</b>${closeBtn}</div>
     ${img(key) ? `<div class="gallery">${imgTag(key, CREDITS[key].caption || name)}</div>` : ""}
     <div class="dbody">${scorePanel(L)}
+      <div class="acts"><button class="btn" type="button" data-cmp="${esc(name)}" aria-pressed="${CMP.includes(name)}">${CMP.includes(name) ? "Remove from compare" : "Add to compare"}</button>
+        <button class="btn" type="button" data-share>Copy link to ${esc(name)}</button></div>
       <button class="btn primary lo" type="button" data-see="${esc(name)}">See ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"} in ${esc(name)}</button>
       <p class="fine">${creditLine(key)}</p></div>`;
   openLayer($("drawer"));
@@ -1096,6 +1158,10 @@ document.addEventListener("click", e => {
   if (t.hasAttribute("data-reset")) return resetFilters();
   if (d.see) { closeLayers(); resetFilters(true); S.loc = d.see; render(); return goExplore(); }
   if (d.loc) return openLocality(d.loc);
+  if (d.cmp) return toggleCompare(d.cmp);
+  if (d.uncmp) return toggleCompare(d.uncmp);
+  if (t.hasAttribute("data-cmpopen")) return openCompare();
+  if (t.hasAttribute("data-share")) return shareLink();
   if (d.cat) { const c = CATS.find(c => c.key === d.cat); resetFilters(true); S.types = new Set(c.types); render(); return goExplore(); }
   if (d.quick) { e.preventDefault(); setTab(d.quick); return runSearch(d.quick); }
   if (d.preset) {
@@ -1166,6 +1232,7 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   drawCounts(); render();
   if (LISTINGS && matchMedia("(min-width: 1181px)").matches) initMap();
   initLocMap();
+  routeFromHash(); addEventListener("hashchange", routeFromHash);
   if (sb && LISTINGS) {
     sb.auth.onAuthStateChange((ev, session) => { me = session?.user ?? null; syncAccount(); if (ev === "SIGNED_IN" && /access_token/.test(location.hash)) { history.replaceState(null, "", location.pathname); toast("Signed in"); } });
     loadLive();
