@@ -259,8 +259,10 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .method ul { display: grid; gap: 8px; padding-left: 20px; margin: 0; }
 .method p, .method li { color: var(--muted); }
 .method b { color: var(--ink); }
-.nd { display: flex; flex-wrap: wrap; gap: 5px; }
-.nd span { font-size: 12px; border: 1px dashed var(--line); color: var(--muted); padding: 2px 8px; border-radius: 999px; }
+.nd { font-size: 12px; color: var(--muted); border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; }
+.nd summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+.nd ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 5px; }
+.nd b { color: var(--ink); font-weight: 600; }
 .modal { position: fixed; z-index: 90; inset: 0; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); pointer-events: none; }
 .sheet { pointer-events: auto; width: min(640px, 100%); max-height: 100%; overflow-y: auto; background: var(--surface); border-radius: 18px; box-shadow: 0 30px 80px rgba(0,0,0,.3); opacity: 0; translate: 0 12px; transition: opacity .25s, translate .25s; }
 .modal.on .sheet { opacity: 1; translate: 0 0; }
@@ -285,6 +287,13 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .locmap { position: relative; height: 380px; max-height: 60vh; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); margin-bottom: 16px; background: var(--lake-soft); }
 #locmap { position: absolute; inset: 0; }
 .lpin { padding: 4px 7px; font-size: 11px; }
+.lpin.b1 { background: var(--lake); color: var(--surface); border-color: var(--lake); }
+.lpin.b2 { background: var(--lake-soft); color: var(--ink); }
+.lpin.sel { outline: 3px solid var(--marigold); outline-offset: 1px; transform: scale(1.15); z-index: 4; }
+.legend { position: absolute; left: 10px; bottom: 10px; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; max-width: calc(100% - 20px);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; font-size: 11px; color: var(--muted); box-shadow: var(--shadow); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--line); vertical-align: -2px; margin-right: 4px; background: var(--surface); }
+.legend i.b1 { background: var(--lake); border-color: var(--lake); } .legend i.b2 { background: var(--lake-soft); }
 .lpin .nm { display: none; }
 .lpin:hover .nm, .lpin:focus-visible .nm, .locmap.near .lpin .nm { display: inline; }
 @media (max-width: 760px) { .pick .chips { flex-basis: 100%; } .pick .go { width: 100%; padding-block: 13px; } }
@@ -416,7 +425,8 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <div class="head"><div><h2 id="loc-h">Know the neighbourhood first</h2><p>Every locality gets an early score out of 100 from 5 of the 21 measures we plan, counted within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery. <a href="#method">How the score works</a>.</p></div></div>
       <div class="loc-tools"><span class="fine">Ranked for what matters to you:</span><div class="chips" id="pri-locs"></div></div>
       <div class="loc-tools"><span class="fine">Zone:</span><div class="chips" id="zones"></div><span class="fine num" id="zone-n" aria-live="polite"></span></div>
-      <div class="locmap"><div id="locmap" role="region" aria-label="Map of localities with their early scores"></div></div>
+      <div class="locmap"><div id="locmap" role="region" aria-label="Map of localities with their early scores"></div>
+        <div class="legend" aria-hidden="true"><span>Early score:</span><span><i class="b1"></i>top third</span><span><i class="b2"></i>middle third</span><span><i></i>bottom third</span></div></div>
       <p class="fine" style="margin:-8px 0 16px">Each pin shows the locality's early score, from 5 of 21 measures.</p>
       <div class="locs" id="locs"></div>
     </div>
@@ -558,7 +568,25 @@ const FACTORS = {
   green: { label: "Green cover", value: d => d.green_pct, show: v => Math.round(v) + "%", score: (v, max) => v / max },
 };
 const SOURCES = 'Places: <a href="https://overturemaps.org" target="_blank" rel="noopener">Overture Maps</a> release of 18 Nov 2026 (CDLA Permissive 2.0), retrieved 21 Nov 2026. Stations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), as carried in the same Overture release of 18 Nov 2026, retrieved 21 Nov 2026. Green cover: <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a>, 10 m satellite land cover (CC BY 4.0), retrieved 21 Nov 2026.';
-const NO_DATA = ["Water", "Power", "Traffic", "Safety", "Flooding", "Cost of living", "Price & yield", "Noise", "Construction dust", "Legal & title risk", "Apartment quality", "Internet & mobile", "Jobs nearby", "Air quality", "Sewage & lakes", "Future infrastructure"];
+// why each measure isn't scored yet, from the source register (21 Nov 2026)
+const NO_DATA = [
+  ["Water", "No locality-level supply data is published. Groundwater depth would only be a proxy."],
+  ["Power", "No locality-level outage data is published."],
+  ["Traffic", "No free source of travel times we can reuse."],
+  ["Safety", "Police figures are not published by locality."],
+  ["Flooding", "No official, machine-readable list of flood spots."],
+  ["Cost of living", "No source found."],
+  ["Price & yield", "No official locality prices, and we don't use property portals."],
+  ["Noise", "Official noise stations cover too few areas."],
+  ["Construction dust", "Only press reports and notices, nothing structured."],
+  ["Legal & title risk", "No final lake-boundary notification yet, and court cases are ongoing."],
+  ["Apartment quality", "RERA shows registration status only."],
+  ["Internet & mobile", "Open speed data allows non-commercial use only. Not added yet."],
+  ["Jobs nearby", "Only office counts and broker reports so far. Not added yet."],
+  ["Air quality", "Too few official stations: most localities have none nearby."],
+  ["Sewage & lakes", "Official reports cover lakes, not localities."],
+  ["Future infrastructure", "Nothing is approved yet (Metro Phase 2, Regional Ring Road)."],
+];
 const PARTIAL = `${Object.keys(FACTORS).length} of ${Object.keys(FACTORS).length + NO_DATA.length} measures`;
 const BUDGETS = {
   buy: [["any", "Any budget"], ["0-5000000", "Under ₹50 L"], ["5000000-10000000", "₹50 L – ₹1 Cr"], ["10000000-20000000", "₹1 – 2 Cr"], ["20000000-50000000", "₹2 – 5 Cr"], ["50000000-", "₹5 Cr +"]],
@@ -633,8 +661,9 @@ function drawZones() {
 }
 function initLocMap() {
   if (locMap || !window.maplibregl) return;
-  const rows = Object.values(locs), b = rows.reduce((b, r) => b.extend([r.lon, r.lat]), new maplibregl.LngLatBounds());
-  locMap = new maplibregl.Map({ container: "locmap", style: mapStyle(), bounds: b, fitBoundsOptions: { padding: 60 }, attributionControl: { compact: true }, cooperativeGestures: true });
+  const rows = Object.values(locs);
+  // opens on the western corridor, where most localities sit; zone chips re-frame it
+  locMap = new maplibregl.Map({ container: "locmap", style: mapStyle(), bounds: zoneBounds("West"), fitBoundsOptions: { padding: MAP_PAD }, attributionControl: { compact: true }, cooperativeGestures: true });
   locMap.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
   for (const r of rows) {
     r.pin = Object.assign(document.createElement("button"), { type: "button", className: "pin lpin num", onclick: () => openLocality(r.name) });
@@ -644,8 +673,12 @@ function initLocMap() {
   locMap.on("zoom", () => $("locmap").parentElement.classList.toggle("near", locMap.getZoom() >= 13));
   drawPins();
 }
+const zoneBounds = z => Object.values(locs).filter(r => z === "All" || r.zone === z).reduce((b, r) => b.extend([r.lon, r.lat]), new maplibregl.LngLatBounds());
+let SEL = null;
+const MAP_PAD = { top: 40, right: 50, bottom: 70, left: 40 };  // bottom clears the legend
 function drawPins() {
-  for (const r of Object.values(locs)) if (r.pin) { r.pin.style.display = ZONE === "All" || r.zone === ZONE ? "" : "none"; r.pin.innerHTML = `${r.score}<span class="nm"> ${esc(r.name)}</span>`; r.pin.setAttribute("aria-label", `${r.name}, early score ${r.score} from ${PARTIAL}, rank ${r.rank} of ${Object.keys(locs).length}`); }
+  const n = Object.keys(locs).length;
+  for (const r of Object.values(locs)) if (r.pin) { r.pin.classList.toggle("b1", r.rank <= n / 3); r.pin.classList.toggle("b2", r.rank > n / 3 && r.rank <= 2 * n / 3); r.pin.classList.toggle("sel", r.name === SEL); r.pin.style.display = ZONE === "All" || r.zone === ZONE ? "" : "none"; r.pin.innerHTML = `${r.score}<span class="nm"> ${esc(r.name)}</span>`; r.pin.setAttribute("aria-label", `${r.name}, early score ${r.score} from ${PARTIAL}, rank ${r.rank} of ${Object.keys(locs).length}`); }
 }
 
 /* ---------- filtering ---------- */
@@ -770,6 +803,7 @@ function openLayer(el) {
   setTimeout(() => el.querySelector("[data-close], button, input, select")?.focus(), 60);
 }
 function closeLayers() {
+  if (SEL) { SEL = null; drawPins(); }
   for (const el of [$("drawer"), $("modal"), $("scrim")]) el.classList.remove("on");
   setTimeout(() => { $("drawer").hidden = true; $("modal").hidden = true; $("scrim").hidden = true; }, 260);
   document.body.style.overflow = "";
@@ -784,7 +818,8 @@ function scorePanel(L) {
     <p class="fine">This is an early score from ${PARTIAL}. It uses a 2 km circle around a centre point we picked, not an official ward boundary: official boundaries for the new 300 wards aren't published yet. Counts show how many schools and clinics there are, not how good they are.</p>
     ${L.parts.transport < 30 ? `<p class="fine"><b>Read with care:</b> this score is held down mainly by the distance to the nearest operating metro station (${L.metro.km.toFixed(1)} km). Metro Phase 2 isn't approved yet, and future infrastructure is not yet scored.</p>` : ""}
     <p class="fine">${SOURCES} Places listed with low confidence are left out. <a href="#method" data-close>How the score works</a>.</p>
-    <div class="fine" style="font-weight:600;color:var(--ink)">Not enough data yet</div><div class="nd">${NO_DATA.map(n => `<span>${n}</span>`).join("")}</div></div>`;
+    <details class="nd"><summary>${NO_DATA.length} of ${NO_DATA.length + Object.keys(FACTORS).length} measures: not enough data yet</summary>
+      <ul>${NO_DATA.map(([n, why]) => `<li><b>${n}</b> ${why}</li>`).join("")}</ul></details></div>`;
 }
 function creditLine(key) {
   const c = CREDITS[key];
@@ -823,6 +858,7 @@ function stepGallery(d) {
 }
 function openLocality(name) {
   const L = locs[name], n = listings.filter(l => l.locality === name).length, key = locImg(name);
+  SEL = name; drawPins();
   $("drawer").innerHTML = `<div class="bar"><b>${esc(name)}</b>${closeBtn}</div>
     ${img(key) ? `<div class="gallery">${imgTag(key, CREDITS[key].caption || name)}</div>` : ""}
     <div class="dbody">${scorePanel(L)}
@@ -1047,7 +1083,7 @@ document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   const d = t.dataset;
   if (d.heart) return toggleShort(d.heart);
-  if (d.zone) { ZONE = d.zone; drawZones(); drawCounts(); drawPins(); return; }
+  if (d.zone) { ZONE = d.zone; drawZones(); drawCounts(); drawPins(); locMap?.fitBounds(zoneBounds(ZONE), { padding: MAP_PAD, maxZoom: 13.5, duration: calm ? 0 : 600 }); return; }
   if (d.pri) { PRI.has(d.pri) ? PRI.delete(d.pri) : PRI.add(d.pri); rank(); drawPri(); drawCounts(); drawPins(); return; }
   if (t.hasAttribute("data-signin")) return openSignIn();
   if (t.hasAttribute("data-account")) { closeLayers(); return setTimeout(openAccount, 280); }
