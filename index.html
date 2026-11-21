@@ -260,11 +260,9 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .method p, .method li { color: var(--muted); }
 .method b { color: var(--ink); }
 .nd { font-size: 12px; color: var(--muted); border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; }
-.wbox { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; background: var(--surface); }
-.wbox summary { cursor: pointer; font-weight: 600; } .wbox[open] summary { margin-bottom: 6px; }
 #wt { display: grid; gap: 4px; margin-top: 8px; }
 .wrow { display: grid; grid-template-columns: 110px 1fr 44px; gap: 10px; align-items: center; font-size: 13px; }
-.wrow input { width: 100%; accent-color: var(--lake); min-height: 28px; } .wrow output { text-align: right; color: var(--muted); }
+.wrow input { width: 100%; accent-color: var(--marigold); min-height: 28px; } .wrow output { text-align: right; color: var(--muted); }
 .wfoot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-top: 6px; }
 .wfoot .btn[disabled] { opacity: .5; cursor: default; }
 .acts { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -292,7 +290,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .formgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .formgrid .full { grid-column: 1 / -1; }
 .inp { display: grid; gap: 4px; font-size: 13px; font-weight: 500; }
-.inp input, .inp select { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); font-weight: 400; font-size: 15px; width: 100%; }
+.inp input, .inp select, .inp textarea { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); font-weight: 400; font-size: 15px; width: 100%; }
 .thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
 .thumbs img { width: 84px; height: 64px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
 .sheet .foot { display: flex; justify-content: space-between; gap: 8px; }
@@ -326,6 +324,117 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 520px) { .formgrid { grid-template-columns: 1fr; } .barrow { grid-template-columns: 96px 1fr 40px; } }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); translate: -50% 0; z-index: 100; background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 999px; font-size: 14px; box-shadow: var(--shadow); white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+/* ---- directory, weights, reviews, waitlist (layout and interactions after the HydScore reference) ---- */
+:root { --amber-ink: #a9560a; }
+:root[data-theme="dark"] { --amber-ink: #f2b149; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --amber-ink: #f2b149; } }
+.btn.dark { background: var(--ink); border-color: var(--ink); color: var(--surface); font-weight: 600; text-decoration: none; }
+.btn.dark:hover { filter: brightness(1.15); }
+.btn.amber { background: var(--marigold-soft); border-color: color-mix(in srgb, var(--marigold) 55%, transparent); color: var(--amber-ink); font-weight: 600; }
+.btn.big { padding: 13px 22px; font-size: 15px; text-decoration: none; }
+.navcta { padding: 8px 16px; font-size: 14px; }
+.menubtn { display: none; } .mnav { display: grid; gap: 4px; padding: 10px 16px 14px; border-top: 1px solid var(--line); background: var(--surface); } .mnav[hidden] { display: none; }
+.mnav a { text-decoration: none; color: var(--ink); padding: 10px 12px; border-radius: 10px; font-weight: 500; } .mnav a:hover { background: var(--paper); } .mnav .btn { text-align: center; margin-top: 6px; color: var(--surface); }
+@media (max-width: 960px) { .menubtn { display: inline-grid; } .navcta { display: none; } }
+@media (min-width: 961px) { .mnav { display: none; } }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--amber-ink); margin: 0 0 6px; }
+.band.tint { background: color-mix(in srgb, var(--surface) 55%, var(--paper)); border-block: 1px solid var(--line); }
+.sub { color: var(--muted); max-width: 52ch; margin-top: 10px; }
+/* hero */
+.hero2 { background: linear-gradient(180deg, var(--marigold-soft) 0%, var(--paper) 100%); border-bottom: 1px solid var(--line); }
+.hero2-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(24px, 4vw, 56px); align-items: center; padding-block: clamp(36px, 6vw, 80px); }
+.hero2-text { display: grid; gap: 22px; justify-items: start; }
+.hero2 h1 { font-size: clamp(36px, 5.2vw, 62px); max-width: 14ch; font-weight: 700; }
+.hero2 h1 em { font-style: normal; color: var(--amber-ink); }
+.hero2 .lede { color: var(--muted); font-size: clamp(16px, 1.5vw, 18px); max-width: 54ch; }
+.hero2 .facts { color: var(--muted); border-top: 1px solid var(--line); opacity: 1; width: 100%; max-width: none; }
+.hero2 .facts b { color: var(--ink); }
+.cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.pillbadge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid color-mix(in srgb, var(--marigold) 50%, transparent); background: var(--marigold-soft); color: var(--amber-ink); padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.pillbadge i { width: 7px; height: 7px; border-radius: 50%; background: var(--lake); }
+.pillbadge.dk { background: rgba(226,154,31,.15); color: #f2b149; border-color: rgba(226,154,31,.35); }
+.topwrap { display: grid; gap: 6px; }
+.topcard { display: grid; gap: 10px; text-align: left; width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 22px; padding: 10px; box-shadow: var(--shadow); cursor: pointer; transition: transform .15s; }
+.topcard:hover { transform: translateY(-2px); }
+.tph { display: block; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; position: relative; background: linear-gradient(135deg, color-mix(in srgb, var(--lake) 70%, var(--night)), var(--night)); }
+.tph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--paper); border-radius: 14px; padding: 12px 14px; }
+.topcard small { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.topcard .tsub { letter-spacing: 0; text-transform: none; font-weight: 400; font-size: 12px; }
+.tn { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; margin: 2px 0; }
+.tsc { text-align: center; background: var(--lake-soft); color: var(--lake); border-radius: 12px; padding: 6px 14px; }
+.tsc b { display: block; font-family: var(--display); font-size: 28px; line-height: 1.1; } .tsc small { color: inherit; opacity: 1; }
+.tcredit { margin: 0; padding-inline: 6px; }
+@media (max-width: 860px) { .hero2-grid { grid-template-columns: 1fr; } }
+/* directory */
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 10px; margin-bottom: 12px; }
+.search { position: relative; flex: 1 1 260px; display: block; }
+.search svg { position: absolute; left: 12px; top: 50%; translate: 0 -50%; width: 16px; height: 16px; stroke: var(--muted); }
+.search input { width: 100%; padding: 11px 12px 11px 36px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); font-size: 15px; }
+.toolbar .chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.locs { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.loc { border-radius: 18px; transition: transform .15s, box-shadow .15s; cursor: pointer; }
+.loc:hover { transform: translateY(-2px); }
+.loc .ph { aspect-ratio: 16 / 9; }
+.loc .body { padding: 14px 16px 16px; gap: 10px; }
+.loc .row { align-items: flex-start; }
+.loc .eyebrow { display: block; margin: 0 0 2px; color: var(--muted); font-size: 10px; }
+.loc .sbadge { display: flex; flex-direction: column; align-items: center; border-radius: 12px; padding: 6px 11px; border: 1px solid; line-height: 1; flex: none; }
+.loc .sbadge b { font-size: 22px; line-height: 1; } .loc .sbadge i { font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-top: 4px; }
+.sbadge.t1 { background: var(--lake-soft); color: var(--lake); border-color: color-mix(in srgb, var(--lake) 30%, transparent); }
+.sbadge.t2 { background: var(--marigold-soft); color: var(--amber-ink); border-color: color-mix(in srgb, var(--marigold) 45%, transparent); }
+.sbadge.t3 { background: var(--paper); color: var(--muted); border-color: var(--line); }
+.loc .lead { color: var(--amber-ink); font-weight: 600; font-size: 12px; }
+.loc .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px; color: var(--muted); }
+.loc .stats > span { background: var(--paper); border-radius: 8px; padding: 5px 9px; }
+.loc .stats b { font-family: var(--body); font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: 0; }
+.loc .foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-top: 1px solid var(--line); padding-top: 10px; }
+.loc .tags em { display: inline-block; font-style: normal; font-size: 11px; background: var(--paper); border-radius: 6px; padding: 2px 8px; color: var(--muted); margin: 0 6px 2px 0; }
+.loc .more { color: var(--amber-ink); font-weight: 700; font-size: 12px; white-space: nowrap; }
+.more-row { display: flex; justify-content: center; margin-top: 18px; }
+.empty-note { border: 1px dashed var(--line); border-radius: 16px; padding: 28px; text-align: center; display: grid; gap: 6px; justify-items: center; color: var(--muted); }
+.empty-note b { color: var(--ink); } .empty-note[hidden] { display: none; }
+@media (max-width: 1000px) { .locs { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .locs { grid-template-columns: 1fr; } }
+/* weights and live ranking */
+.wgrid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+.wbox2 { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); padding: 14px 16px; margin-top: 16px; }
+.rankcard { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); padding: 18px; }
+.rc-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.rc-pill { font-size: 11px; background: var(--paper); border-radius: 8px; padding: 3px 9px; color: var(--muted); }
+#rank-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.rb { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 112px 1fr 28px; gap: 10px; align-items: center; width: 100%; font-size: 12px; padding: 3px 0; border-radius: 6px; }
+.rb:focus-visible { outline: 2px solid var(--lake); } .rb:hover .rn { color: var(--lake); }
+.rb b { text-align: right; font-family: var(--body); font-weight: 700; font-size: 12px; }
+.rt { display: block; height: 20px; background: var(--paper); border-radius: 6px; overflow: hidden; }
+.rt i { display: block; height: 100%; background: var(--marigold); border-radius: 6px; transition: width .35s; }
+@media (max-width: 860px) { .wgrid { grid-template-columns: 1fr; } .rb { grid-template-columns: 96px 1fr 28px; } }
+/* radar in the locality panel */
+.radar { display: block; width: 100%; max-width: 300px; margin: 4px auto 0; }
+.radar .rg { fill: none; stroke: var(--line); } .radar .rp { fill: color-mix(in srgb, var(--marigold) 35%, transparent); stroke: var(--marigold); stroke-width: 2; }
+.radar text { font-size: 11px; fill: var(--muted); font-family: var(--body); }
+/* reviews */
+.revs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.rev { border: 1px solid var(--line); background: var(--surface); border-radius: 18px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.rv-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.tagbtn { all: unset; cursor: pointer; background: var(--marigold-soft); color: var(--amber-ink); font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 8px; } .tagbtn:focus-visible { outline: 2px solid var(--lake); }
+.stars { color: var(--amber-ink); letter-spacing: 1px; font-size: 13px; }
+.rev p { margin: 0; } .rev small { color: var(--muted); }
+.revs .empty-note { grid-column: 1 / -1; }
+.lrevs { display: grid; gap: 8px; } .lrevs .rev { padding: 12px; border-radius: 12px; background: var(--paper); border: none; font-size: 13px; }
+@media (max-width: 900px) { .revs { grid-template-columns: 1fr; } }
+/* waitlist */
+.dark-band { background: var(--night); color: #e6eeec; padding: clamp(48px, 7vw, 88px) 0; }
+.narrow { max-width: 780px; display: grid; gap: 14px; justify-items: center; text-align: center; }
+.dark-band h2 { color: #fff; font-size: clamp(28px, 4vw, 44px); } .dark-band p { color: #b9c6c3; margin: 0; } .dark-band .fine { color: #93a3a0; }
+.wlform { position: relative; display: grid; grid-template-columns: 1.3fr 1fr auto; gap: 10px; align-items: end; width: 100%; text-align: left; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 18px; padding: 14px; }
+.wlform label { display: grid; gap: 4px; font-size: 12px; font-weight: 600; color: #b9c6c3; }
+.wlform input, .wlform select { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); color: #fff; font-size: 15px; }
+.wlform select option { color: #111; } .wlform ::placeholder { color: #8a9a97; }
+.wlform .btn { padding: 12px 20px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+@media (max-width: 760px) { .wlform { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -341,31 +450,32 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <a class="lo" href="#explore" data-quick="commercial">Commercial</a>
       <a class="lo" href="#explore" data-quick="plots">Plots</a>
       <a href="#localities">Localities</a>
-      <a href="#what">What we do</a>
-      <a href="#method">Method</a>
+      <a href="#method">Scoring model</a>
+      <a href="#reviews">Community reviews</a>
     </nav>
     <div class="actions">
+      <a class="btn dark navcta" href="#waitlist">Get early access</a>
       <button class="iconbtn" type="button" id="theme" aria-label="Switch light or dark"><svg class="icon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
       <button class="iconbtn lo" type="button" id="open-account" aria-label="Sign in"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
       <button class="iconbtn lo" type="button" id="open-short" aria-label="Shortlist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge num" id="short-count" hidden>0</span></button>
       <button class="btn primary list-btn lo" type="button" id="open-list"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>List property</span></button>
+      <button class="iconbtn menubtn" type="button" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <nav class="mnav" id="mobile-menu" aria-label="Menu" hidden>
+    <a href="#localities">Localities</a><a href="#weights">Set your weights</a><a href="#method">Scoring model</a><a href="#reviews">Community reviews</a><a class="btn dark" href="#waitlist">Get early access</a>
+  </nav>
 </header>
 
 <main id="top">
-  <section class="hero" aria-label="Choose a locality">
-    <img class="poster" src="media/hero-poster.jpg" alt="">
-    <video id="hero-video" muted loop playsinline preload="metadata" poster="media/hero-poster.jpg" aria-hidden="true"><source src="media/hero.mp4" type="video/mp4"></video>
-    <div class="wrap">
-      <h1>Find your place in <em>Hyderabad</em>.</h1>
+  <section class="hero2" aria-label="Introduction">
+    <div class="wrap hero2-grid">
+    <div class="hero2-text">
+      <span class="pillbadge co"><i></i>Built for renters, buyers and residents in Hyderabad</span>
+      <h1>Know every Hyderabad locality <em>before you move.</em></h1>
       <p class="lede lo">Flats, houses, villas, plots and workspaces to rent or buy, with a score for every locality built from open map data.</p>
-      <p class="lede co">Choosing where to live, work, buy or open a business? Compare <span class="loc-n">50</span> localities across the city on schools, healthcare, metro access, green cover and daily needs, scored from open data with every source shown.</p>
-      <form class="console pick co" id="pick">
-        <div class="pick-h">What matters most to you?</div>
-        <div class="chips" id="pri-hero"></div>
-        <button class="btn primary go" type="submit">Rank localities</button>
-      </form>
+      <p class="lede co">Stop relying on broker pitches. Compare <span class="loc-n">50</span> localities on schools, healthcare, daily needs, metro access and green cover. Every number comes from open data with its source and date, and you choose what matters.</p>
+      <div class="cta-row co"><a class="btn primary big" href="#localities">Explore locality scores <span aria-hidden="true">→</span></a><a class="btn big" href="#weights">Set your own weights</a></div>
       <form class="console lo" id="console">
         <div class="tabs" role="tablist" aria-label="What are you looking for">
           <button type="button" role="tab" data-tab="buy" aria-selected="true">Buy</button>
@@ -396,7 +506,15 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
         <div class="lo"><b class="num" id="fact-listings">26</b><span id="fact-listings-label">example listings to explore</span></div>
       </div>
     </div>
-    <span class="credit-tag" id="hero-credit"></span>
+    <div class="topwrap co">
+      <button class="topcard" id="top-card" type="button" data-loc="">
+        <span class="tph" id="top-ph"></span>
+        <span class="tbar"><span><small>Top locality right now · early score</small><b class="tn" id="top-name"></b><small class="tsub" id="top-sub"></small></span>
+          <span class="tsc"><b class="num" id="top-score"></b><small>/ 100</small></span></span>
+      </button>
+      <p class="tcredit fine" id="top-credit"></p>
+    </div>
+    </div>
   </section>
 
   <section class="band lo" aria-labelledby="cats-h">
@@ -441,15 +559,40 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 
   <section class="band" id="localities" aria-labelledby="loc-h">
     <div class="wrap">
-      <div class="head"><div><h2 id="loc-h">Know the neighbourhood first</h2><p>Every locality gets an early score out of 100 from 5 of the 21 measures we plan, counted within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery. <a href="#method">How the score works</a>.</p></div></div>
-      <div class="loc-tools"><span class="fine">Ranked for what matters to you:</span><div class="chips" id="pri-locs"></div></div>
-      <details class="wbox"><summary>Set your own weights</summary>
-        <p class="fine">Drag a slider to say how much each measure matters to you. The ranking, the map and the scores update as you drag.</p><div id="wt"></div></details>
+      <div class="head"><div><p class="eyebrow">Interactive directory</p><h2 id="loc-h">Hyderabad locality scores</h2><p>Every locality gets an early score out of 100 from 5 of the 21 measures we plan, counted within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery. <a href="#method">How the score works</a>.</p></div>
+        <button class="btn amber" type="button" data-review-open>Add a resident note</button></div>
+      <div class="toolbar"><label class="search"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <input id="q" type="search" placeholder="Search Gachibowli, Jubilee Hills, Raidurg metro…" aria-label="Search localities" autocomplete="off"></label>
+        <div class="chips" id="tags" role="group" aria-label="Filter localities"></div></div>
       <div class="loc-tools"><span class="fine">Zone:</span><div class="chips" id="zones"></div><span class="fine num" id="zone-n" aria-live="polite"></span></div>
       <div class="locmap"><div id="locmap" role="region" aria-label="Map of localities with their early scores"></div>
         <div class="legend" aria-hidden="true"><span>Early score:</span><span><i class="b1"></i>top third</span><span><i class="b2"></i>middle third</span><span><i></i>bottom third</span></div></div>
       <p class="fine" style="margin:-8px 0 16px">Each pin shows the locality's early score, from 5 of 21 measures.</p>
       <div class="locs" id="locs"></div>
+      <div class="empty-note" id="empty-dir" hidden><b>No localities match</b><span>Try a different search or clear the filter.</span><button class="btn" type="button" data-clear>Clear search and filters</button></div>
+      <div class="more-row"><button class="btn" id="more" type="button" data-more hidden></button></div>
+    </div>
+  </section>
+
+  <section class="band tint" id="weights" aria-labelledby="w-h">
+    <div class="wrap wgrid">
+      <div>
+        <p class="eyebrow">Transparent algorithm</p>
+        <h2 id="w-h">Customise what matters most</h2>
+        <p class="sub">By default every measure weighs the same, 20% each. Drag a slider to say what matters to you and the ranking, the map and every score re-order as you drag. <a href="#method">How the score works</a>.</p>
+        <div class="wbox2"><div id="wt"></div></div>
+        <div class="loc-tools" style="margin:14px 0 0"><span class="fine">Quick presets, one measure counts three times:</span><div class="chips" id="pri-locs"></div></div>
+      </div>
+      <div class="rankcard"><div class="rc-h"><b>Live weighted ranking</b><span class="rc-pill">Top 10 · score out of 100</span></div><ol id="rank-bars"></ol></div>
+    </div>
+  </section>
+
+  <section class="band" id="reviews" aria-labelledby="rv-h">
+    <div class="wrap">
+      <div class="head"><div><p class="eyebrow">Ground reality</p><h2 id="rv-h">What residents say</h2>
+        <p>Notes from people who live there: water supply, traffic, street lighting, daily life. They sit beside the scores and never change them. We read every note before it appears.</p></div>
+        <button class="btn dark" type="button" data-review-open>Add your note</button></div>
+      <div class="revs" id="revs"></div>
     </div>
   </section>
 
@@ -490,7 +633,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
         <li><b>Counts</b> use a log scale against the locality with the most, so one very large count doesn't flatten the rest. The best locality gets 100.</li>
         <li><b>Metro access</b> gets 100 within 500 m of a station, falling in a straight line to 0 at 5 km or more.</li>
         <li><b>Green cover</b> is scaled against the greenest locality, which gets 100.</li>
-        <li><b>The score</b> is the average of the five. By default every measure weighs the same. Picking a measure under "What matters to you" counts it three times, and the sliders under "Set your own weights" let you choose any mix. The default weights are <b>provisional, awaiting the owner's approval</b>.</li>
+        <li><b>The score</b> is the average of the five. By default every measure weighs the same. Choosing a quick preset counts that measure three times, and the sliders under "Customise what matters most" let you choose any mix. The default weights are <b>provisional, awaiting the owner's approval</b>.</li>
       </ul>
       <p>Scores are relative: each locality is compared with the others on this site, so adding a locality can change everyone's numbers. Metro distance moves the ranking a lot. Localities far from an operating station, such as Kokapet and Financial District, score low mainly for that reason. Planned lines aren't counted because Metro Phase 2 isn't approved yet.</p>
     </div>
@@ -514,6 +657,20 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
           <div><button class="btn primary" type="button" id="cta-list" style="padding:12px 22px;font-size:15px">List your property</button></div>
         </div>
       </div>
+    </div>
+  </section>
+  <section class="dark-band" id="waitlist" aria-labelledby="wl-h">
+    <div class="wrap narrow">
+      <span class="pillbadge dk">Early access</span>
+      <h2 id="wl-h">Get notified when more measures go live.</h2>
+      <p>Water, flooding, safety and others show "not enough data" today because no open source covers them. Tell us which area you are researching and we will email you when more measures get a source.</p>
+      <form id="wl" class="wlform" novalidate>
+        <label>Email address<input id="wl-email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+        <label>Area you are researching<select id="wl-loc"></select></label>
+        <button class="btn primary" type="submit">Notify me</button>
+        <input class="hp" id="wl-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      </form>
+      <p class="fine on-dark" id="wl-msg" role="status">We use your email only to tell you when new measures launch.</p>
     </div>
   </section>
 </main>
@@ -682,14 +839,22 @@ function drawWeights() {
 }
 function weightsChanged() { rank(); drawPri(); drawWeights(); drawCounts(); drawPins(); }
 function drawPri() {
-  $("pri-hero").innerHTML = $("pri-locs").innerHTML = Object.entries(FACTORS).map(([k, f]) => `<button class="chip" type="button" data-pri="${k}" aria-pressed="${PRI.has(k)}">${f.label}</button>`).join("");
+  $("pri-locs").innerHTML = Object.entries(FACTORS).map(([k, f]) => `<button class="chip" type="button" data-pri="${k}" aria-pressed="${PRI.has(k)}">${f.label}</button>`).join("");
 }
 let locMap = null, ZONE = "All";
+let Q = "", TAG = "All", SHOW = 12;
+const TAGS = ["Metro within 1 km", "Green cover 40%+", "Most schools", "Most clinics"];
+let TH = {};  // top-quarter thresholds, taken from the data itself
+const q75 = a => [...a].sort((x, y) => x - y)[Math.floor(a.length * .75)];
+const tagsOf = L => [L.metro.km <= 1 && TAGS[0], L.green_pct >= 40 && TAGS[1], L.counts.schools >= TH.schools && TAGS[2], L.counts.healthcare >= TH.healthcare && TAGS[3]].filter(Boolean);
+const visible = L => (ZONE === "All" || L.zone === ZONE) && (TAG === "All" || tagsOf(L).includes(TAG)) && (!Q || [L.name, L.zone + " zone", L.metro.name, ...tagsOf(L)].join(" ").toLowerCase().includes(Q));
+const drawTags = () => { $("tags").innerHTML = ["All", ...TAGS].map(t => `<button class="chip" type="button" data-tag="${t}" aria-pressed="${t === TAG}">${t}</button>`).join(""); };
+const refreshDirectory = () => { SHOW = 12; drawZones(); drawCounts(); drawPins(); };
 const ZONES = ["All", "West", "Central", "North", "East", "South"];
 function drawZones() {
   $("zones").innerHTML = ZONES.map(z => `<button class="chip" type="button" data-zone="${z}" aria-pressed="${z === ZONE}">${z === "All" ? "All zones" : z}</button>`).join("");
-  const n = Object.values(locs).filter(L => ZONE === "All" || L.zone === ZONE).length;
-  $("zone-n").textContent = ZONE === "All" ? `${n} localities` : `${n} in the ${ZONE} zone`;
+  const n = Object.values(locs).filter(visible).length, all = Object.keys(locs).length;
+  $("zone-n").textContent = n === all ? `${n} localities` : `${n} of ${all} localities`;
 }
 function initLocMap() {
   if (locMap || !window.maplibregl) return;
@@ -710,7 +875,7 @@ let SEL = null;
 const MAP_PAD = { top: 40, right: 50, bottom: 70, left: 40 };  // bottom clears the legend
 function drawPins() {
   const n = Object.keys(locs).length;
-  for (const r of Object.values(locs)) if (r.pin) { r.pin.classList.toggle("b1", r.rank <= n / 3); r.pin.classList.toggle("b2", r.rank > n / 3 && r.rank <= 2 * n / 3); r.pin.classList.toggle("sel", r.name === SEL); r.pin.style.display = ZONE === "All" || r.zone === ZONE ? "" : "none"; r.pin.innerHTML = `${r.score}<span class="nm"> ${esc(r.name)}</span>`; r.pin.setAttribute("aria-label", `${r.name}, early score ${r.score} from ${PARTIAL}, rank ${r.rank} of ${Object.keys(locs).length}`); }
+  for (const r of Object.values(locs)) if (r.pin) { r.pin.classList.toggle("b1", r.rank <= n / 3); r.pin.classList.toggle("b2", r.rank > n / 3 && r.rank <= 2 * n / 3); r.pin.classList.toggle("sel", r.name === SEL); r.pin.style.display = visible(r) ? "" : "none"; r.pin.innerHTML = `${r.score}<span class="nm"> ${esc(r.name)}</span>`; r.pin.setAttribute("aria-label", `${r.name}, early score ${r.score} from ${PARTIAL}, rank ${r.rank} of ${Object.keys(locs).length}`); }
 }
 
 /* ---------- filtering ---------- */
@@ -846,6 +1011,7 @@ const closeBtn = `<button class="iconbtn" type="button" data-close aria-label="C
 function scorePanel(L) {
   return `<div class="panel"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
       <h3>${esc(L.name)} early score</h3><span class="price num" style="color:var(--lake)">${L.score}<small> / 100</small></span></div>
+    ${radar(L)}
     <div class="bars">${Object.entries(FACTORS).map(([k, f]) => `<div class="barrow"><span>${f.label}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span><span class="num">${f.show(L.vals[k])}</span></div>`).join("")}</div>
     <p class="fine">Within 2 km of the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools; ${L.counts.healthcare} hospitals and clinics; ${L.counts.daily} groceries, pharmacies, banks and ATMs. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Rank ${L.rank} of ${Object.keys(locs).length}.</p>
     <p class="fine">This is an early score from ${PARTIAL}. It uses a 2 km circle around a centre point we picked, not an official ward boundary: official boundaries for the new 300 wards aren't published yet. Counts show how many schools and clinics there are, not how good they are.</p>
@@ -940,7 +1106,7 @@ function openLocality(name) {
   SEL = name; drawPins(); setHash("#loc=" + encodeURIComponent(name));
   $("drawer").innerHTML = `<div class="bar"><b>${esc(name)}</b>${closeBtn}</div>
     ${img(key) ? `<div class="gallery">${imgTag(key, CREDITS[key].caption || name)}</div>` : ""}
-    <div class="dbody">${scorePanel(L)}
+    <div class="dbody">${scorePanel(L)}${notesFor(name)}
       <div class="acts"><button class="btn" type="button" data-cmp="${esc(name)}" aria-pressed="${CMP.includes(name)}">${CMP.includes(name) ? "Remove from compare" : "Add to compare"}</button>
         <button class="btn" type="button" data-share>Copy link to ${esc(name)}</button></div>
       <button class="btn primary lo" type="button" data-see="${esc(name)}">See ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"} in ${esc(name)}</button>
@@ -1110,13 +1276,88 @@ async function setState(id, to) {
   toast(to === "closed" ? "Listing closed" : "Sent back for review"); openAccount(); loadLive();
 }
 
+function drawBars() {
+  $("rank-bars").innerHTML = Object.values(locs).sort((a, b) => a.rank - b.rank).slice(0, 10).map(L =>
+    `<li><button class="rb" type="button" data-loc="${esc(L.name)}" aria-label="${esc(L.name)}, score ${L.score}, rank ${L.rank}"><span class="rn">${esc(L.name)}</span><span class="rt"><i style="width:${L.score}%"></i></span><b class="num">${L.score}</b></button></li>`).join("");
+}
+function drawTop() {
+  const L = Object.values(locs).find(r => r.rank === 1); if (!L) return;
+  const key = locImg(L.name), card = $("top-card");
+  if (card.dataset.loc !== L.name) {
+    card.dataset.loc = L.name; $("top-ph").innerHTML = imgTag(key, CREDITS[key]?.caption || L.name);
+    $("top-credit").innerHTML = creditLine(key);
+  }
+  $("top-name").textContent = L.name; $("top-sub").textContent = `${L.zone} zone · nearest metro ${L.metro.km.toFixed(1)} km`; $("top-score").textContent = L.score;
+}
+function radar(L) {
+  const keys = Object.keys(FACTORS), n = keys.length, c = 110, R = 80, f = x => x.toFixed(1);
+  const pt = (i, v) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [c + R * v / 100 * Math.cos(a), c + R * v / 100 * Math.sin(a)]; };
+  const ring = v => keys.map((_, i) => pt(i, v).map(f).join(",")).join(" ");
+  return `<svg class="radar" viewBox="-64 -8 348 236" role="img" aria-label="Radar chart for ${esc(L.name)}: ${keys.map(k => `${FACTORS[k].label} ${L.parts[k]} out of 100`).join(", ")}">
+    ${[25, 50, 75, 100].map(v => `<polygon class="rg" points="${ring(v)}"/>`).join("")}
+    ${keys.map((_, i) => { const [x, y] = pt(i, 100); return `<line class="rg" x1="${c}" y1="${c}" x2="${f(x)}" y2="${f(y)}"/>`; }).join("")}
+    <polygon class="rp" points="${keys.map((k, i) => pt(i, L.parts[k]).map(f).join(",")).join(" ")}"/>
+    ${keys.map((k, i) => { const [x, y] = pt(i, 124); return `<text x="${f(x)}" y="${f(y)}" text-anchor="${x < c - 4 ? "end" : x > c + 4 ? "start" : "middle"}" dominant-baseline="middle">${FACTORS[k].label}</text>`; }).join("")}</svg>`;
+}
+
+/* ---------- resident notes and early access (need the Supabase tables in supabase/community.sql) ---------- */
+let REVIEWS = [];
+const stars = n => "★".repeat(n) + "☆".repeat(5 - n);
+const revCard = r => `<article class="rev"><div class="rv-top"><button class="tagbtn" type="button" data-loc="${esc(r.locality)}">${esc(r.locality)}</button><span class="stars" role="img" aria-label="${r.rating} out of 5">${stars(r.rating)}</span></div>
+  <p>“${esc(r.body)}”</p><small>${esc(r.author)} · ${new Date(r.created_at).toLocaleDateString("en-IN", { month: "short", year: "numeric" })}</small></article>`;
+const noNotes = `<div class="empty-note"><b>No resident notes yet</b><span>Be the first to say what daily life is like in your area.</span><button class="btn" type="button" data-review-open>Add your note</button></div>`;
+function drawReviews() { $("revs").innerHTML = REVIEWS.length ? REVIEWS.slice(0, 6).map(revCard).join("") : noNotes; }
+const notesFor = name => { const l = REVIEWS.filter(r => r.locality === name); return `<div class="panel"><h3>Resident notes</h3>${l.length ? `<div class="lrevs">${l.slice(0, 3).map(revCard).join("")}</div>` : `<p class="fine">No resident notes yet for ${esc(name)}.</p>`}<div><button class="btn" type="button" data-review-open="${esc(name)}">Add a note about ${esc(name)}</button></div></div>`; };
+async function loadReviews() {
+  if (sb) { const { data, error } = await sb.from("locality_reviews").select("locality,rating,body,author,created_at").eq("status", "live").order("created_at", { ascending: false }).limit(60); if (!error && data) REVIEWS = data.filter(r => locs[r.locality]); }
+  drawReviews();
+}
+const onlyLive = what => sheet(what, `<p>This works on the live site.</p><p><a href="${SITE}" target="_blank" rel="noopener">Open the live site</a></p>`);
+function openReview(pre) {
+  if (!sb) return onlyLive("Add your note");
+  const names = Object.keys(locs).sort();
+  sheet("Add your note", `<p>Tell people what daily life is like where you live. We read every note before it appears. Please leave out phone numbers and the names of other people.</p>
+    <form id="rf" class="formgrid">
+      <label class="inp">Locality<select id="rf-loc" required>${names.map(n => `<option${n === pre ? " selected" : ""}>${esc(n)}</option>`).join("")}</select></label>
+      <label class="inp">Your first name<input id="rf-name" maxlength="40" required autocomplete="given-name"></label>
+      <label class="inp">Rating<select id="rf-rate"><option value="5">5 – Excellent</option><option value="4">4 – Very good</option><option value="3">3 – Average</option><option value="2">2 – Needs work</option><option value="1">1 – Poor</option></select></label>
+      <label class="inp full">What is daily life like here?<textarea id="rf-body" rows="4" minlength="20" maxlength="600" required></textarea></label>
+      <input class="hp" id="rf-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="full err" id="rf-err" hidden></p>
+      <div class="full foot"><span class="fine">Notes never change the score.</span><button class="btn primary" type="submit">Send for review</button></div></form>`);
+  $("rf").onsubmit = async e => {
+    e.preventDefault(); const btn = $("rf").querySelector("button"); btn.disabled = true; btn.textContent = "Sending…";
+    const row = { locality: $("rf-loc").value, rating: +$("rf-rate").value, body: $("rf-body").value.trim(), author: $("rf-name").value.trim() };
+    const { error } = $("rf-hp").value ? { error: null } : await sb.from("locality_reviews").insert(row);
+    if (error) { $("rf-err").hidden = false; $("rf-err").textContent = "We could not send your note just now. Check your connection and try again."; btn.disabled = false; btn.textContent = "Send for review"; return; }
+    sheet("Thank you", `<p>Your note about <b>${esc(row.locality)}</b> was sent. It will appear once we have read it.</p>`);
+  };
+}
+async function joinWaitlist(e) {
+  e.preventDefault(); const em = $("wl-email").value.trim(), msg = $("wl-msg"), btn = $("wl").querySelector("button");
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { msg.textContent = "Please enter a valid email address."; return $("wl-email").focus(); }
+  if (!sb) return onlyLive("Get early access");
+  btn.disabled = true;
+  const { error } = $("wl-hp").value ? { error: null } : await sb.from("waitlist").insert({ email: em, locality: $("wl-loc").value });
+  btn.disabled = false;
+  if (error && error.code !== "23505") return void (msg.textContent = "We could not save that just now. Please try again in a moment.");
+  msg.textContent = error ? "You are already on the list. Thank you." : "Thank you. We will email you when new measures launch."; $("wl").reset();
+}
+
 /* ---------- live listings ---------- */
 function drawCounts() {
   $("cats").innerHTML = CATS.map(c => { const n = listings.filter(l => c.types.includes(l.type)).length;
     return `<button class="cat" type="button" data-cat="${c.key}">${art(c.types[0])}${imgTag(c.img, "", true, true)}<span class="cap"><b>${c.label}</b><small>${c.sub} · ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"}</small></span></button>`; }).join("");
-  $("locs").innerHTML = Object.values(locs).filter(L => ZONE === "All" || L.zone === ZONE).sort((a, b) => a.rank - b.rank).map(L => { const key = locImg(L.name), n = listings.filter(l => l.locality === L.name).length;
+  const list = Object.values(locs).filter(visible).sort((a, b) => a.rank - b.rank);
+  $("locs").innerHTML = list.slice(0, SHOW).map(L => { const key = locImg(L.name), n = listings.filter(l => l.locality === L.name).length;
     return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
-      <span class="body"><span class="row"><b>${esc(L.name)}</b><span class="sc num">${L.score}</span></span><small>Early score, ${PARTIAL} · strongest: ${FACTORS[L.best].label.toLowerCase()} · ${LISTINGS ? `${n} ${n === 1 ? "listing" : "listings"}` : `metro ${L.metro.km.toFixed(1)} km`}</small></span></button>`; }).join("");
+      <span class="body"><span class="row"><span><span class="eyebrow">${esc(L.zone)} zone</span><b>${esc(L.name)}</b></span><span class="sbadge ${L.score >= 80 ? "t1" : L.score >= 60 ? "t2" : "t3"}"><b class="num">${L.score}</b><i>Score</i></span></span>
+        <small class="lead">Nearest metro: ${esc(L.metro.name)}, ${L.metro.km.toFixed(1)} km${LISTINGS ? ` · ${n} ${n === 1 ? "listing" : "listings"}` : ""}</small>
+        <span class="stats">${Object.entries(FACTORS).map(([k, f]) => `<span>${f.label} <b class="num">${L.parts[k]}</b></span>`).join("")}</span>
+        <span class="foot"><span class="tags">${tagsOf(L).slice(0, 2).map(t => `<em>${t}</em>`).join("")}</span><span class="more">Breakdown →</span></span></span></button>`; }).join("");
+  $("empty-dir").hidden = list.length > 0;
+  $("more").hidden = list.length <= SHOW; $("more").textContent = `Show ${Math.min(12, list.length - SHOW)} more (${list.length - SHOW} left)`;
+  drawBars(); drawTop();
 }
 function fromRow(r) {
   const L = locs[r.locality], h = parseInt(r.id.slice(0, 8), 16);
@@ -1164,7 +1405,7 @@ document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   const d = t.dataset;
   if (d.heart) return toggleShort(d.heart);
-  if (d.zone) { ZONE = d.zone; drawZones(); drawCounts(); drawPins(); locMap?.fitBounds(zoneBounds(ZONE), { padding: MAP_PAD, maxZoom: 13.5, duration: calm ? 0 : 600 }); return; }
+  if (d.zone) { ZONE = d.zone; SHOW = 12; drawZones(); drawCounts(); drawPins(); locMap?.fitBounds(zoneBounds(ZONE), { padding: MAP_PAD, maxZoom: 13.5, duration: calm ? 0 : 600 }); return; }
   if (d.pri) { PRI.has(d.pri) ? PRI.delete(d.pri) : PRI.add(d.pri); for (const k in WT) WT[k] = PRI.has(k) ? 60 : 20; return weightsChanged(); }
   if (t.hasAttribute("data-wreset")) { PRI.clear(); for (const k in WT) WT[k] = 20; return weightsChanged(); }
   if (t.hasAttribute("data-signin")) return openSignIn();
@@ -1178,6 +1419,10 @@ document.addEventListener("click", e => {
   if (t.hasAttribute("data-reset")) return resetFilters();
   if (d.see) { closeLayers(); resetFilters(true); S.loc = d.see; render(); return goExplore(); }
   if (d.loc) return openLocality(d.loc);
+  if (d.tag) { TAG = d.tag; drawTags(); return refreshDirectory(); }
+  if (t.hasAttribute("data-more")) { SHOW += 12; return drawCounts(); }
+  if (t.hasAttribute("data-clear")) { Q = ""; TAG = "All"; ZONE = "All"; $("q").value = ""; drawTags(); return refreshDirectory(); }
+  if (t.hasAttribute("data-review-open")) { closeLayers(); return setTimeout(() => openReview(d.reviewOpen || ""), 280); }
   if (d.cmp) return toggleCompare(d.cmp);
   if (d.uncmp) return toggleCompare(d.uncmp);
   if (t.hasAttribute("data-cmpopen")) return openCompare();
@@ -1196,7 +1441,10 @@ document.addEventListener("click", e => {
 $("scrim").onclick = closeLayers;
 addEventListener("keydown", e => { if (e.key === "Escape" && !$("scrim").hidden) closeLayers(); });
 document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => setTab(b.dataset.tab));
-$("pick").onsubmit = e => { e.preventDefault(); $("localities").scrollIntoView({ behavior: calm ? "auto" : "smooth" }); };
+$("q").oninput = e => { Q = e.target.value.trim().toLowerCase(); refreshDirectory(); };
+$("wl").onsubmit = joinWaitlist;
+$("menu-btn").onclick = () => { const m = $("mobile-menu"); m.hidden = !m.hidden; $("menu-btn").setAttribute("aria-expanded", String(!m.hidden)); };
+$("mobile-menu").onclick = e => { if (e.target.closest("a")) { $("mobile-menu").hidden = true; $("menu-btn").setAttribute("aria-expanded", "false"); } };
 $("console").onsubmit = e => { e.preventDefault(); runSearch(tab, $("c-type").value, $("c-budget").value, $("c-rate").value, $("c-loc").value); };
 $("f-mode").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.mode = b.dataset.v; S.budget = S.rate = "any"; render(); };
 $("f-type").onclick = e => { const b = e.target.closest("button"); if (!b) return; const v = b.dataset.v; S.types.has(v) ? S.types.delete(v) : S.types.add(v); render(); };
@@ -1228,12 +1476,13 @@ $("theme").onclick = () => { document.documentElement.dataset.theme = dark() ? "
 
 /* videos play only while on screen, and never when the viewer prefers less motion */
 const vio = new IntersectionObserver(es => es.forEach(en => { const v = en.target; if (calm) return; if (en.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }), { threshold: .15 });
-["hero-video", "what-video"].forEach(id => vio.observe($(id)));
+["what-video"].forEach(id => vio.observe($(id)));
 
 /* ---------- boot ---------- */
 Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/listings.json").then(r => r.json()), fetch("data/photos.json").then(r => r.ok ? r.json() : {}).catch(() => ({}))])
 .then(([raw, ls, credits]) => {
-  locs = scoreLocalities(raw); rank(); listings = EXAMPLES = ls.map(l => ({ ...l, example: true })); CREDITS = credits; HAVE = new Set(Object.keys(credits).filter(k => !k.startsWith("_")));
+  locs = scoreLocalities(raw); rank();
+  TH = { schools: q75(raw.map(d => d.counts.schools)), healthcare: q75(raw.map(d => d.counts.healthcare)) }; listings = EXAMPLES = ls.map(l => ({ ...l, example: true })); CREDITS = credits; HAVE = new Set(Object.keys(credits).filter(k => !k.startsWith("_")));
   $("fact-listings").textContent = ls.length;
   const names = Object.keys(locs).sort();
   fillSelect($("c-loc"), [["any", `All ${names.length} localities`], ...names.map(n => [n, `${n} · score ${locs[n].score}`])], "any");
@@ -1243,7 +1492,6 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   $("f-type").innerHTML = Object.entries(TYPES).map(([v, t]) => `<button class="chip" type="button" data-v="${v}" aria-pressed="false">${t}</button>`).join("");
   const list = Object.entries(credits).filter(([k]) => !k.startsWith("_"));
   if (list.length) $("credits").innerHTML = list.map(([, c]) => `<li>${esc(c.file.replace(/^File:/, "").replace(/\.\w+$/, ""))}: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a></li>`).join("");
-  if (credits["loc-raidurg"]) $("hero-credit").textContent = `Durgam Cheruvu cable bridge at night, Raidurg. Photo: ${credits["loc-raidurg"].author || "Unknown"}, ${credits["loc-raidurg"].license}, via Wikimedia Commons.`;
   // use the Kokapet video when its photo is licensed and present, else the bridge photo
   const whatKey = credits._videos?.what ? "loc-kokapet" : credits["loc-raidurg"] ? "loc-raidurg" : "";
   if (whatKey) {
@@ -1254,12 +1502,13 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   }
   const ctaKey = ["amenity-park", "loc-gachibowli", "loc-raidurg"].find(k => HAVE.has(k));
   if (ctaKey) $("cta-media").innerHTML = imgTag(ctaKey, "", false, true);
-  drawHow(LISTINGS ? "seek" : "choose"); drawPri(); drawWeights(); drawZones();
+  drawHow(LISTINGS ? "seek" : "choose"); drawPri(); drawWeights(); drawTags(); drawZones();
+  $("wl-loc").innerHTML = ["Not sure yet", ...names].map(n => `<option>${esc(n)}</option>`).join("");
   document.querySelectorAll(".loc-n").forEach(e => e.textContent = Object.keys(locs).length);
   drawCounts(); render();
   if (LISTINGS && matchMedia("(min-width: 1181px)").matches) initMap();
   initLocMap();
-  routeFromHash(); addEventListener("hashchange", routeFromHash);
+  routeFromHash(); addEventListener("hashchange", routeFromHash); loadReviews();
   if (sb && LISTINGS) {
     sb.auth.onAuthStateChange((ev, session) => { me = session?.user ?? null; syncAccount(); if (ev === "SIGNED_IN" && /access_token/.test(location.hash)) { history.replaceState(null, "", location.pathname); toast("Signed in"); } });
     loadLive();
