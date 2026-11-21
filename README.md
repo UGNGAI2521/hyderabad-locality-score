@@ -2,8 +2,6 @@
 
 Helps people choose the right area to live, work or buy property anywhere in Hyderabad, using honest open data. For now the site is locality comparison only: property search, owner posting and enquiries are built and tested but switched off with `LISTINGS = false` in `src/page.html`.
 
-A property search for West Hyderabad: flats, houses, villas, plots, offices and shops to rent or buy, with an open-data score for every locality.
-
 Owners sign in by email and post listings with photos; buyers send enquiries that only the owner can read. Every new or edited listing waits for the admin's approval before it goes live. Until the first listing is approved, the site shows 26 clearly marked example listings.
 
 ## Running the marketplace
