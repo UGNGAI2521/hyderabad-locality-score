@@ -18,7 +18,16 @@
    "km": 4.47
   },
   "green_pct": 53.3,
-  "built_pct": 42.6
+  "built_pct": 42.6,
+  "parts": {
+   "schools": 60,
+   "healthcare": 73,
+   "daily": 78,
+   "transport": 52,
+   "green": 87
+  },
+  "score": 70,
+  "rank": 33
  },
  {
   "name": "Madhapur",
@@ -39,7 +48,16 @@
    "km": 2.66
   },
   "green_pct": 25.0,
-  "built_pct": 69.6
+  "built_pct": 69.6,
+  "parts": {
+   "schools": 81,
+   "healthcare": 80,
+   "daily": 94,
+   "transport": 100,
+   "green": 41
+  },
+  "score": 79,
+  "rank": 11
  },
  {
   "name": "Kondapur",
@@ -60,7 +78,16 @@
    "km": 2.83
   },
   "green_pct": 28.8,
-  "built_pct": 63.7
+  "built_pct": 63.7,
+  "parts": {
+   "schools": 71,
+   "healthcare": 84,
+   "daily": 82,
+   "transport": 77,
+   "green": 47
+  },
+  "score": 72,
+  "rank": 27
  },
  {
   "name": "HITEC City",
@@ -81,7 +108,16 @@
    "km": 2.85
   },
   "green_pct": 18.7,
-  "built_pct": 74.1
+  "built_pct": 74.1,
+  "parts": {
+   "schools": 72,
+   "healthcare": 81,
+   "daily": 91,
+   "transport": 100,
+   "green": 31
+  },
+  "score": 75,
+  "rank": 19
  },
  {
   "name": "Financial District",
@@ -102,7 +138,16 @@
    "km": 7.12
   },
   "green_pct": 53.0,
-  "built_pct": 33.9
+  "built_pct": 33.9,
+  "parts": {
+   "schools": 32,
+   "healthcare": 50,
+   "daily": 43,
+   "transport": 0,
+   "green": 87
+  },
+  "score": 42,
+  "rank": 75
  },
  {
   "name": "Nanakramguda",
@@ -123,7 +168,16 @@
    "km": 7.15
   },
   "green_pct": 51.5,
-  "built_pct": 37.8
+  "built_pct": 37.8,
+  "parts": {
+   "schools": 51,
+   "healthcare": 66,
+   "daily": 68,
+   "transport": 6,
+   "green": 84
+  },
+  "score": 55,
+  "rank": 57
  },
  {
   "name": "Manikonda",
@@ -144,7 +198,16 @@
    "km": 6.96
   },
   "green_pct": 27.8,
-  "built_pct": 66.6
+  "built_pct": 66.6,
+  "parts": {
+   "schools": 93,
+   "healthcare": 77,
+   "daily": 85,
+   "transport": 19,
+   "green": 46
+  },
+  "score": 64,
+  "rank": 45
  },
  {
   "name": "Narsingi",
@@ -165,7 +228,16 @@
    "km": 9.07
   },
   "green_pct": 31.9,
-  "built_pct": 48.5
+  "built_pct": 48.5,
+  "parts": {
+   "schools": 67,
+   "healthcare": 55,
+   "daily": 65,
+   "transport": 0,
+   "green": 52
+  },
+  "score": 48,
+  "rank": 66
  },
  {
   "name": "Kokapet",
@@ -186,7 +258,16 @@
    "km": 10.01
   },
   "green_pct": 41.0,
-  "built_pct": 36.7
+  "built_pct": 36.7,
+  "parts": {
+   "schools": 51,
+   "healthcare": 36,
+   "daily": 65,
+   "transport": 0,
+   "green": 67
+  },
+  "score": 44,
+  "rank": 73
  },
  {
   "name": "Raidurg",
@@ -207,7 +288,16 @@
    "km": 5.31
   },
   "green_pct": 30.1,
-  "built_pct": 64.0
+  "built_pct": 64.0,
+  "parts": {
+   "schools": 70,
+   "healthcare": 86,
+   "daily": 69,
+   "transport": 53,
+   "green": 49
+  },
+  "score": 65,
+  "rank": 44
  },
  {
   "name": "Miyapur",
@@ -228,7 +318,16 @@
    "km": 1.87
   },
   "green_pct": 29.7,
-  "built_pct": 61.9
+  "built_pct": 61.9,
+  "parts": {
+   "schools": 79,
+   "healthcare": 76,
+   "daily": 82,
+   "transport": 73,
+   "green": 49
+  },
+  "score": 72,
+  "rank": 29
  },
  {
   "name": "Nallagandla",
@@ -249,7 +348,16 @@
    "km": 1.39
   },
   "green_pct": 48.5,
-  "built_pct": 38.4
+  "built_pct": 38.4,
+  "parts": {
+   "schools": 85,
+   "healthcare": 62,
+   "daily": 72,
+   "transport": 0,
+   "green": 80
+  },
+  "score": 60,
+  "rank": 50
  },
  {
   "name": "Chandanagar",
@@ -270,7 +378,16 @@
    "km": 1.07
   },
   "green_pct": 29.1,
-  "built_pct": 60.5
+  "built_pct": 60.5,
+  "parts": {
+   "schools": 78,
+   "healthcare": 78,
+   "daily": 81,
+   "transport": 0,
+   "green": 48
+  },
+  "score": 57,
+  "rank": 53
  },
  {
   "name": "Kukatpally",
@@ -291,7 +408,16 @@
    "km": 3.79
   },
   "green_pct": 23.5,
-  "built_pct": 73.3
+  "built_pct": 73.3,
+  "parts": {
+   "schools": 93,
+   "healthcare": 92,
+   "daily": 95,
+   "transport": 100,
+   "green": 39
+  },
+  "score": 84,
+  "rank": 3
  },
  {
   "name": "KPHB Colony",
@@ -312,7 +438,16 @@
    "km": 3.8
   },
   "green_pct": 26.3,
-  "built_pct": 70.5
+  "built_pct": 70.5,
+  "parts": {
+   "schools": 85,
+   "healthcare": 94,
+   "daily": 98,
+   "transport": 100,
+   "green": 43
+  },
+  "score": 84,
+  "rank": 2
  },
  {
   "name": "Nizampet",
@@ -333,7 +468,16 @@
    "km": 4.17
   },
   "green_pct": 29.2,
-  "built_pct": 62.3
+  "built_pct": 62.3,
+  "parts": {
+   "schools": 86,
+   "healthcare": 73,
+   "daily": 66,
+   "transport": 66,
+   "green": 48
+  },
+  "score": 68,
+  "rank": 36
  },
  {
   "name": "Jubilee Hills",
@@ -354,7 +498,16 @@
    "km": 3.15
   },
   "green_pct": 33.2,
-  "built_pct": 65.5
+  "built_pct": 65.5,
+  "parts": {
+   "schools": 71,
+   "healthcare": 95,
+   "daily": 85,
+   "transport": 100,
+   "green": 54
+  },
+  "score": 81,
+  "rank": 7
  },
  {
   "name": "Banjara Hills",
@@ -375,7 +528,16 @@
    "km": 2.55
   },
   "green_pct": 19.7,
-  "built_pct": 79.4
+  "built_pct": 79.4,
+  "parts": {
+   "schools": 87,
+   "healthcare": 100,
+   "daily": 86,
+   "transport": 73,
+   "green": 32
+  },
+  "score": 76,
+  "rank": 15
  },
  {
   "name": "Tolichowki",
@@ -396,7 +558,16 @@
    "km": 5.98
   },
   "green_pct": 28.3,
-  "built_pct": 69.5
+  "built_pct": 69.5,
+  "parts": {
+   "schools": 93,
+   "healthcare": 92,
+   "daily": 80,
+   "transport": 42,
+   "green": 46
+  },
+  "score": 71,
+  "rank": 32
  },
  {
   "name": "Tellapur",
@@ -417,7 +588,16 @@
    "km": 1.25
   },
   "green_pct": 41.3,
-  "built_pct": 23.7
+  "built_pct": 23.7,
+  "parts": {
+   "schools": 26,
+   "healthcare": 38,
+   "daily": 37,
+   "transport": 0,
+   "green": 68
+  },
+  "score": 34,
+  "rank": 84
  },
  {
   "name": "Kollur",
@@ -438,7 +618,16 @@
    "km": 4.55
   },
   "green_pct": 28.1,
-  "built_pct": 18.2
+  "built_pct": 18.2,
+  "parts": {
+   "schools": 32,
+   "healthcare": 0,
+   "daily": 14,
+   "transport": 0,
+   "green": 46
+  },
+  "score": 18,
+  "rank": 88
  },
  {
   "name": "Puppalaguda",
@@ -459,7 +648,16 @@
    "km": 7.81
   },
   "green_pct": 27.8,
-  "built_pct": 62.4
+  "built_pct": 62.4,
+  "parts": {
+   "schools": 90,
+   "healthcare": 70,
+   "daily": 80,
+   "transport": 0,
+   "green": 46
+  },
+  "score": 57,
+  "rank": 54
  },
  {
   "name": "Gopanpally",
@@ -480,7 +678,16 @@
    "km": 3.6
   },
   "green_pct": 61.0,
-  "built_pct": 23.6
+  "built_pct": 23.6,
+  "parts": {
+   "schools": 16,
+   "healthcare": 43,
+   "daily": 33,
+   "transport": 0,
+   "green": 100
+  },
+  "score": 38,
+  "rank": 81
  },
  {
   "name": "Serilingampally",
@@ -501,7 +708,16 @@
    "km": 1.41
   },
   "green_pct": 41.8,
-  "built_pct": 43.3
+  "built_pct": 43.3,
+  "parts": {
+   "schools": 56,
+   "healthcare": 58,
+   "daily": 40,
+   "transport": 0,
+   "green": 69
+  },
+  "score": 45,
+  "rank": 70
  },
  {
   "name": "Hafeezpet",
@@ -522,7 +738,16 @@
    "km": 0.23
   },
   "green_pct": 22.2,
-  "built_pct": 68.2
+  "built_pct": 68.2,
+  "parts": {
+   "schools": 65,
+   "healthcare": 73,
+   "daily": 67,
+   "transport": 69,
+   "green": 36
+  },
+  "score": 62,
+  "rank": 49
  },
  {
   "name": "Madinaguda",
@@ -543,7 +768,16 @@
    "km": 1.18
   },
   "green_pct": 26.9,
-  "built_pct": 57.5
+  "built_pct": 57.5,
+  "parts": {
+   "schools": 88,
+   "healthcare": 79,
+   "daily": 76,
+   "transport": 38,
+   "green": 44
+  },
+  "score": 65,
+  "rank": 42
  },
  {
   "name": "Lingampally",
@@ -564,7 +798,16 @@
    "km": 0.57
   },
   "green_pct": 34.5,
-  "built_pct": 57.8
+  "built_pct": 57.8,
+  "parts": {
+   "schools": 76,
+   "healthcare": 76,
+   "daily": 79,
+   "transport": 0,
+   "green": 57
+  },
+  "score": 58,
+  "rank": 52
  },
  {
   "name": "Gandipet",
@@ -585,7 +828,16 @@
    "km": 10.45
   },
   "green_pct": 42.6,
-  "built_pct": 21.8
+  "built_pct": 21.8,
+  "parts": {
+   "schools": 16,
+   "healthcare": 31,
+   "daily": 40,
+   "transport": 0,
+   "green": 70
+  },
+  "score": 31,
+  "rank": 85
  },
  {
   "name": "Film Nagar",
@@ -606,7 +858,16 @@
    "km": 5.01
   },
   "green_pct": 30.4,
-  "built_pct": 68.0
+  "built_pct": 68.0,
+  "parts": {
+   "schools": 70,
+   "healthcare": 97,
+   "daily": 76,
+   "transport": 76,
+   "green": 50
+  },
+  "score": 74,
+  "rank": 22
  },
  {
   "name": "Shaikpet",
@@ -627,7 +888,16 @@
    "km": 5.97
   },
   "green_pct": 22.7,
-  "built_pct": 73.8
+  "built_pct": 73.8,
+  "parts": {
+   "schools": 78,
+   "healthcare": 95,
+   "daily": 84,
+   "transport": 48,
+   "green": 37
+  },
+  "score": 68,
+  "rank": 37
  },
  {
   "name": "Moosapet",
@@ -648,7 +918,16 @@
    "km": 1.2
   },
   "green_pct": 27.7,
-  "built_pct": 66.6
+  "built_pct": 66.6,
+  "parts": {
+   "schools": 66,
+   "healthcare": 71,
+   "daily": 69,
+   "transport": 96,
+   "green": 45
+  },
+  "score": 69,
+  "rank": 35
  },
  {
   "name": "Ameenpur",
@@ -669,7 +948,16 @@
    "km": 3.6
   },
   "green_pct": 37.8,
-  "built_pct": 44.2
+  "built_pct": 44.2,
+  "parts": {
+   "schools": 45,
+   "healthcare": 53,
+   "daily": 40,
+   "transport": 0,
+   "green": 62
+  },
+  "score": 40,
+  "rank": 78
  },
  {
   "name": "Patancheru",
@@ -690,7 +978,16 @@
    "km": 2.59
   },
   "green_pct": 29.5,
-  "built_pct": 37.5
+  "built_pct": 37.5,
+  "parts": {
+   "schools": 42,
+   "healthcare": 38,
+   "daily": 67,
+   "transport": 0,
+   "green": 48
+  },
+  "score": 39,
+  "rank": 80
  },
  {
   "name": "Ameerpet",
@@ -711,7 +1008,16 @@
    "km": 1.0
   },
   "green_pct": 19.7,
-  "built_pct": 78.6
+  "built_pct": 78.6,
+  "parts": {
+   "schools": 95,
+   "healthcare": 92,
+   "daily": 100,
+   "transport": 100,
+   "green": 32
+  },
+  "score": 84,
+  "rank": 1
  },
  {
   "name": "Begumpet",
@@ -732,7 +1038,16 @@
    "km": 1.15
   },
   "green_pct": 29.5,
-  "built_pct": 63.2
+  "built_pct": 63.2,
+  "parts": {
+   "schools": 74,
+   "healthcare": 76,
+   "daily": 76,
+   "transport": 100,
+   "green": 48
+  },
+  "score": 75,
+  "rank": 18
  },
  {
   "name": "Somajiguda",
@@ -753,7 +1068,16 @@
    "km": 0.55
   },
   "green_pct": 18.2,
-  "built_pct": 62.6
+  "built_pct": 62.6,
+  "parts": {
+   "schools": 82,
+   "healthcare": 91,
+   "daily": 94,
+   "transport": 98,
+   "green": 30
+  },
+  "score": 79,
+  "rank": 12
  },
  {
   "name": "Khairatabad",
@@ -774,7 +1098,16 @@
    "km": 1.29
   },
   "green_pct": 14.4,
-  "built_pct": 66.4
+  "built_pct": 66.4,
+  "parts": {
+   "schools": 74,
+   "healthcare": 93,
+   "daily": 79,
+   "transport": 100,
+   "green": 24
+  },
+  "score": 74,
+  "rank": 23
  },
  {
   "name": "Himayatnagar",
@@ -795,7 +1128,16 @@
    "km": 2.01
   },
   "green_pct": 10.5,
-  "built_pct": 83.1
+  "built_pct": 83.1,
+  "parts": {
+   "schools": 100,
+   "healthcare": 95,
+   "daily": 98,
+   "transport": 93,
+   "green": 17
+  },
+  "score": 81,
+  "rank": 6
  },
  {
   "name": "Abids",
@@ -816,7 +1158,16 @@
    "km": 1.07
   },
   "green_pct": 10.3,
-  "built_pct": 88.5
+  "built_pct": 88.5,
+  "parts": {
+   "schools": 93,
+   "healthcare": 97,
+   "daily": 99,
+   "transport": 98,
+   "green": 17
+  },
+  "score": 81,
+  "rank": 5
  },
  {
   "name": "Mehdipatnam",
@@ -837,7 +1188,16 @@
    "km": 3.54
   },
   "green_pct": 24.6,
-  "built_pct": 74.4
+  "built_pct": 74.4,
+  "parts": {
+   "schools": 77,
+   "healthcare": 86,
+   "daily": 80,
+   "transport": 35,
+   "green": 40
+  },
+  "score": 64,
+  "rank": 46
  },
  {
   "name": "Panjagutta",
@@ -858,7 +1218,16 @@
    "km": 1.23
   },
   "green_pct": 15.5,
-  "built_pct": 76.4
+  "built_pct": 76.4,
+  "parts": {
+   "schools": 85,
+   "healthcare": 97,
+   "daily": 99,
+   "transport": 100,
+   "green": 25
+  },
+  "score": 81,
+  "rank": 8
  },
  {
   "name": "Nampally",
@@ -879,7 +1248,16 @@
    "km": 0.18
   },
   "green_pct": 9.9,
-  "built_pct": 89.2
+  "built_pct": 89.2,
+  "parts": {
+   "schools": 97,
+   "healthcare": 91,
+   "daily": 82,
+   "transport": 100,
+   "green": 16
+  },
+  "score": 77,
+  "rank": 13
  },
  {
   "name": "Koti",
@@ -900,7 +1278,16 @@
    "km": 1.73
   },
   "green_pct": 10.4,
-  "built_pct": 88.4
+  "built_pct": 88.4,
+  "parts": {
+   "schools": 84,
+   "healthcare": 96,
+   "daily": 97,
+   "transport": 100,
+   "green": 17
+  },
+  "score": 79,
+  "rank": 10
  },
  {
   "name": "Lakdikapul",
@@ -921,7 +1308,16 @@
    "km": 1.65
   },
   "green_pct": 14.1,
-  "built_pct": 78.2
+  "built_pct": 78.2,
+  "parts": {
+   "schools": 77,
+   "healthcare": 94,
+   "daily": 88,
+   "transport": 99,
+   "green": 23
+  },
+  "score": 76,
+  "rank": 17
  },
  {
   "name": "Masab Tank",
@@ -942,7 +1338,16 @@
    "km": 2.13
   },
   "green_pct": 14.5,
-  "built_pct": 84.7
+  "built_pct": 84.7,
+  "parts": {
+   "schools": 76,
+   "healthcare": 96,
+   "daily": 87,
+   "transport": 79,
+   "green": 24
+  },
+  "score": 72,
+  "rank": 28
  },
  {
   "name": "Narayanguda",
@@ -963,7 +1368,16 @@
    "km": 1.5
   },
   "green_pct": 11.2,
-  "built_pct": 87.1
+  "built_pct": 87.1,
+  "parts": {
+   "schools": 100,
+   "healthcare": 96,
+   "daily": 97,
+   "transport": 100,
+   "green": 18
+  },
+  "score": 82,
+  "rank": 4
  },
  {
   "name": "Musheerabad",
@@ -984,7 +1398,16 @@
    "km": 1.68
   },
   "green_pct": 11.3,
-  "built_pct": 84.0
+  "built_pct": 84.0,
+  "parts": {
+   "schools": 79,
+   "healthcare": 79,
+   "daily": 80,
+   "transport": 100,
+   "green": 19
+  },
+  "score": 71,
+  "rank": 31
  },
  {
   "name": "Amberpet",
@@ -1005,7 +1428,16 @@
    "km": 2.44
   },
   "green_pct": 22.8,
-  "built_pct": 72.7
+  "built_pct": 72.7,
+  "parts": {
+   "schools": 71,
+   "healthcare": 82,
+   "daily": 66,
+   "transport": 68,
+   "green": 37
+  },
+  "score": 65,
+  "rank": 41
  },
  {
   "name": "Vidyanagar",
@@ -1026,7 +1458,16 @@
    "km": 1.78
   },
   "green_pct": 18.0,
-  "built_pct": 80.9
+  "built_pct": 80.9,
+  "parts": {
+   "schools": 92,
+   "healthcare": 84,
+   "daily": 89,
+   "transport": 78,
+   "green": 30
+  },
+  "score": 75,
+  "rank": 21
  },
  {
   "name": "Secunderabad",
@@ -1047,7 +1488,16 @@
    "km": 0.15
   },
   "green_pct": 14.4,
-  "built_pct": 82.7
+  "built_pct": 82.7,
+  "parts": {
+   "schools": 85,
+   "healthcare": 87,
+   "daily": 88,
+   "transport": 100,
+   "green": 24
+  },
+  "score": 77,
+  "rank": 14
  },
  {
   "name": "Kompally",
@@ -1068,7 +1518,16 @@
    "km": 2.7
   },
   "green_pct": 49.7,
-  "built_pct": 29.8
+  "built_pct": 29.8,
+  "parts": {
+   "schools": 56,
+   "healthcare": 52,
+   "daily": 63,
+   "transport": 0,
+   "green": 81
+  },
+  "score": 50,
+  "rank": 65
  },
  {
   "name": "Alwal",
@@ -1089,7 +1548,16 @@
    "km": 0.69
   },
   "green_pct": 29.2,
-  "built_pct": 66.9
+  "built_pct": 66.9,
+  "parts": {
+   "schools": 75,
+   "healthcare": 64,
+   "daily": 78,
+   "transport": 0,
+   "green": 48
+  },
+  "score": 53,
+  "rank": 60
  },
  {
   "name": "Bowenpally",
@@ -1110,7 +1578,16 @@
    "km": 1.34
   },
   "green_pct": 36.0,
-  "built_pct": 60.4
+  "built_pct": 60.4,
+  "parts": {
+   "schools": 71,
+   "healthcare": 64,
+   "daily": 63,
+   "transport": 58,
+   "green": 59
+  },
+  "score": 63,
+  "rank": 47
  },
  {
   "name": "Sainikpuri",
@@ -1131,7 +1608,16 @@
    "km": 1.38
   },
   "green_pct": 23.5,
-  "built_pct": 72.4
+  "built_pct": 72.4,
+  "parts": {
+   "schools": 82,
+   "healthcare": 72,
+   "daily": 85,
+   "transport": 0,
+   "green": 39
+  },
+  "score": 56,
+  "rank": 56
  },
  {
   "name": "Malkajgiri",
@@ -1152,7 +1638,16 @@
    "km": 0.9
   },
   "green_pct": 25.6,
-  "built_pct": 72.2
+  "built_pct": 72.2,
+  "parts": {
+   "schools": 80,
+   "healthcare": 71,
+   "daily": 86,
+   "transport": 55,
+   "green": 42
+  },
+  "score": 67,
+  "rank": 39
  },
  {
   "name": "Tarnaka",
@@ -1173,7 +1668,16 @@
    "km": 1.83
   },
   "green_pct": 35.6,
-  "built_pct": 61.8
+  "built_pct": 61.8,
+  "parts": {
+   "schools": 82,
+   "healthcare": 66,
+   "daily": 76,
+   "transport": 90,
+   "green": 58
+  },
+  "score": 74,
+  "rank": 26
  },
  {
   "name": "Bachupally",
@@ -1194,7 +1698,16 @@
    "km": 6.03
   },
   "green_pct": 37.2,
-  "built_pct": 50.2
+  "built_pct": 50.2,
+  "parts": {
+   "schools": 54,
+   "healthcare": 49,
+   "daily": 48,
+   "transport": 10,
+   "green": 61
+  },
+  "score": 44,
+  "rank": 71
  },
  {
   "name": "ECIL",
@@ -1215,7 +1728,16 @@
    "km": 3.37
   },
   "green_pct": 28.6,
-  "built_pct": 68.5
+  "built_pct": 68.5,
+  "parts": {
+   "schools": 74,
+   "healthcare": 78,
+   "daily": 83,
+   "transport": 0,
+   "green": 47
+  },
+  "score": 56,
+  "rank": 55
  },
  {
   "name": "AS Rao Nagar",
@@ -1236,7 +1758,16 @@
    "km": 1.53
   },
   "green_pct": 11.4,
-  "built_pct": 85.4
+  "built_pct": 85.4,
+  "parts": {
+   "schools": 82,
+   "healthcare": 79,
+   "daily": 85,
+   "transport": 0,
+   "green": 19
+  },
+  "score": 53,
+  "rank": 61
  },
  {
   "name": "Kapra",
@@ -1257,7 +1788,16 @@
    "km": 2.68
   },
   "green_pct": 17.3,
-  "built_pct": 77.1
+  "built_pct": 77.1,
+  "parts": {
+   "schools": 77,
+   "healthcare": 78,
+   "daily": 87,
+   "transport": 0,
+   "green": 28
+  },
+  "score": 54,
+  "rank": 59
  },
  {
   "name": "Suchitra",
@@ -1278,7 +1818,16 @@
    "km": 1.41
   },
   "green_pct": 45.2,
-  "built_pct": 48.9
+  "built_pct": 48.9,
+  "parts": {
+   "schools": 56,
+   "healthcare": 62,
+   "daily": 66,
+   "transport": 0,
+   "green": 74
+  },
+  "score": 52,
+  "rank": 64
  },
  {
   "name": "Medchal",
@@ -1299,7 +1848,16 @@
    "km": 1.15
   },
   "green_pct": 32.7,
-  "built_pct": 29.2
+  "built_pct": 29.2,
+  "parts": {
+   "schools": 48,
+   "healthcare": 47,
+   "daily": 63,
+   "transport": 0,
+   "green": 54
+  },
+  "score": 42,
+  "rank": 76
  },
  {
   "name": "Shamirpet",
@@ -1320,7 +1878,16 @@
    "km": 9.24
   },
   "green_pct": 54.1,
-  "built_pct": 8.6
+  "built_pct": 8.6,
+  "parts": {
+   "schools": 26,
+   "healthcare": 0,
+   "daily": 0,
+   "transport": 0,
+   "green": 89
+  },
+  "score": 23,
+  "rank": 87
  },
  {
   "name": "Uppal",
@@ -1341,7 +1908,16 @@
    "km": 4.4
   },
   "green_pct": 29.5,
-  "built_pct": 65.2
+  "built_pct": 65.2,
+  "parts": {
+   "schools": 78,
+   "healthcare": 64,
+   "daily": 83,
+   "transport": 100,
+   "green": 48
+  },
+  "score": 75,
+  "rank": 20
  },
  {
   "name": "LB Nagar",
@@ -1362,7 +1938,16 @@
    "km": 7.02
   },
   "green_pct": 7.2,
-  "built_pct": 90.5
+  "built_pct": 90.5,
+  "parts": {
+   "schools": 74,
+   "healthcare": 82,
+   "daily": 87,
+   "transport": 100,
+   "green": 12
+  },
+  "score": 71,
+  "rank": 30
  },
  {
   "name": "Dilsukhnagar",
@@ -1383,7 +1968,16 @@
    "km": 3.49
   },
   "green_pct": 13.8,
-  "built_pct": 80.8
+  "built_pct": 80.8,
+  "parts": {
+   "schools": 93,
+   "healthcare": 85,
+   "daily": 93,
+   "transport": 100,
+   "green": 23
+  },
+  "score": 79,
+  "rank": 9
  },
  {
   "name": "Habsiguda",
@@ -1404,7 +1998,16 @@
    "km": 2.68
   },
   "green_pct": 45.0,
-  "built_pct": 50.0
+  "built_pct": 50.0,
+  "parts": {
+   "schools": 66,
+   "healthcare": 65,
+   "daily": 75,
+   "transport": 100,
+   "green": 74
+  },
+  "score": 76,
+  "rank": 16
  },
  {
   "name": "Nagole",
@@ -1425,7 +2028,16 @@
    "km": 6.59
   },
   "green_pct": 22.0,
-  "built_pct": 70.8
+  "built_pct": 70.8,
+  "parts": {
+   "schools": 66,
+   "healthcare": 71,
+   "daily": 76,
+   "transport": 78,
+   "green": 36
+  },
+  "score": 65,
+  "rank": 43
  },
  {
   "name": "Vanasthalipuram",
@@ -1446,7 +2058,16 @@
    "km": 9.83
   },
   "green_pct": 12.5,
-  "built_pct": 85.1
+  "built_pct": 85.1,
+  "parts": {
+   "schools": 78,
+   "healthcare": 77,
+   "daily": 83,
+   "transport": 43,
+   "green": 20
+  },
+  "score": 60,
+  "rank": 51
  },
  {
   "name": "Boduppal",
@@ -1467,7 +2088,16 @@
    "km": 4.11
   },
   "green_pct": 19.8,
-  "built_pct": 73.6
+  "built_pct": 73.6,
+  "parts": {
+   "schools": 71,
+   "healthcare": 63,
+   "daily": 67,
+   "transport": 39,
+   "green": 32
+  },
+  "score": 54,
+  "rank": 58
  },
  {
   "name": "Saroornagar",
@@ -1488,7 +2118,16 @@
    "km": 5.23
   },
   "green_pct": 5.2,
-  "built_pct": 91.0
+  "built_pct": 91.0,
+  "parts": {
+   "schools": 90,
+   "healthcare": 87,
+   "daily": 86,
+   "transport": 99,
+   "green": 9
+  },
+  "score": 74,
+  "rank": 25
  },
  {
   "name": "Kothapet",
@@ -1509,7 +2148,16 @@
    "km": 6.47
   },
   "green_pct": 14.4,
-  "built_pct": 81.2
+  "built_pct": 81.2,
+  "parts": {
+   "schools": 82,
+   "healthcare": 79,
+   "daily": 83,
+   "transport": 80,
+   "green": 24
+  },
+  "score": 70,
+  "rank": 34
  },
  {
   "name": "Ramanthapur",
@@ -1530,7 +2178,16 @@
    "km": 4.03
   },
   "green_pct": 27.8,
-  "built_pct": 66.7
+  "built_pct": 66.7,
+  "parts": {
+   "schools": 72,
+   "healthcare": 68,
+   "daily": 67,
+   "transport": 61,
+   "green": 46
+  },
+  "score": 63,
+  "rank": 48
  },
  {
   "name": "Hayathnagar",
@@ -1551,7 +2208,16 @@
    "km": 13.08
   },
   "green_pct": 27.3,
-  "built_pct": 55.0
+  "built_pct": 55.0,
+  "parts": {
+   "schools": 60,
+   "healthcare": 52,
+   "daily": 69,
+   "transport": 0,
+   "green": 45
+  },
+  "score": 45,
+  "rank": 69
  },
  {
   "name": "Ghatkesar",
@@ -1572,7 +2238,16 @@
    "km": 0.67
   },
   "green_pct": 51.3,
-  "built_pct": 23.9
+  "built_pct": 23.9,
+  "parts": {
+   "schools": 58,
+   "healthcare": 34,
+   "daily": 58,
+   "transport": 0,
+   "green": 84
+  },
+  "score": 47,
+  "rank": 67
  },
  {
   "name": "Pocharam",
@@ -1593,7 +2268,16 @@
    "km": 4.23
   },
   "green_pct": 59.3,
-  "built_pct": 19.9
+  "built_pct": 19.9,
+  "parts": {
+   "schools": 32,
+   "healthcare": 12,
+   "daily": 0,
+   "transport": 0,
+   "green": 97
+  },
+  "score": 28,
+  "rank": 86
  },
  {
   "name": "Attapur",
@@ -1614,7 +2298,16 @@
    "km": 4.71
   },
   "green_pct": 16.7,
-  "built_pct": 79.7
+  "built_pct": 79.7,
+  "parts": {
+   "schools": 75,
+   "healthcare": 75,
+   "daily": 83,
+   "transport": 1,
+   "green": 27
+  },
+  "score": 52,
+  "rank": 63
  },
  {
   "name": "Rajendranagar",
@@ -1635,7 +2328,16 @@
    "km": 3.39
   },
   "green_pct": 44.6,
-  "built_pct": 39.9
+  "built_pct": 39.9,
+  "parts": {
+   "schools": 32,
+   "healthcare": 49,
+   "daily": 33,
+   "transport": 0,
+   "green": 73
+  },
+  "score": 37,
+  "rank": 82
  },
  {
   "name": "Shamshabad",
@@ -1656,7 +2358,16 @@
    "km": 0.25
   },
   "green_pct": 48.6,
-  "built_pct": 29.7
+  "built_pct": 29.7,
+  "parts": {
+   "schools": 73,
+   "healthcare": 40,
+   "daily": 70,
+   "transport": 0,
+   "green": 80
+  },
+  "score": 53,
+  "rank": 62
  },
  {
   "name": "Charminar",
@@ -1677,7 +2388,16 @@
    "km": 0.87
   },
   "green_pct": 6.5,
-  "built_pct": 92.6
+  "built_pct": 92.6,
+  "parts": {
+   "schools": 93,
+   "healthcare": 82,
+   "daily": 89,
+   "transport": 59,
+   "green": 11
+  },
+  "score": 67,
+  "rank": 38
  },
  {
   "name": "Santosh Nagar",
@@ -1698,7 +2418,16 @@
    "km": 3.41
   },
   "green_pct": 16.9,
-  "built_pct": 81.8
+  "built_pct": 81.8,
+  "parts": {
+   "schools": 92,
+   "healthcare": 81,
+   "daily": 84,
+   "transport": 51,
+   "green": 28
+  },
+  "score": 67,
+  "rank": 40
  },
  {
   "name": "Chandrayangutta",
@@ -1719,7 +2448,16 @@
    "km": 1.1
   },
   "green_pct": 18.6,
-  "built_pct": 79.0
+  "built_pct": 79.0,
+  "parts": {
+   "schools": 70,
+   "healthcare": 61,
+   "daily": 61,
+   "transport": 0,
+   "green": 30
+  },
+  "score": 44,
+  "rank": 72
  },
  {
   "name": "Malakpet",
@@ -1740,7 +2478,16 @@
    "km": 1.74
   },
   "green_pct": 13.0,
-  "built_pct": 84.5
+  "built_pct": 84.5,
+  "parts": {
+   "schools": 82,
+   "healthcare": 83,
+   "daily": 83,
+   "transport": 100,
+   "green": 21
+  },
+  "score": 74,
+  "rank": 24
  },
  {
   "name": "Falaknuma",
@@ -1761,7 +2508,16 @@
    "km": 0.8
   },
   "green_pct": 8.9,
-  "built_pct": 90.3
+  "built_pct": 90.3,
+  "parts": {
+   "schools": 78,
+   "healthcare": 67,
+   "daily": 63,
+   "transport": 0,
+   "green": 15
+  },
+  "score": 45,
+  "rank": 68
  },
  {
   "name": "Kismatpur",
@@ -1782,7 +2538,16 @@
    "km": 4.43
   },
   "green_pct": 42.4,
-  "built_pct": 34.9
+  "built_pct": 34.9,
+  "parts": {
+   "schools": 26,
+   "healthcare": 44,
+   "daily": 29,
+   "transport": 0,
+   "green": 70
+  },
+  "score": 34,
+  "rank": 83
  },
  {
   "name": "Bandlaguda Jagir",
@@ -1803,7 +2568,16 @@
    "km": 5.8
   },
   "green_pct": 29.9,
-  "built_pct": 56.1
+  "built_pct": 56.1,
+  "parts": {
+   "schools": 58,
+   "healthcare": 58,
+   "daily": 50,
+   "transport": 0,
+   "green": 49
+  },
+  "score": 43,
+  "rank": 74
  },
  {
   "name": "Aramghar",
@@ -1824,7 +2598,16 @@
    "km": 4.04
   },
   "green_pct": 33.6,
-  "built_pct": 57.1
+  "built_pct": 57.1,
+  "parts": {
+   "schools": 67,
+   "healthcare": 62,
+   "daily": 23,
+   "transport": 0,
+   "green": 55
+  },
+  "score": 41,
+  "rank": 77
  },
  {
   "name": "Budvel",
@@ -1845,6 +2628,15 @@
    "km": 3.26
   },
   "green_pct": 50.2,
-  "built_pct": 32.3
+  "built_pct": 32.3,
+  "parts": {
+   "schools": 32,
+   "healthcare": 46,
+   "daily": 33,
+   "transport": 0,
+   "green": 82
+  },
+  "score": 39,
+  "rank": 79
  }
 ]

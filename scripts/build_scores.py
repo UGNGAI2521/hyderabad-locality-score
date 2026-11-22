@@ -62,6 +62,24 @@ def worldcover(refresh):
         return src.read(1), src.transform
 
 
+def score(out):
+    """Add each locality's measure scores (0-100), its default score (equal weights) and rank.
+    Counts use a log scale against the best locality, so one huge count doesn't flatten the rest; metro scores 100
+    within 500 m and 0 beyond 5 km; green cover scales against the greenest. The page re-weights these parts as visitors choose."""
+    half_up = lambda x: math.floor(x + 0.5)  # the page rounds with Math.round
+    clip = lambda x: min(1.0, max(0.0, x))
+    mx = {k: max(o["counts"][k] for o in out) for k in ("schools", "healthcare", "daily")}
+    green_max = max(o["green_pct"] for o in out)
+    for o in out:
+        p = {k: half_up(100 * clip(math.log1p(o["counts"][k]) / math.log1p(mx[k]) if mx[k] else 0)) for k in mx}
+        p["transport"] = half_up(100 * clip((5 - o["metro"]["km"]) / 4.5))
+        p["green"] = half_up(100 * clip(o["green_pct"] / green_max))
+        o["parts"], o["score"] = p, half_up(sum(p.values()) / len(p))
+    for i, o in enumerate(sorted(out, key=lambda o: (-o["score"], o["name"].lower()))):
+        o["rank"] = i + 1
+    assert all(0 <= v <= 100 for o in out for v in o["parts"].values()) and max(o["score"] for o in out) <= 100
+
+
 def main(refresh=False):
     os.makedirs(CACHE, exist_ok=True)
     centres = [{k: d[k] for k in ("name", "zone", "lat", "lon")} for d in json.load(open("data/centres.json"))]
@@ -110,6 +128,7 @@ def main(refresh=False):
 
     # an outer village can truly map no clinic; a broken download maps none anywhere
     assert len(out) == len(centres) and sum(o["counts"]["healthcare"] > 0 for o in out) >= 0.9 * len(out)
+    score(out)
     json.dump(out, open("data/localities.json", "w"), indent=1)
 
 

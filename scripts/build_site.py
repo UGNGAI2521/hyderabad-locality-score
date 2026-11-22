@@ -11,3 +11,6 @@ html = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 assert html.count("<title>") == 1 and "<header" in html
 open("index.html", "w", encoding="utf-8").write(html)
 print("index.html", len(html) // 1024, "KB")
+
+from build_pages import main as build_pages  # one page per locality, the locality index and sitemap.xml
+build_pages()

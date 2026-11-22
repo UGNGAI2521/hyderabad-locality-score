@@ -560,6 +560,19 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     </div>
   </section>
 
+  <section class="band tint" id="weights" aria-labelledby="w-h">
+    <div class="wrap wgrid">
+      <div>
+        <p class="eyebrow">Transparent algorithm</p>
+        <h2 id="w-h">Customise what matters most</h2>
+        <p class="sub">By default every measure weighs the same, 20% each. Drag a slider to say what matters to you and the ranking, the map and every score re-order as you drag. <a href="#method">How the score works</a>.</p>
+        <div class="wbox2"><div id="wt"></div></div>
+        <div class="loc-tools" style="margin:14px 0 0"><span class="fine">Quick presets, one measure counts three times:</span><div class="chips" id="pri-locs"></div></div>
+      </div>
+      <div class="rankcard"><div class="rc-h"><b>Live weighted ranking</b><span class="rc-pill">Top 10 · score out of 100</span></div><ol id="rank-bars"></ol></div>
+    </div>
+  </section>
+
   <section class="band" id="localities" aria-labelledby="loc-h">
     <div class="wrap">
       <div class="head"><div><p class="eyebrow">Interactive directory</p><h2 id="loc-h">Hyderabad locality scores</h2><p>Every locality gets an early score out of 100 from 5 of the 21 measures we plan, measured around its centre: schools and daily needs within 1 km (a short walk), clinics and green cover within 2 km, places counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery. <a href="#method">How the score works</a>.</p></div>
@@ -574,19 +587,6 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <div class="locs" id="locs"></div>
       <div class="empty-note" id="empty-dir" hidden><b>No localities match</b><span>Try a different search or clear the filter.</span><button class="btn" type="button" data-clear>Clear search and filters</button></div>
       <div class="more-row"><button class="btn" id="more" type="button" data-more hidden></button></div>
-    </div>
-  </section>
-
-  <section class="band tint" id="weights" aria-labelledby="w-h">
-    <div class="wrap wgrid">
-      <div>
-        <p class="eyebrow">Transparent algorithm</p>
-        <h2 id="w-h">Customise what matters most</h2>
-        <p class="sub">By default every measure weighs the same, 20% each. Drag a slider to say what matters to you and the ranking, the map and every score re-order as you drag. <a href="#method">How the score works</a>.</p>
-        <div class="wbox2"><div id="wt"></div></div>
-        <div class="loc-tools" style="margin:14px 0 0"><span class="fine">Quick presets, one measure counts three times:</span><div class="chips" id="pri-locs"></div></div>
-      </div>
-      <div class="rankcard"><div class="rc-h"><b>Live weighted ranking</b><span class="rc-pill">Top 10 · score out of 100</span></div><ol id="rank-bars"></ol></div>
     </div>
   </section>
 
@@ -663,6 +663,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <h3>About Locality Score</h3>
       <p class="co">We help you choose the right area in Hyderabad to live, work, buy or open a business. The right area matters more than the right flat. Scores come only from open, official and satellite data, every number shows its source and date, and where there is no reliable source we say "not enough data" instead of guessing. No brokers, no listings, no paid placements.</p>
       <p class="co"><a href="https://github.com/UGNGAI2521/hyderabad-locality-score/issues/new" target="_blank" rel="noopener">Report a problem or suggest a locality</a></p>
+      <p class="co"><a href="locality/">All localities, one page each</a></p>
       <p class="fine co">Data last updated 21 Nov 2026 (Overture Maps release of 18 Nov 2026).</p>
       <p class="lo">A broker-free property search for Hyderabad. Owners list directly, and every listing is checked before it goes live. Listings marked Example are not real offers, and their prices are illustrative.</p>
     </div>
@@ -724,7 +725,8 @@ const ART = {
 const art = t => `<span class="art" aria-hidden="true"><svg viewBox="0 0 64 64">${ART[t] || ART.flat}</svg></span>`;
 const TYPE_IMG = { flat: "cat-flat", house: "", villa: "", plot: "cat-plot", office: "cat-commercial", shop: "cat-commercial" };
 // every locality photo is keyed "loc-<name in lower case, dashes>" in data/photos.json
-const locImg = name => "loc-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+const slugOf = name => name.toLowerCase().replace(/[^a-z0-9]+/g, "-");  // also the locality page's folder (scripts/build_pages.py)
+const locImg = name => "loc-" + slugOf(name);
 // counts score on a log scale against the best locality; metro gets full marks within 500 m and none beyond 5 km; green cover scales against the greenest
 const FACTORS = {
   schools: { label: "Schools", value: d => d.counts.schools, show: v => v },
@@ -798,14 +800,10 @@ function photosFor(l) {
 }
 
 /* ---------- locality scores (log scale so one huge count doesn't flatten the rest) ---------- */
+// measure scores (0 to 100) come from scripts/build_scores.py; the page only re-weights them
 function scoreLocalities(raw) {
   const rows = raw.map(d => ({ ...d, vals: Object.fromEntries(Object.entries(FACTORS).map(([k, f]) => [k, f.value(d)])) }));
-  const max = Object.fromEntries(Object.keys(FACTORS).map(k => [k, Math.max(...rows.map(r => r.vals[k]))]));
-  const part = (k, v) => { const f = FACTORS[k], x = f.score ? f.score(v, max[k]) : max[k] ? Math.log1p(v) / Math.log1p(max[k]) : 0; return Math.round(100 * Math.min(1, Math.max(0, x))); };
-  for (const r of rows) {
-    r.parts = Object.fromEntries(Object.keys(FACTORS).map(k => [k, part(k, r.vals[k])]));
-    r.best = Object.entries(r.parts).sort((a, b) => b[1] - a[1])[0][0];
-  }
+  for (const r of rows) r.best = Object.entries(r.parts).sort((a, b) => b[1] - a[1])[0][0];
   return Object.fromEntries(rows.map(r => [r.name, r]));
 }
 // a measure the visitor picked counts three times as much as the others
@@ -1095,7 +1093,7 @@ function openLocality(name) {
     ${img(key) ? `<div class="gallery">${imgTag(key, CREDITS[key].caption || name)}</div>` : ""}
     <div class="dbody">${scorePanel(L)}${notesFor(name)}
       <div class="acts"><button class="btn" type="button" data-cmp="${esc(name)}" aria-pressed="${CMP.includes(name)}">${CMP.includes(name) ? "Remove from compare" : "Add to compare"}</button>
-        <button class="btn" type="button" data-share>Copy link to ${esc(name)}</button></div>
+        <button class="btn" type="button" data-share>Copy link to ${esc(name)}</button><a class="btn" href="locality/${slugOf(name)}/">Full page for ${esc(name)}</a></div>
       <button class="btn primary lo" type="button" data-see="${esc(name)}">See ${n} ${REAL ? "" : "example "}${n === 1 ? "listing" : "listings"} in ${esc(name)}</button>
       <p class="fine">${creditLine(key)}</p></div>`;
   openLayer($("drawer"));

@@ -16,6 +16,8 @@ Merged to `main` and live:
 
 Circles (22 Nov): schools and daily needs within 1 km, healthcare and green cover within 2 km (`R_NEAR`, `R_WIDE` in `build_scores.py`), chosen after a 1 km vs 2 km comparison.
 
+Locality pages (22 Nov): `build_scores.py` now writes each locality's measure scores (`parts`), default `score` and `rank`; the page only re-weights them. `build_site.py` also runs `build_pages.py`, which writes `locality/<slug>/index.html`, `locality/index.html` and `sitemap.xml` (submit it in Google Search Console). "Customise what matters most" now sits right under the hero.
+
 Next, in order: analytics and a custom domain (need the owner's accounts), move scoring into `build_scores.py`, one static page per locality, then new measures (bus stops, parks).
 
 ## The idea
@@ -69,7 +71,7 @@ Rebuild (needs `pip install pyarrow rasterio numpy shapely`):
 python3 scripts/geocode.py        # only looks up names missing from data/centres.json
 python3 scripts/build_scores.py   # writes data/localities.json (add --refresh for new data)
 python3 scripts/build_basemap.py  # writes data/basemap.geojson
-python3 scripts/build_site.py     # wraps src/page.html into index.html, ALWAYS run after editing the page
+python3 scripts/build_site.py     # wraps src/page.html into index.html and writes the locality pages and sitemap; ALWAYS run after editing the page or data
 ```
 Edit `src/page.html`, never `index.html`. Overture and ESA are read from public AWS S3 through the session proxy.
 
