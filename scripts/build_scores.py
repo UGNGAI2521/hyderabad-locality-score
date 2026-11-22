@@ -36,7 +36,7 @@ def km(lat1, lon1, lat2, lon2):
 
 
 def overture(theme, typ, columns, refresh):
-    path = f"{CACHE}/{theme}-{typ}-{W}-{S}-{E}-{N}.parquet"  # a new box never reuses an old cache
+    path = f"{CACHE}/{theme}-{typ}-{REL}-{W}-{S}-{E}-{N}.parquet"  # a new release or box never reuses an old cache
     if refresh or not os.path.exists(path):
         os.environ.setdefault("AWS_CA_BUNDLE", CA if os.path.exists(CA) else "")
         s3 = fs.S3FileSystem(anonymous=True, region="us-west-2", proxy_options=os.environ.get("HTTPS_PROXY") or None, scheme="https")

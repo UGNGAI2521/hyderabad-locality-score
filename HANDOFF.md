@@ -18,6 +18,8 @@ Circles (22 Nov): schools and daily needs within 1 km, healthcare and green cove
 
 Locality pages (22 Nov): `build_scores.py` now writes each locality's measure scores (`parts`), default `score` and `rank`; the page only re-weights them. `build_site.py` also runs `build_pages.py`, which writes `locality/<slug>/index.html`, `locality/index.html` and `sitemap.xml` (submit it in Google Search Console). "Customise what matters most" now sits right under the hero.
 
+Checks and refresh (22 Nov): `.github/workflows/check.yml` runs on every push: rebuilds and fails if built files are stale, then `scripts/check.py` (data, photo credits, pages, links) and `scripts/smoke.js` (browser). Push to a branch, wait for green, then merge to `main`. `.github/workflows/refresh.yml` runs on the 1st of each month (or by hand from the Actions tab): `scripts/refresh.py` switches to the newest Overture release, rebuilds everything, updates the dates the site shows, and opens a pull request with the score changes for the owner to merge. If Actions may not open pull requests (Settings > Actions > General), it leaves a `data-refresh-YYYY-MM` branch instead.
+
 Next, in order: analytics and a custom domain (need the owner's accounts), move scoring into `build_scores.py`, one static page per locality, then new measures (bus stops, parks).
 
 ## The idea

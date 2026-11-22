@@ -1,0 +1,24 @@
+# Runs on every push and pull request. Merge to main (which publishes the site) only when this is green.
+name: Checks
+on: [push, pull_request]
+permissions: { contents: read }
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Built files are up to date with src/page.html and the data
+        run: python3 scripts/build_site.py && git diff --exit-code
+      - name: Data, photos, pages and links
+        run: python3 scripts/check.py
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - name: Browser smoke test
+        run: |
+          npm install --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium
+          python3 -m http.server 8765 &
+          sleep 2
+          node scripts/smoke.js

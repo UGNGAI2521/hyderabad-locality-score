@@ -22,6 +22,8 @@ When `LISTINGS` is on, owners sign in by email and post listings with photos; bu
 | `data/listings.json` | Example listings, shown only while no owner listing is live |
 | `supabase/schema.sql` | Tables, row-level security and photo storage for owner listings and enquiries |
 | `locality/`, `sitemap.xml` | One static page per locality, an index of all of them and the sitemap, written by `scripts/build_pages.py` (run from `build_site.py`) |
+| `scripts/check.py`, `scripts/smoke.js` | Checks run by GitHub Actions on every push: data, photo credits, pages, links, and a browser smoke test |
+| `scripts/refresh.py` | Monthly refresh (GitHub Actions, 1st of the month): newest Overture release, rebuild, pull request for review |
 | `supabase/community.sql` | Tables and row-level security for resident notes (read only once marked live) and the early-access list. Not applied yet: run it once in the Supabase SQL editor to switch both on |
 | `supabase/config.js` | Supabase project URL and publishable key |
 | `data/photos.json` | Each photo's author, licence, Wikimedia address, and whether a local copy exists |

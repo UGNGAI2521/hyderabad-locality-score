@@ -1,0 +1,29 @@
+# Once a month: if Overture has a newer release, rebuild everything on a new branch and open a pull request.
+# Nothing is published until the owner reviews and merges it.
+name: Monthly data refresh
+on:
+  schedule: [{ cron: "23 3 1 * *" }]   # 03:23 UTC on the 1st; Overture usually releases in the third week of the month
+  workflow_dispatch:
+permissions: { contents: write, pull-requests: write }
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pyarrow rasterio numpy shapely
+      - name: Rebuild from the newest Overture release
+        shell: bash   # bash here also means pipefail, so a failed refresh stops the run
+        run: python3 scripts/refresh.py | tee /tmp/summary.md
+      - name: Check, then open a pull request
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          if git diff --quiet; then echo "Nothing changed."; exit 0; fi
+          python3 scripts/check.py
+          b="data-refresh-$(date +%Y-%m)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$b" && git add -A && git commit -qm "Monthly data refresh $(date +%Y-%m)" && git push -u origin "$b"
+          gh pr create --base main --head "$b" --title "Monthly data refresh $(date +%Y-%m)" --body-file /tmp/summary.md \
+            || echo "::warning::Branch $b was pushed, but the pull request could not be opened. Open it by hand, or allow Actions to create pull requests in Settings > Actions > General."
