@@ -16,7 +16,8 @@ from rasterio.windows import from_bounds
 
 REL = "2026-11-18.0"
 W, S, E, N = 78.20, 17.15, 78.75, 17.70  # Hyderabad box, wider than every 2 km circle
-R_KM = 2.0
+R_NEAR = 1.0  # km: schools and daily needs, roughly a 12-15 minute walk
+R_WIDE = 2.0  # km: healthcare and green cover, which people travel a little further for
 MIN_CONFIDENCE = 0.5  # Overture places below this are often stale or duplicate listings
 CACHE = ".cache"
 CA = "/root/.ccr/ca-bundle.crt"
@@ -85,21 +86,23 @@ def main(refresh=False):
     px_deg, inv = tr.a, ~tr
     out = []
     for c in centres:
-        near = [p for p in places if km(c["lat"], c["lon"], *where(p["bbox"])) <= R_KM]
+        dist = [(km(c["lat"], c["lon"], *where(p["bbox"])), p) for p in places]
+        near = [p for d, p in dist if d <= R_NEAR]
+        wide = [p for d, p in dist if d <= R_WIDE]
         def count(test): return sum(1 for p in near if test(cat(p)))
         def nearest(pts):
             n, la, lo = min(pts, key=lambda s: km(c["lat"], c["lon"], s[1], s[2]))
             return {"name": n, "km": round(km(c["lat"], c["lon"], la, lo), 2)}
         # equirectangular distance is exact enough at 2 km for a pixel mask
         col, row = (int(v) for v in inv * (c["lon"], c["lat"]))
-        h = int(R_KM / 111.2 / px_deg) + 2  # half-width of a window that holds the circle
+        h = int(R_WIDE / 111.2 / px_deg) + 2  # half-width of a window that holds the circle
         assert h <= row and h <= col and row + h <= cover.shape[0] and col + h <= cover.shape[1], f"{c['name']} is too close to the data box edge; widen W, S, E, N"
         win = cover[row - h:row + h, col - h:col + h]
         rr, cc = np.indices(win.shape)
         lons, lats = tr * (cc + col - h + 0.5, rr + row - h + 0.5)
-        px = win[((lats - c["lat"]) * 111.2) ** 2 + ((lons - c["lon"]) * 111.2 * math.cos(math.radians(c["lat"]))) ** 2 <= R_KM ** 2]
+        px = win[((lats - c["lat"]) * 111.2) ** 2 + ((lons - c["lon"]) * 111.2 * math.cos(math.radians(c["lat"]))) ** 2 <= R_WIDE ** 2]
         out.append({**c,
-                    "counts": {"schools": count(SCHOOLS.__contains__), "healthcare": count(HEALTH.__contains__),
+                    "counts": {"schools": count(SCHOOLS.__contains__), "healthcare": sum(1 for p in wide if cat(p) in HEALTH),
                                "daily": count(lambda t: t in DAILY or t.endswith("grocery_store"))},
                     "metro": nearest(metro), "rail": nearest(rail),
                     "green_pct": round(100 * np.isin(px, GREEN).mean(), 1), "built_pct": round(100 * (px == 50).mean(), 1)})

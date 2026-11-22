@@ -14,6 +14,8 @@ Merged to `main` and live:
 - "Data last updated" in the footer is typed by hand; change it when the data is rebuilt.
 - The `hyderabad-locality-score` environment now also allows share.gemini.google, gemini.google.com, www.gstatic.com, gemini.gstatic.com and one *.scf.usercontent.goog host (added once to read the mock-up); they can be removed.
 
+Circles (22 Nov): schools and daily needs within 1 km, healthcare and green cover within 2 km (`R_NEAR`, `R_WIDE` in `build_scores.py`), chosen after a 1 km vs 2 km comparison.
+
 Next, in order: analytics and a custom domain (need the owner's accounts), move scoring into `build_scores.py`, one static page per locality, then new measures (bus stops, parks).
 
 ## The idea
@@ -33,7 +35,7 @@ We help people choose the right **area** in Hyderabad to live, work, buy propert
 ## What the site does now
 
 - **88 localities in 5 zones:** West 33, Central 16, North 14, East 13, South 12 (`data/centres.json`).
-- **Score out of 100 from 5 measures within 2 km of each centre:** schools, healthcare, daily needs (groceries, pharmacies, banks/ATMs), distance to the nearest *operating* metro station, and green cover.
+- **Score out of 100 from 5 measures around each centre (1 km for schools and daily needs, 2 km for healthcare and green):** schools, healthcare, daily needs (groceries, pharmacies, banks/ATMs), distance to the nearest *operating* metro station, and green cover.
 - **"What matters to you" chips** re-rank the list (a picked measure counts 3×). There's a zone filter.
 - **The map draws itself** (MapLibre plus `data/basemap.geojson`: main roads, lakes, metro and rail). No tile service, so it also shows in the claude.ai preview.
 - Each locality opens a panel with its numbers, its sources and the **16 "not enough data" components**.

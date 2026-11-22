@@ -562,7 +562,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 
   <section class="band" id="localities" aria-labelledby="loc-h">
     <div class="wrap">
-      <div class="head"><div><p class="eyebrow">Interactive directory</p><h2 id="loc-h">Hyderabad locality scores</h2><p>Every locality gets an early score out of 100 from 5 of the 21 measures we plan, counted within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery. <a href="#method">How the score works</a>.</p></div>
+      <div class="head"><div><p class="eyebrow">Interactive directory</p><h2 id="loc-h">Hyderabad locality scores</h2><p>Every locality gets an early score out of 100 from 5 of the 21 measures we plan, measured around its centre: schools and daily needs within 1 km (a short walk), clinics and green cover within 2 km, places counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery. <a href="#method">How the score works</a>.</p></div>
         <button class="btn amber cm" type="button" data-review-open>Add a resident note</button></div>
       <div class="dtools"><label class="search"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
         <input id="q" type="search" placeholder="Search Gachibowli, Jubilee Hills, Raidurg metro…" aria-label="Search localities" autocomplete="off"></label>
@@ -605,7 +605,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <p>The score is an <b>early score</b>: it uses 5 of the 21 measures we plan. The other 16 show "not enough data" until we find an open, official source for them.</p>
       <h3>What is counted</h3>
       <ul>
-        <li><b>Area:</b> a 2 km circle around each locality's centre point. This is not an official ward boundary. The new 300-ward map has no published boundaries yet, so every locality gets the same size circle. We will switch once official boundaries are out.</li>
+        <li><b>Area:</b> circles around each locality's centre point: 1 km (roughly a 12 to 15 minute walk) for schools and daily needs, and 2 km for clinics and green cover, which people travel a little further for. These are not official ward boundaries. The new 300-ward map has no published boundaries yet, so every locality gets the same size circles. We will switch once official boundaries are out.</li>
         <li><b>Schools, healthcare, daily needs:</b> places from Overture Maps (release of 18 Nov 2026) inside the circle. Daily needs means groceries, supermarkets, pharmacies, banks and ATMs. Places marked closed, or listed with confidence below 0.5, are left out. Counts show how many places are mapped in open data, not how good they are. Outer areas are mapped less fully, so their counts can run low.</li>
         <li><b>Metro access:</b> straight-line distance to the nearest operating metro station. Stations still under construction are left out.</li>
         <li><b>Green cover:</b> share of land in the circle under trees, shrubs, grass or wetland, from ESA WorldCover 2021 satellite land cover at 10 m.</li>
@@ -1000,8 +1000,8 @@ function scorePanel(L) {
       <h3>${esc(L.name)} early score</h3><span class="price num" style="color:var(--lake)">${L.score}<small> / 100</small></span></div>
     ${radar(L)}
     <div class="bars">${Object.entries(FACTORS).map(([k, f]) => `<div class="barrow"><span>${f.label}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span><span class="num">${f.show(L.vals[k])}</span></div>`).join("")}</div>
-    <p class="fine">Within 2 km of the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools; ${L.counts.healthcare} hospitals and clinics; ${L.counts.daily} groceries, pharmacies, banks and ATMs. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Rank ${L.rank} of ${Object.keys(locs).length}.</p>
-    <p class="fine">This is an early score from ${PARTIAL}. It uses a 2 km circle around a centre point we picked, not an official ward boundary: official boundaries for the new 300 wards aren't published yet. Counts show how many schools and clinics are mapped in open data, not how good they are, and outer areas are mapped less fully.</p>
+    <p class="fine">Around the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools within 1 km; ${L.counts.healthcare} hospitals and clinics within 2 km; ${L.counts.daily} groceries, pharmacies, banks and ATMs within 1 km. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Rank ${L.rank} of ${Object.keys(locs).length}.</p>
+    <p class="fine">This is an early score from ${PARTIAL}. It uses circles around a centre point we picked (1 km for schools and daily needs, 2 km for clinics and green cover), not an official ward boundary: official boundaries for the new 300 wards aren't published yet. Counts show how many schools and clinics are mapped in open data, not how good they are, and outer areas are mapped less fully.</p>
     ${L.parts.transport < 30 ? `<p class="fine"><b>Read with care:</b> this score is held down mainly by the distance to the nearest operating metro station (${L.metro.km.toFixed(1)} km). Metro Phase 2 isn't approved yet, and future infrastructure is not yet scored.</p>` : ""}
     <p class="fine">${SOURCES} Places listed with low confidence are left out. <a href="#method" data-close>How the score works</a>.</p>
     <details class="nd"><summary>${NO_DATA.length} of ${NO_DATA.length + Object.keys(FACTORS).length} measures: not enough data yet</summary>
@@ -1070,7 +1070,7 @@ function openCompare() {
         ${line("Rank", L => -L.rank, L => `${L.rank} of ${Object.keys(locs).length}`)}
         ${Object.entries(FACTORS).map(([k, f]) => line(f.label, L => L.parts[k], L => `<span class="num">${f.show(L.vals[k])}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span>`)).join("")}
         ${line("Nearest metro", L => -L.metro.km, L => `${esc(L.metro.name)}, ${L.metro.km.toFixed(1)} km`)}</tbody></table></div>
-      <p class="fine">The best value in each row is highlighted. Counts are within 2 km of each centre and show how many places there are, not how good they are. This is an early score from ${PARTIAL}. <a href="#method" data-close>How the score works</a>.</p>
+      <p class="fine">The best value in each row is highlighted. Schools and daily needs are counted within 1 km of each centre, clinics within 2 km; counts show how many places are mapped, not how good they are. This is an early score from ${PARTIAL}. <a href="#method" data-close>How the score works</a>.</p>
       <p class="fine">${SOURCES}</p>
       <div class="acts"><button class="btn" type="button" data-share>Copy link to this comparison</button></div></div>`;
   openLayer($("drawer"));
@@ -1367,8 +1367,8 @@ async function loadLive() {
 
 /* ---------- how it works ---------- */
 const HOW = {
-  choose: [["Pick what matters", "Choose the measures you care about most: schools, healthcare, metro access, green cover or daily needs."], ["Compare localities", "The ranking updates straight away, and the map shows every locality with its score."], ["Check the details", "Open a locality for its numbers: schools and clinics within 2 km, the nearest metro, how green it is, and where each figure comes from."]],
-  seek: [["Search", "Pick buy or rent and the kind of property, then filter by budget, rate per sq ft, bedrooms, locality and locality score."], ["Compare localities", "Check each locality's score and what's within 2 km before you shortlist."], ["Contact the owner", "Message owners directly and arrange a visit. No broker in between."]],
+  choose: [["Pick what matters", "Choose the measures you care about most: schools, healthcare, metro access, green cover or daily needs."], ["Compare localities", "The ranking updates straight away, and the map shows every locality with its score."], ["Check the details", "Open a locality for its numbers: schools and shops within 1 km, clinics within 2 km, the nearest metro, how green it is, and where each figure comes from."]],
+  seek: [["Search", "Pick buy or rent and the kind of property, then filter by budget, rate per sq ft, bedrooms, locality and locality score."], ["Compare localities", "Check each locality's score and what's nearby before you shortlist."], ["Contact the owner", "Message owners directly and arrange a visit. No broker in between."]],
   own: [["Describe your property", "Type, locality, size and price. It takes a few minutes."], ["Add photos", "Clear photos of every room get far more enquiries."], ["Hear from people", "Enquiries come straight to you from people looking in your locality."]],
 };
 function drawHow(k) {

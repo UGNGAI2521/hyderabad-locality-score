@@ -43,7 +43,7 @@ Photos without a local copy in `media/` load directly from Wikimedia Commons; if
 
 ## Data notes
 
-- Everything is measured within 2 km of each locality centre (centres geocoded with OpenStreetMap Nominatim). Equal circles keep the comparison fair until GHMC publishes the new 300-ward map; the old 150-ward polygons in OpenStreetMap are not official and some look mislabelled, so they are not used.
+- Schools and daily needs are counted within 1 km of each locality centre (a short walk); clinics and green cover within 2 km. Equal circles keep the comparison fair until GHMC publishes the new 300-ward map; the old 150-ward polygons in OpenStreetMap are not official and some look mislabelled, so they are not used.
 - Schools, healthcare and daily needs: places from [Overture Maps](https://overturemaps.org), release 2026-11-18.0 (CDLA Permissive 2.0), confidence 0.5 or higher.
 - Metro and MMTS stations: © OpenStreetMap contributors (ODbL), read from Overture's base layer.
 - Green cover: [ESA WorldCover 2021 v200](https://esa-worldcover.org), 10 m land cover (CC BY 4.0); trees, shrubland, grassland and wetland.
