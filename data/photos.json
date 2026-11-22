@@ -495,6 +495,286 @@
   "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Malakpet_metro_station.jpg/500px-Malakpet_metro_station.jpg",
   "local": true
  },
+ "loc-tellapur": {
+  "file": "File:2022 Tellapur railway station.jpg",
+  "author": "Adityamadhav83",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:2022_Tellapur_railway_station.jpg",
+  "caption": "Tellapur railway station",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/2022_Tellapur_railway_station.jpg/960px-2022_Tellapur_railway_station.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/2022_Tellapur_railway_station.jpg/500px-2022_Tellapur_railway_station.jpg",
+  "local": true
+ },
+ "loc-gopanpally": {
+  "file": "File:University of Hyderabad.jpg",
+  "author": "rmb",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:University_of_Hyderabad.jpg",
+  "caption": "University of Hyderabad entrance, next to Gopanpally",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/University_of_Hyderabad.jpg/960px-University_of_Hyderabad.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/University_of_Hyderabad.jpg/500px-University_of_Hyderabad.jpg",
+  "local": true
+ },
+ "loc-hafeezpet": {
+  "file": "File:GenPact Hafeezpet hyd.jpg",
+  "author": "Curvasingh",
+  "license": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:GenPact_Hafeezpet_hyd.jpg",
+  "caption": "Office towers on the Hafeezpet road",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/GenPact_Hafeezpet_hyd.jpg/960px-GenPact_Hafeezpet_hyd.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/GenPact_Hafeezpet_hyd.jpg/500px-GenPact_Hafeezpet_hyd.jpg",
+  "local": true
+ },
+ "loc-madinaguda": {
+  "file": "File:Madinaguda, Hyderabad.jpg",
+  "author": "Nikhilb239",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Madinaguda,_Hyderabad.jpg",
+  "caption": "Madinaguda on the old Mumbai highway",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Madinaguda%2C_Hyderabad.jpg/960px-Madinaguda%2C_Hyderabad.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Madinaguda%2C_Hyderabad.jpg/500px-Madinaguda%2C_Hyderabad.jpg",
+  "local": true
+ },
+ "loc-lingampally": {
+  "file": "File:Lingampally Railway Station PF no.1.JPG",
+  "author": "Nikhilb239",
+  "license": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Lingampally_Railway_Station_PF_no.1.JPG",
+  "caption": "Lingampally railway station",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Lingampally_Railway_Station_PF_no.1.JPG/960px-Lingampally_Railway_Station_PF_no.1.JPG",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Lingampally_Railway_Station_PF_no.1.JPG/500px-Lingampally_Railway_Station_PF_no.1.JPG",
+  "local": true
+ },
+ "loc-gandipet": {
+  "file": "File:Sunset view of Gandipet Lake.jpg",
+  "author": "Nikesh.kumar44",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Sunset_view_of_Gandipet_Lake.jpg",
+  "caption": "Sunset over Gandipet lake",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Sunset_view_of_Gandipet_Lake.jpg/960px-Sunset_view_of_Gandipet_Lake.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Sunset_view_of_Gandipet_Lake.jpg/500px-Sunset_view_of_Gandipet_Lake.jpg",
+  "local": true
+ },
+ "loc-film-nagar": {
+  "file": "File:Aerial view of Film Nagar with Hitech City in the Background.jpg",
+  "author": "iMahesh",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Film_Nagar_with_Hitech_City_in_the_Background.jpg",
+  "caption": "Aerial view of Film Nagar, HITEC City behind",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Aerial_view_of_Film_Nagar_with_Hitech_City_in_the_Background.jpg/960px-Aerial_view_of_Film_Nagar_with_Hitech_City_in_the_Background.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Aerial_view_of_Film_Nagar_with_Hitech_City_in_the_Background.jpg/500px-Aerial_view_of_Film_Nagar_with_Hitech_City_in_the_Background.jpg",
+  "local": true
+ },
+ "loc-shaikpet": {
+  "file": "File:Mosque and sarai in Shaikpet (1).jpg",
+  "author": "iMahesh",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Mosque_and_sarai_in_Shaikpet_(1).jpg",
+  "caption": "Mosque and sarai, Shaikpet",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Mosque_and_sarai_in_Shaikpet_%281%29.jpg/960px-Mosque_and_sarai_in_Shaikpet_%281%29.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Mosque_and_sarai_in_Shaikpet_%281%29.jpg/500px-Mosque_and_sarai_in_Shaikpet_%281%29.jpg",
+  "local": true
+ },
+ "loc-ameenpur": {
+  "file": "File:Ameenpur Lake.jpg",
+  "author": "Ravi Chandra 2222",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Ameenpur_Lake.jpg",
+  "caption": "Ameenpur lake",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ameenpur_Lake.jpg/960px-Ameenpur_Lake.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ameenpur_Lake.jpg/500px-Ameenpur_Lake.jpg",
+  "local": true
+ },
+ "loc-patancheru": {
+  "file": "File:Tomb at Patancheru.jpg",
+  "author": "Ajaz Bhai",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tomb_at_Patancheru.jpg",
+  "caption": "Old tomb at Patancheru",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Tomb_at_Patancheru.jpg/960px-Tomb_at_Patancheru.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Tomb_at_Patancheru.jpg/500px-Tomb_at_Patancheru.jpg",
+  "local": true
+ },
+ "loc-nampally": {
+  "file": "File:Nampally Area Hospital, Hyderabad.jpg",
+  "author": "adbh266",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Nampally_Area_Hospital,_Hyderabad.jpg",
+  "caption": "Nampally Area Hospital",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Nampally_Area_Hospital%2C_Hyderabad.jpg/960px-Nampally_Area_Hospital%2C_Hyderabad.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Nampally_Area_Hospital%2C_Hyderabad.jpg/500px-Nampally_Area_Hospital%2C_Hyderabad.jpg",
+  "local": true
+ },
+ "loc-koti": {
+  "file": "File:RTC Bus at Andhra Bank Koti Hyderabad Telangana.jpg",
+  "author": "Kavali Chandrakanth KCK",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:RTC_Bus_at_Andhra_Bank_Koti_Hyderabad_Telangana.jpg",
+  "caption": "RTC bus at Koti",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/RTC_Bus_at_Andhra_Bank_Koti_Hyderabad_Telangana.jpg/960px-RTC_Bus_at_Andhra_Bank_Koti_Hyderabad_Telangana.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/RTC_Bus_at_Andhra_Bank_Koti_Hyderabad_Telangana.jpg/500px-RTC_Bus_at_Andhra_Bank_Koti_Hyderabad_Telangana.jpg",
+  "local": true
+ },
+ "loc-lakdikapul": {
+  "file": "File:Rail station, LakdiKaPul.jpg",
+  "author": "Jayanta  (Talk)",
+  "license": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Rail_station,_LakdiKaPul.jpg",
+  "caption": "Lakdikapul railway station",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Rail_station%2C_LakdiKaPul.jpg/960px-Rail_station%2C_LakdiKaPul.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Rail_station%2C_LakdiKaPul.jpg/500px-Rail_station%2C_LakdiKaPul.jpg",
+  "local": true
+ },
+ "loc-masab-tank": {
+  "file": "File:Masab Tank Fly over.jpg",
+  "author": "Adbh266",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Masab_Tank_Fly_over.jpg",
+  "caption": "Masab Tank flyover",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Masab_Tank_Fly_over.jpg/960px-Masab_Tank_Fly_over.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Masab_Tank_Fly_over.jpg/500px-Masab_Tank_Fly_over.jpg",
+  "local": true
+ },
+ "loc-narayanguda": {
+  "file": "File:Mapillary (1366215591578371, IVhPxB0SH7KqTN6w4kjL95) (ph4ni) 2025-10-13 07H14M40S591.jpg",
+  "author": "ph4ni",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Mapillary_(1366215591578371,_IVhPxB0SH7KqTN6w4kjL95)_(ph4ni)_2025-10-13_07H14M40S591.jpg",
+  "caption": "Street in Narayanguda",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Mapillary_%281366215591578371%2C_IVhPxB0SH7KqTN6w4kjL95%29_%28ph4ni%29_2025-10-13_07H14M40S591.jpg/960px-Mapillary_%281366215591578371%2C_IVhPxB0SH7KqTN6w4kjL95%29_%28ph4ni%29_2025-10-13_07H14M40S591.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Mapillary_%281366215591578371%2C_IVhPxB0SH7KqTN6w4kjL95%29_%28ph4ni%29_2025-10-13_07H14M40S591.jpg/500px-Mapillary_%281366215591578371%2C_IVhPxB0SH7KqTN6w4kjL95%29_%28ph4ni%29_2025-10-13_07H14M40S591.jpg",
+  "local": true
+ },
+ "loc-musheerabad": {
+  "file": "File:Musheerabad metro station.jpg",
+  "author": "Adbh266",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Musheerabad_metro_station.jpg",
+  "caption": "Musheerabad metro station",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Musheerabad_metro_station.jpg/960px-Musheerabad_metro_station.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Musheerabad_metro_station.jpg/500px-Musheerabad_metro_station.jpg",
+  "local": true
+ },
+ "loc-amberpet": {
+  "file": "File:Bathukamma Kunta.jpg",
+  "author": "Bathula Ganesh Goud",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Bathukamma_Kunta.jpg",
+  "caption": "Bathukamma Kunta, Amberpet",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Bathukamma_Kunta.jpg/960px-Bathukamma_Kunta.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Bathukamma_Kunta.jpg/500px-Bathukamma_Kunta.jpg",
+  "local": true
+ },
+ "loc-vidyanagar": {
+  "file": "File:RTC X road metro station.jpg",
+  "author": "Adbh266",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:RTC_X_road_metro_station.jpg",
+  "caption": "RTC X Roads metro station, near Vidyanagar",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RTC_X_road_metro_station.jpg/960px-RTC_X_road_metro_station.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RTC_X_road_metro_station.jpg/500px-RTC_X_road_metro_station.jpg",
+  "local": true
+ },
+ "loc-ecil": {
+  "file": "File:ECIL bus station platforms.JPG",
+  "author": "Supdiop",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:ECIL_bus_station_platforms.JPG",
+  "caption": "ECIL bus station",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/ECIL_bus_station_platforms.JPG/960px-ECIL_bus_station_platforms.JPG",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/ECIL_bus_station_platforms.JPG/500px-ECIL_bus_station_platforms.JPG",
+  "local": true
+ },
+ "loc-medchal": {
+  "file": "File:(Kacheguda - Karimnagar) Passenger at Medchal.jpg",
+  "author": "Adityamadhav83",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:(Kacheguda_-_Karimnagar)_Passenger_at_Medchal.jpg",
+  "caption": "Passenger train at Medchal station",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/%28Kacheguda_-_Karimnagar%29_Passenger_at_Medchal.jpg/960px-%28Kacheguda_-_Karimnagar%29_Passenger_at_Medchal.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/%28Kacheguda_-_Karimnagar%29_Passenger_at_Medchal.jpg/500px-%28Kacheguda_-_Karimnagar%29_Passenger_at_Medchal.jpg",
+  "local": true
+ },
+ "loc-shamirpet": {
+  "file": "File:Ratnaalayam Sri Venkateswara Swamy Temple Shamirpet Hyderabad 1.jpg",
+  "author": "Ravindraoudeptling",
+  "license": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Ratnaalayam_Sri_Venkateswara_Swamy_Temple_Shamirpet_Hyderabad_1.jpg",
+  "caption": "Ratnalayam Venkateswara temple, Shamirpet",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ratnaalayam_Sri_Venkateswara_Swamy_Temple_Shamirpet_Hyderabad_1.jpg/960px-Ratnaalayam_Sri_Venkateswara_Swamy_Temple_Shamirpet_Hyderabad_1.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ratnaalayam_Sri_Venkateswara_Swamy_Temple_Shamirpet_Hyderabad_1.jpg/500px-Ratnaalayam_Sri_Venkateswara_Swamy_Temple_Shamirpet_Hyderabad_1.jpg",
+  "local": true
+ },
+ "loc-nagole": {
+  "file": "File:Nagole Flyover view from Service road, Nagole Metro Station, Nov 2025.jpg",
+  "author": "Tushar0034",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Nagole_Flyover_view_from_Service_road,_Nagole_Metro_Station,_Nov_2025.jpg",
+  "caption": "Nagole flyover by the metro station",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Nagole_Flyover_view_from_Service_road%2C_Nagole_Metro_Station%2C_Nov_2025.jpg/960px-Nagole_Flyover_view_from_Service_road%2C_Nagole_Metro_Station%2C_Nov_2025.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Nagole_Flyover_view_from_Service_road%2C_Nagole_Metro_Station%2C_Nov_2025.jpg/500px-Nagole_Flyover_view_from_Service_road%2C_Nagole_Metro_Station%2C_Nov_2025.jpg",
+  "local": true
+ },
+ "loc-kothapet": {
+  "file": "File:Brand Factory shopping mall, Kothapet, Hyderabad.jpg",
+  "author": "Bhavss1214",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Brand_Factory_shopping_mall,_Kothapet,_Hyderabad.jpg",
+  "caption": "Shopping street, Kothapet",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Brand_Factory_shopping_mall%2C_Kothapet%2C_Hyderabad.jpg/960px-Brand_Factory_shopping_mall%2C_Kothapet%2C_Hyderabad.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Brand_Factory_shopping_mall%2C_Kothapet%2C_Hyderabad.jpg/500px-Brand_Factory_shopping_mall%2C_Kothapet%2C_Hyderabad.jpg",
+  "local": true
+ },
+ "loc-hayathnagar": {
+  "file": "File:Hayathnagar, Hyderabad 1.JPG",
+  "author": "కాసుబాబు",
+  "license": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hayathnagar,_Hyderabad_1.JPG",
+  "caption": "Highway through Hayathnagar",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Hayathnagar%2C_Hyderabad_1.JPG/960px-Hayathnagar%2C_Hyderabad_1.JPG",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Hayathnagar%2C_Hyderabad_1.JPG/500px-Hayathnagar%2C_Hyderabad_1.JPG",
+  "local": true
+ },
+ "loc-ghatkesar": {
+  "file": "File:Ghatkesar Railway Station 16102016.jpg",
+  "author": "Nikhilb239",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Ghatkesar_Railway_Station_16102016.jpg",
+  "caption": "Ghatkesar railway station",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Ghatkesar_Railway_Station_16102016.jpg/960px-Ghatkesar_Railway_Station_16102016.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Ghatkesar_Railway_Station_16102016.jpg/500px-Ghatkesar_Railway_Station_16102016.jpg",
+  "local": true
+ },
+ "loc-falaknuma": {
+  "file": "File:Falaknuma Palace 01.jpg",
+  "author": "Bernard Gagnon",
+  "license": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Falaknuma_Palace_01.jpg",
+  "caption": "Falaknuma Palace",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Falaknuma_Palace_01.jpg/960px-Falaknuma_Palace_01.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Falaknuma_Palace_01.jpg/500px-Falaknuma_Palace_01.jpg",
+  "local": true
+ },
+ "loc-bandlaguda-jagir": {
+  "file": "File:Hyderabad City. view of Bandlaguda Lake. Peeramcheruvu.jpg",
+  "author": "Rohitjahnavi",
+  "license": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hyderabad_City._view_of_Bandlaguda_Lake._Peeramcheruvu.jpg",
+  "caption": "Peeram Cheruvu lake, Bandlaguda Jagir",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Hyderabad_City._view_of_Bandlaguda_Lake._Peeramcheruvu.jpg/960px-Hyderabad_City._view_of_Bandlaguda_Lake._Peeramcheruvu.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Hyderabad_City._view_of_Bandlaguda_Lake._Peeramcheruvu.jpg/500px-Hyderabad_City._view_of_Bandlaguda_Lake._Peeramcheruvu.jpg",
+  "local": true
+ },
+ "loc-aramghar": {
+  "file": "File:Aramghar, Hyderabad.jpg",
+  "author": "Adbh266",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Aramghar,_Hyderabad.jpg",
+  "caption": "Aramghar crossroads",
+  "remote": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Aramghar%2C_Hyderabad.jpg/960px-Aramghar%2C_Hyderabad.jpg",
+  "remote_sm": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Aramghar%2C_Hyderabad.jpg/500px-Aramghar%2C_Hyderabad.jpg",
+  "local": true
+ },
  "_videos": {
   "hero": true,
   "what": false
