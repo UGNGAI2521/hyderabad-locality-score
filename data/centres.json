@@ -133,6 +133,104 @@
   "zone": "West"
  },
  {
+  "name": "Tellapur",
+  "lat": 17.4646,
+  "lon": 78.2896,
+  "match": "middle of 33 Overture places named for Tellapur",
+  "zone": "West"
+ },
+ {
+  "name": "Kollur",
+  "lat": 17.438,
+  "lon": 78.2661,
+  "match": "middle of 17 Overture places named for Kollur (the OSM village point sits 1.6 km west of the new housing)",
+  "zone": "West"
+ },
+ {
+  "name": "Puppalaguda",
+  "lat": 17.3959,
+  "lon": 78.3757,
+  "match": "Nominatim: Puppalguda neighbourhood, Narsingi",
+  "zone": "West"
+ },
+ {
+  "name": "Gopanpally",
+  "lat": 17.451,
+  "lon": 78.3134,
+  "match": "middle of 17 Overture places named for Gopanpally",
+  "zone": "West"
+ },
+ {
+  "name": "Serilingampally",
+  "lat": 17.475,
+  "lon": 78.329,
+  "match": "hand-picked: Doyens Colony, Serilingampally (the Ward 106 centroid falls on the University of Hyderabad campus)",
+  "zone": "West"
+ },
+ {
+  "name": "Hafeezpet",
+  "lat": 17.4834,
+  "lon": 78.3611,
+  "match": "Overture divisions (OpenStreetMap): Hafeezpet, neighbourhood",
+  "zone": "West"
+ },
+ {
+  "name": "Madinaguda",
+  "lat": 17.4918,
+  "lon": 78.3423,
+  "match": "Overture divisions (OpenStreetMap): Madinaguda",
+  "zone": "West"
+ },
+ {
+  "name": "Lingampally",
+  "lat": 17.488,
+  "lon": 78.316,
+  "match": "Nominatim: Lingampally suburb, Ward 106 Serilingampally",
+  "zone": "West"
+ },
+ {
+  "name": "Gandipet",
+  "lat": 17.3873,
+  "lon": 78.3205,
+  "match": "Overture divisions (OpenStreetMap): Gandipet",
+  "zone": "West"
+ },
+ {
+  "name": "Film Nagar",
+  "lat": 17.4141,
+  "lon": 78.4105,
+  "match": "Overture divisions (OpenStreetMap): Film Nagar, neighbourhood",
+  "zone": "West"
+ },
+ {
+  "name": "Shaikpet",
+  "lat": 17.4058,
+  "lon": 78.4007,
+  "match": "Overture divisions (OpenStreetMap): Shaikpet",
+  "zone": "West"
+ },
+ {
+  "name": "Moosapet",
+  "lat": 17.4685,
+  "lon": 78.4207,
+  "match": "Overture divisions (OpenStreetMap): Moosapet",
+  "zone": "West"
+ },
+ {
+  "name": "Ameenpur",
+  "lat": 17.5172,
+  "lon": 78.3192,
+  "match": "middle of 32 Overture places named for Ameenpur",
+  "zone": "West"
+ },
+ {
+  "name": "Patancheru",
+  "lat": 17.5286,
+  "lon": 78.2674,
+  "match": "Overture divisions (OpenStreetMap): Patancheru",
+  "zone": "West"
+ },
+ {
   "name": "Ameerpet",
   "lat": 17.437501,
   "lon": 78.448251,
@@ -186,6 +284,62 @@
   "lat": 17.425424,
   "lon": 78.451752,
   "match": "suburb: Panjagutta, Ward 91 Khairatabad, Greater Hyderabad Municipal Corporation Central Zone, Hyd",
+  "zone": "Central"
+ },
+ {
+  "name": "Nampally",
+  "lat": 17.3919,
+  "lon": 78.466,
+  "match": "Overture divisions (OpenStreetMap): Nampally",
+  "zone": "Central"
+ },
+ {
+  "name": "Koti",
+  "lat": 17.3847,
+  "lon": 78.4837,
+  "match": "Overture divisions (OpenStreetMap): Koti",
+  "zone": "Central"
+ },
+ {
+  "name": "Lakdikapul",
+  "lat": 17.4054,
+  "lon": 78.46,
+  "match": "Overture divisions (OpenStreetMap): Lakdi-ka-pul",
+  "zone": "Central"
+ },
+ {
+  "name": "Masab Tank",
+  "lat": 17.403,
+  "lon": 78.4508,
+  "match": "Overture divisions (OpenStreetMap): Masab Tank",
+  "zone": "Central"
+ },
+ {
+  "name": "Narayanguda",
+  "lat": 17.3981,
+  "lon": 78.4885,
+  "match": "Overture divisions (OpenStreetMap): Narayanguda",
+  "zone": "Central"
+ },
+ {
+  "name": "Musheerabad",
+  "lat": 17.4191,
+  "lon": 78.4986,
+  "match": "Overture divisions (OpenStreetMap): Musheerabad, neighbourhood",
+  "zone": "Central"
+ },
+ {
+  "name": "Amberpet",
+  "lat": 17.3857,
+  "lon": 78.5219,
+  "match": "Overture divisions (OpenStreetMap): Ward 83 Amberpet",
+  "zone": "Central"
+ },
+ {
+  "name": "Vidyanagar",
+  "lat": 17.4019,
+  "lon": 78.5096,
+  "match": "Overture divisions (OpenStreetMap): Vidyanagar",
   "zone": "Central"
  },
  {
@@ -245,6 +399,48 @@
   "zone": "North"
  },
  {
+  "name": "ECIL",
+  "lat": 17.4735,
+  "lon": 78.5681,
+  "match": "middle of 72 Overture places named for ECIL",
+  "zone": "North"
+ },
+ {
+  "name": "AS Rao Nagar",
+  "lat": 17.4799,
+  "lon": 78.551,
+  "match": "Overture divisions (OpenStreetMap): AS Rao Nagar",
+  "zone": "North"
+ },
+ {
+  "name": "Kapra",
+  "lat": 17.4846,
+  "lon": 78.561,
+  "match": "Overture divisions (OpenStreetMap): Kapra",
+  "zone": "North"
+ },
+ {
+  "name": "Suchitra",
+  "lat": 17.5014,
+  "lon": 78.4766,
+  "match": "middle of 70 Overture places named for Suchitra",
+  "zone": "North"
+ },
+ {
+  "name": "Medchal",
+  "lat": 17.634,
+  "lon": 78.4843,
+  "match": "Overture divisions (OpenStreetMap): Medchal, locality",
+  "zone": "North"
+ },
+ {
+  "name": "Shamirpet",
+  "lat": 17.5943,
+  "lon": 78.5744,
+  "match": "Overture divisions (OpenStreetMap): Shamirpet, locality",
+  "zone": "North"
+ },
+ {
   "name": "Uppal",
   "lat": 17.402509,
   "lon": 78.561256,
@@ -301,6 +497,41 @@
   "zone": "East"
  },
  {
+  "name": "Kothapet",
+  "lat": 17.3676,
+  "lon": 78.5558,
+  "match": "Overture divisions (OpenStreetMap): Ward 21 Kothapet",
+  "zone": "East"
+ },
+ {
+  "name": "Ramanthapur",
+  "lat": 17.3885,
+  "lon": 78.5372,
+  "match": "Overture divisions (OpenStreetMap): Ward 9 Ramanthapur",
+  "zone": "East"
+ },
+ {
+  "name": "Hayathnagar",
+  "lat": 17.3281,
+  "lon": 78.6045,
+  "match": "Overture divisions (OpenStreetMap): Hayathnagar",
+  "zone": "East"
+ },
+ {
+  "name": "Ghatkesar",
+  "lat": 17.4511,
+  "lon": 78.6843,
+  "match": "Overture divisions (OpenStreetMap): Ghatkesar, locality",
+  "zone": "East"
+ },
+ {
+  "name": "Pocharam",
+  "lat": 17.4366,
+  "lon": 78.6422,
+  "match": "Overture divisions (OpenStreetMap): Pocharam, locality near Ghatkesar",
+  "zone": "East"
+ },
+ {
   "name": "Attapur",
   "lat": 17.367224,
   "lon": 78.430728,
@@ -309,9 +540,9 @@
  },
  {
   "name": "Rajendranagar",
-  "lat": 17.330592,
-  "lon": 78.404764,
-  "match": "centroid of OSM relation 7848844, old GHMC Ward 60 Rajendra Nagar",
+  "lat": 17.3368,
+  "lon": 78.4101,
+  "match": "middle of 45 Overture places named for Rajendranagar (the ward centroid and the OSM point both fall on the university campuses)",
   "zone": "South"
  },
  {
@@ -347,6 +578,41 @@
   "lat": 17.373671,
   "lon": 78.499648,
   "match": "suburb: Malakpet, Ward 27 Akbarbagh, Greater Hyderabad Municipal Corporation South Zone, Hyderabad",
+  "zone": "South"
+ },
+ {
+  "name": "Falaknuma",
+  "lat": 17.3337,
+  "lon": 78.4677,
+  "match": "Overture divisions (OpenStreetMap): Falaknuma",
+  "zone": "South"
+ },
+ {
+  "name": "Kismatpur",
+  "lat": 17.3351,
+  "lon": 78.3927,
+  "match": "Overture divisions (OpenStreetMap): Kismatpur, locality",
+  "zone": "South"
+ },
+ {
+  "name": "Bandlaguda Jagir",
+  "lat": 17.3506,
+  "lon": 78.3908,
+  "match": "Overture divisions (OpenStreetMap): Bandlaguda Jagir, locality",
+  "zone": "South"
+ },
+ {
+  "name": "Aramghar",
+  "lat": 17.3457,
+  "lon": 78.4312,
+  "match": "middle of 4 Overture places named for Aramghar (few; check by hand)",
+  "zone": "South"
+ },
+ {
+  "name": "Budvel",
+  "lat": 17.333,
+  "lon": 78.4062,
+  "match": "Overture divisions (OpenStreetMap): Budvel",
   "zone": "South"
  }
 ]

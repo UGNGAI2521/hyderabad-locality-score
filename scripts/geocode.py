@@ -8,13 +8,19 @@ import json, os, sys, time, urllib.parse, urllib.request
 ZONES = {
     "West": ["Gachibowli", "Madhapur", "Kondapur", "HITEC City", "Financial District", "Nanakramguda", "Manikonda", "Narsingi",
              "Kokapet", "Raidurg", "Miyapur", "Nallagandla", "Chandanagar", "Kukatpally", "KPHB Colony", "Nizampet",
-             "Jubilee Hills", "Banjara Hills", "Tolichowki"],
-    "Central": ["Ameerpet", "Begumpet", "Somajiguda", "Khairatabad", "Himayatnagar", "Abids", "Mehdipatnam", "Panjagutta"],
-    "North": ["Secunderabad", "Kompally", "Alwal", "Bowenpally", "Sainikpuri", "Malkajgiri", "Tarnaka", "Bachupally"],
-    "East": ["Uppal", "LB Nagar", "Dilsukhnagar", "Habsiguda", "Nagole", "Vanasthalipuram", "Boduppal", "Saroornagar"],
-    "South": ["Attapur", "Rajendranagar", "Shamshabad", "Charminar", "Santosh Nagar", "Chandrayangutta", "Malakpet"],
+             "Jubilee Hills", "Banjara Hills", "Tolichowki",
+             "Tellapur", "Kollur", "Puppalaguda", "Gopanpally", "Serilingampally", "Hafeezpet", "Madinaguda", "Lingampally",
+             "Gandipet", "Film Nagar", "Shaikpet", "Moosapet", "Ameenpur", "Patancheru"],
+    "Central": ["Ameerpet", "Begumpet", "Somajiguda", "Khairatabad", "Himayatnagar", "Abids", "Mehdipatnam", "Panjagutta",
+                "Nampally", "Koti", "Lakdikapul", "Masab Tank", "Narayanguda", "Musheerabad", "Amberpet", "Vidyanagar"],
+    "North": ["Secunderabad", "Kompally", "Alwal", "Bowenpally", "Sainikpuri", "Malkajgiri", "Tarnaka", "Bachupally",
+              "ECIL", "AS Rao Nagar", "Kapra", "Suchitra", "Medchal", "Shamirpet"],
+    "East": ["Uppal", "LB Nagar", "Dilsukhnagar", "Habsiguda", "Nagole", "Vanasthalipuram", "Boduppal", "Saroornagar",
+             "Kothapet", "Ramanthapur", "Hayathnagar", "Ghatkesar", "Pocharam"],
+    "South": ["Attapur", "Rajendranagar", "Shamshabad", "Charminar", "Santosh Nagar", "Chandrayangutta", "Malakpet",
+              "Falaknuma", "Kismatpur", "Bandlaguda Jagir", "Aramghar", "Budvel"],
 }
-CITY = (78.20, 17.15, 78.75, 17.65)  # W, S, E, N: anything outside is a wrong match
+CITY = (78.20, 17.15, 78.75, 17.70)  # W, S, E, N: anything outside is a wrong match
 UA = {"User-Agent": "hyderabad-locality-score/0.2 (open-data locality comparison)"}
 OUT = "data/centres.json"
 

@@ -16,7 +16,7 @@ When `LISTINGS` is on, owners sign in by email and post listings with photos; bu
 | --- | --- |
 | `src/page.html` | The site source (HTML, CSS and JS in one file), written for the claude.ai artifact viewer |
 | `index.html` | Standalone build of `src/page.html` for any static host. Regenerate with `python3 scripts/build_site.py` |
-| `data/centres.json` | 50 localities in 5 zones and their centre points (`scripts/geocode.py`, hand-checked) |
+| `data/centres.json` | 88 localities in 5 zones and their centre points (`scripts/geocode.py`, hand-checked) |
 | `data/localities.json` | Measures for each locality: place counts, nearest metro and MMTS station, green cover |
 | `data/basemap.geojson` | Main roads, metro and rail lines, lakes: the map draws this itself (`scripts/build_basemap.py`) |
 | `data/listings.json` | Example listings, shown only while no owner listing is live |

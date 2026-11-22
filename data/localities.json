@@ -399,6 +399,300 @@
   "built_pct": 69.5
  },
  {
+  "name": "Tellapur",
+  "zone": "West",
+  "lat": 17.4646,
+  "lon": 78.2896,
+  "counts": {
+   "schools": 22,
+   "healthcare": 8,
+   "daily": 18
+  },
+  "metro": {
+   "name": "Miyapur Metro",
+   "km": 9.5
+  },
+  "rail": {
+   "name": "Telapur",
+   "km": 1.25
+  },
+  "green_pct": 41.3,
+  "built_pct": 23.7
+ },
+ {
+  "name": "Kollur",
+  "zone": "West",
+  "lat": 17.438,
+  "lon": 78.2661,
+  "counts": {
+   "schools": 3,
+   "healthcare": 0,
+   "daily": 3
+  },
+  "metro": {
+   "name": "Raidurg",
+   "km": 11.79
+  },
+  "rail": {
+   "name": "Nagalapalli",
+   "km": 4.55
+  },
+  "green_pct": 28.1,
+  "built_pct": 18.2
+ },
+ {
+  "name": "Puppalaguda",
+  "zone": "West",
+  "lat": 17.3959,
+  "lon": 78.3757,
+  "counts": {
+   "schools": 97,
+   "healthcare": 57,
+   "daily": 116
+  },
+  "metro": {
+   "name": "Raidurg",
+   "km": 5.15
+  },
+  "rail": {
+   "name": "Borabanda",
+   "km": 7.81
+  },
+  "green_pct": 27.8,
+  "built_pct": 62.4
+ },
+ {
+  "name": "Gopanpally",
+  "zone": "West",
+  "lat": 17.451,
+  "lon": 78.3134,
+  "counts": {
+   "schools": 14,
+   "healthcare": 11,
+   "daily": 15
+  },
+  "metro": {
+   "name": "Raidurg",
+   "km": 6.84
+  },
+  "rail": {
+   "name": "Lingampalli",
+   "km": 3.6
+  },
+  "green_pct": 61.0,
+  "built_pct": 23.6
+ },
+ {
+  "name": "Serilingampally",
+  "zone": "West",
+  "lat": 17.475,
+  "lon": 78.329,
+  "counts": {
+   "schools": 42,
+   "healthcare": 28,
+   "daily": 69
+  },
+  "metro": {
+   "name": "Miyapur Metro",
+   "km": 5.21
+  },
+  "rail": {
+   "name": "Chandanagar",
+   "km": 1.41
+  },
+  "green_pct": 41.8,
+  "built_pct": 43.3
+ },
+ {
+  "name": "Hafeezpet",
+  "zone": "West",
+  "lat": 17.4834,
+  "lon": 78.3611,
+  "counts": {
+   "schools": 86,
+   "healthcare": 66,
+   "daily": 115
+  },
+  "metro": {
+   "name": "Miyapur Metro",
+   "km": 1.9
+  },
+  "rail": {
+   "name": "Hafeezpet",
+   "km": 0.23
+  },
+  "green_pct": 22.2,
+  "built_pct": 68.2
+ },
+ {
+  "name": "Madinaguda",
+  "zone": "West",
+  "lat": 17.4918,
+  "lon": 78.3423,
+  "counts": {
+   "schools": 93,
+   "healthcare": 96,
+   "daily": 117
+  },
+  "metro": {
+   "name": "Miyapur Metro",
+   "km": 3.27
+  },
+  "rail": {
+   "name": "Chandanagar",
+   "km": 1.18
+  },
+  "green_pct": 26.9,
+  "built_pct": 57.5
+ },
+ {
+  "name": "Lingampally",
+  "zone": "West",
+  "lat": 17.488,
+  "lon": 78.316,
+  "counts": {
+   "schools": 85,
+   "healthcare": 79,
+   "daily": 128
+  },
+  "metro": {
+   "name": "Miyapur Metro",
+   "km": 6.09
+  },
+  "rail": {
+   "name": "Lingampalli",
+   "km": 0.57
+  },
+  "green_pct": 34.5,
+  "built_pct": 57.8
+ },
+ {
+  "name": "Gandipet",
+  "zone": "West",
+  "lat": 17.3873,
+  "lon": 78.3205,
+  "counts": {
+   "schools": 6,
+   "healthcare": 5,
+   "daily": 20
+  },
+  "metro": {
+   "name": "Raidurg",
+   "km": 8.57
+  },
+  "rail": {
+   "name": "Telapur",
+   "km": 10.45
+  },
+  "green_pct": 42.6,
+  "built_pct": 21.8
+ },
+ {
+  "name": "Film Nagar",
+  "zone": "West",
+  "lat": 17.4141,
+  "lon": 78.4105,
+  "counts": {
+   "schools": 106,
+   "healthcare": 273,
+   "daily": 170
+  },
+  "metro": {
+   "name": "Jubilee Hills Checkpost",
+   "km": 1.6
+  },
+  "rail": {
+   "name": "Borabanda",
+   "km": 5.01
+  },
+  "green_pct": 30.4,
+  "built_pct": 68.0
+ },
+ {
+  "name": "Shaikpet",
+  "zone": "West",
+  "lat": 17.4058,
+  "lon": 78.4007,
+  "counts": {
+   "schools": 137,
+   "healthcare": 252,
+   "daily": 153
+  },
+  "metro": {
+   "name": "Jubilee Hills Checkpost",
+   "km": 2.85
+  },
+  "rail": {
+   "name": "Borabanda",
+   "km": 5.97
+  },
+  "green_pct": 22.7,
+  "built_pct": 73.8
+ },
+ {
+  "name": "Moosapet",
+  "zone": "West",
+  "lat": 17.4685,
+  "lon": 78.4207,
+  "counts": {
+   "schools": 62,
+   "healthcare": 61,
+   "daily": 107
+  },
+  "metro": {
+   "name": "Moosapet",
+   "km": 0.69
+  },
+  "rail": {
+   "name": "Bharath Nagar",
+   "km": 1.2
+  },
+  "green_pct": 27.7,
+  "built_pct": 66.6
+ },
+ {
+  "name": "Ameenpur",
+  "zone": "West",
+  "lat": 17.5172,
+  "lon": 78.3192,
+  "counts": {
+   "schools": 46,
+   "healthcare": 21,
+   "daily": 44
+  },
+  "metro": {
+   "name": "Miyapur Metro",
+   "km": 6.13
+  },
+  "rail": {
+   "name": "Chandanagar",
+   "km": 3.6
+  },
+  "green_pct": 37.8,
+  "built_pct": 44.2
+ },
+ {
+  "name": "Patancheru",
+  "zone": "West",
+  "lat": 17.5286,
+  "lon": 78.2674,
+  "counts": {
+   "schools": 10,
+   "healthcare": 8,
+   "daily": 27
+  },
+  "metro": {
+   "name": "Miyapur Metro",
+   "km": 11.73
+  },
+  "rail": {
+   "name": "Ramachandrapuram TS",
+   "km": 2.59
+  },
+  "green_pct": 29.5,
+  "built_pct": 37.5
+ },
+ {
   "name": "Ameerpet",
   "zone": "Central",
   "lat": 17.437501,
@@ -565,6 +859,174 @@
   },
   "green_pct": 15.5,
   "built_pct": 76.4
+ },
+ {
+  "name": "Nampally",
+  "zone": "Central",
+  "lat": 17.3919,
+  "lon": 78.466,
+  "counts": {
+   "schools": 163,
+   "healthcare": 192,
+   "daily": 277
+  },
+  "metro": {
+   "name": "Nampally",
+   "km": 0.44
+  },
+  "rail": {
+   "name": "Hyderabad Deccan Nampally",
+   "km": 0.18
+  },
+  "green_pct": 9.9,
+  "built_pct": 89.2
+ },
+ {
+  "name": "Koti",
+  "zone": "Central",
+  "lat": 17.3847,
+  "lon": 78.4837,
+  "counts": {
+   "schools": 177,
+   "healthcare": 255,
+   "daily": 322
+  },
+  "metro": {
+   "name": "Sultan Bazar",
+   "km": 0.04
+  },
+  "rail": {
+   "name": "Kacheguda",
+   "km": 1.73
+  },
+  "green_pct": 10.4,
+  "built_pct": 88.4
+ },
+ {
+  "name": "Lakdikapul",
+  "zone": "Central",
+  "lat": 17.4054,
+  "lon": 78.46,
+  "counts": {
+   "schools": 138,
+   "healthcare": 231,
+   "daily": 214
+  },
+  "metro": {
+   "name": "Lakdi-ka-pul",
+   "km": 0.56
+  },
+  "rail": {
+   "name": "Hyderabad Deccan Nampally",
+   "km": 1.65
+  },
+  "green_pct": 14.1,
+  "built_pct": 78.2
+ },
+ {
+  "name": "Masab Tank",
+  "zone": "Central",
+  "lat": 17.403,
+  "lon": 78.4508,
+  "counts": {
+   "schools": 159,
+   "healthcare": 263,
+   "daily": 231
+  },
+  "metro": {
+   "name": "Khairatabad",
+   "km": 1.43
+  },
+  "rail": {
+   "name": "Hyderabad Deccan Nampally",
+   "km": 2.13
+  },
+  "green_pct": 14.5,
+  "built_pct": 84.7
+ },
+ {
+  "name": "Narayanguda",
+  "zone": "Central",
+  "lat": 17.3981,
+  "lon": 78.4885,
+  "counts": {
+   "schools": 196,
+   "healthcare": 264,
+   "daily": 360
+  },
+  "metro": {
+   "name": "Narayanaguda",
+   "km": 0.44
+  },
+  "rail": {
+   "name": "Kacheguda",
+   "km": 1.5
+  },
+  "green_pct": 11.2,
+  "built_pct": 87.1
+ },
+ {
+  "name": "Musheerabad",
+  "zone": "Central",
+  "lat": 17.4191,
+  "lon": 78.4986,
+  "counts": {
+   "schools": 111,
+   "healthcare": 98,
+   "daily": 224
+  },
+  "metro": {
+   "name": "Musheerabad",
+   "km": 0.17
+  },
+  "rail": {
+   "name": "Secunderabad Junction",
+   "km": 1.68
+  },
+  "green_pct": 11.3,
+  "built_pct": 84.0
+ },
+ {
+  "name": "Amberpet",
+  "zone": "Central",
+  "lat": 17.3857,
+  "lon": 78.5219,
+  "counts": {
+   "schools": 121,
+   "healthcare": 114,
+   "daily": 167
+  },
+  "metro": {
+   "name": "Musarambagh",
+   "km": 1.94
+  },
+  "rail": {
+   "name": "Kacheguda",
+   "km": 2.44
+  },
+  "green_pct": 22.8,
+  "built_pct": 72.7
+ },
+ {
+  "name": "Vidyanagar",
+  "zone": "Central",
+  "lat": 17.4019,
+  "lon": 78.5096,
+  "counts": {
+   "schools": 136,
+   "healthcare": 131,
+   "daily": 198
+  },
+  "metro": {
+   "name": "RTC Cross Roads",
+   "km": 1.47
+  },
+  "rail": {
+   "name": "Kacheguda",
+   "km": 1.78
+  },
+  "green_pct": 18.0,
+  "built_pct": 80.9
  },
  {
   "name": "Secunderabad",
@@ -735,6 +1197,132 @@
   "built_pct": 50.2
  },
  {
+  "name": "ECIL",
+  "zone": "North",
+  "lat": 17.4735,
+  "lon": 78.5681,
+  "counts": {
+   "schools": 68,
+   "healthcare": 92,
+   "daily": 134
+  },
+  "metro": {
+   "name": "Tarnaka",
+   "km": 6.55
+  },
+  "rail": {
+   "name": "Neredmet",
+   "km": 3.37
+  },
+  "green_pct": 28.6,
+  "built_pct": 68.5
+ },
+ {
+  "name": "AS Rao Nagar",
+  "zone": "North",
+  "lat": 17.4799,
+  "lon": 78.551,
+  "counts": {
+   "schools": 102,
+   "healthcare": 95,
+   "daily": 193
+  },
+  "metro": {
+   "name": "Mettuguda",
+   "km": 5.96
+  },
+  "rail": {
+   "name": "Neredmet",
+   "km": 1.53
+  },
+  "green_pct": 11.4,
+  "built_pct": 85.4
+ },
+ {
+  "name": "Kapra",
+  "zone": "North",
+  "lat": 17.4846,
+  "lon": 78.561,
+  "counts": {
+   "schools": 78,
+   "healthcare": 93,
+   "daily": 148
+  },
+  "metro": {
+   "name": "Mettuguda",
+   "km": 7.01
+  },
+  "rail": {
+   "name": "Neredmet",
+   "km": 2.68
+  },
+  "green_pct": 17.3,
+  "built_pct": 77.1
+ },
+ {
+  "name": "Suchitra",
+  "zone": "North",
+  "lat": 17.5014,
+  "lon": 78.4766,
+  "counts": {
+   "schools": 39,
+   "healthcare": 36,
+   "daily": 79
+  },
+  "metro": {
+   "name": "JBS",
+   "km": 6.22
+  },
+  "rail": {
+   "name": "Suchitra Centre",
+   "km": 1.41
+  },
+  "green_pct": 45.2,
+  "built_pct": 48.9
+ },
+ {
+  "name": "Medchal",
+  "zone": "North",
+  "lat": 17.634,
+  "lon": 78.4843,
+  "counts": {
+   "schools": 16,
+   "healthcare": 14,
+   "daily": 23
+  },
+  "metro": {
+   "name": "KPHB Colony",
+   "km": 17.88
+  },
+  "rail": {
+   "name": "Medchal",
+   "km": 1.15
+  },
+  "green_pct": 32.7,
+  "built_pct": 29.2
+ },
+ {
+  "name": "Shamirpet",
+  "zone": "North",
+  "lat": 17.5943,
+  "lon": 78.5744,
+  "counts": {
+   "schools": 2,
+   "healthcare": 0,
+   "daily": 0
+  },
+  "metro": {
+   "name": "JBS",
+   "km": 18.16
+  },
+  "rail": {
+   "name": "Bolarum",
+   "km": 9.24
+  },
+  "green_pct": 54.1,
+  "built_pct": 8.6
+ },
+ {
   "name": "Uppal",
   "zone": "East",
   "lat": 17.402509,
@@ -903,6 +1491,111 @@
   "built_pct": 91.0
  },
  {
+  "name": "Kothapet",
+  "zone": "East",
+  "lat": 17.3676,
+  "lon": 78.5558,
+  "counts": {
+   "schools": 107,
+   "healthcare": 98,
+   "daily": 160
+  },
+  "metro": {
+   "name": "Victoria Memorial",
+   "km": 1.41
+  },
+  "rail": {
+   "name": "Kacheguda",
+   "km": 6.47
+  },
+  "green_pct": 14.4,
+  "built_pct": 81.2
+ },
+ {
+  "name": "Ramanthapur",
+  "zone": "East",
+  "lat": 17.3885,
+  "lon": 78.5372,
+  "counts": {
+   "schools": 73,
+   "healthcare": 51,
+   "daily": 107
+  },
+  "metro": {
+   "name": "Chaitanyapuri",
+   "km": 2.25
+  },
+  "rail": {
+   "name": "Kacheguda",
+   "km": 4.03
+  },
+  "green_pct": 27.8,
+  "built_pct": 66.7
+ },
+ {
+  "name": "Hayathnagar",
+  "zone": "East",
+  "lat": 17.3281,
+  "lon": 78.6045,
+  "counts": {
+   "schools": 27,
+   "healthcare": 19,
+   "daily": 49
+  },
+  "metro": {
+   "name": "L. B. Nagar Metro Station",
+   "km": 6.47
+  },
+  "rail": {
+   "name": "Kacheguda",
+   "km": 13.08
+  },
+  "green_pct": 27.3,
+  "built_pct": 55.0
+ },
+ {
+  "name": "Ghatkesar",
+  "zone": "East",
+  "lat": 17.4511,
+  "lon": 78.6843,
+  "counts": {
+   "schools": 21,
+   "healthcare": 6,
+   "daily": 18
+  },
+  "metro": {
+   "name": "Uppal",
+   "km": 14.33
+  },
+  "rail": {
+   "name": "Ghatkesar",
+   "km": 0.67
+  },
+  "green_pct": 51.3,
+  "built_pct": 23.9
+ },
+ {
+  "name": "Pocharam",
+  "zone": "East",
+  "lat": 17.4366,
+  "lon": 78.6422,
+  "counts": {
+   "schools": 8,
+   "healthcare": 1,
+   "daily": 11
+  },
+  "metro": {
+   "name": "Uppal",
+   "km": 9.6
+  },
+  "rail": {
+   "name": "Ghatkesar",
+   "km": 4.23
+  },
+  "green_pct": 59.3,
+  "built_pct": 19.9
+ },
+ {
   "name": "Attapur",
   "zone": "South",
   "lat": 17.367224,
@@ -926,23 +1619,23 @@
  {
   "name": "Rajendranagar",
   "zone": "South",
-  "lat": 17.330592,
-  "lon": 78.404764,
+  "lat": 17.3368,
+  "lon": 78.4101,
   "counts": {
-   "schools": 14,
-   "healthcare": 12,
-   "daily": 20
+   "schools": 26,
+   "healthcare": 16,
+   "daily": 29
   },
   "metro": {
    "name": "Gandhi Bhavan",
-   "km": 9.52
+   "km": 8.65
   },
   "rail": {
    "name": "Budvel",
-   "km": 3.15
+   "km": 3.39
   },
-  "green_pct": 53.9,
-  "built_pct": 28.6
+  "green_pct": 44.6,
+  "built_pct": 39.9
  },
  {
   "name": "Shamshabad",
@@ -1048,5 +1741,110 @@
   },
   "green_pct": 13.0,
   "built_pct": 84.5
+ },
+ {
+  "name": "Falaknuma",
+  "zone": "South",
+  "lat": 17.3337,
+  "lon": 78.4677,
+  "counts": {
+   "schools": 103,
+   "healthcare": 49,
+   "daily": 77
+  },
+  "metro": {
+   "name": "Mahatma Gandhi Bus Station (Green Line)",
+   "km": 5.47
+  },
+  "rail": {
+   "name": "Falaknuma",
+   "km": 0.8
+  },
+  "green_pct": 8.9,
+  "built_pct": 90.3
+ },
+ {
+  "name": "Kismatpur",
+  "zone": "South",
+  "lat": 17.3351,
+  "lon": 78.3927,
+  "counts": {
+   "schools": 15,
+   "healthcare": 12,
+   "daily": 18
+  },
+  "metro": {
+   "name": "Gandhi Bhavan",
+   "km": 10.25
+  },
+  "rail": {
+   "name": "Budvel",
+   "km": 4.43
+  },
+  "green_pct": 42.4,
+  "built_pct": 34.9
+ },
+ {
+  "name": "Bandlaguda Jagir",
+  "zone": "South",
+  "lat": 17.3506,
+  "lon": 78.3908,
+  "counts": {
+   "schools": 46,
+   "healthcare": 28,
+   "daily": 47
+  },
+  "metro": {
+   "name": "Jubilee Hills Checkpost",
+   "km": 8.96
+  },
+  "rail": {
+   "name": "Budvel",
+   "km": 5.8
+  },
+  "green_pct": 29.9,
+  "built_pct": 56.1
+ },
+ {
+  "name": "Aramghar",
+  "zone": "South",
+  "lat": 17.3457,
+  "lon": 78.4312,
+  "counts": {
+   "schools": 71,
+   "healthcare": 36,
+   "daily": 46
+  },
+  "metro": {
+   "name": "Gandhi Bhavan",
+   "km": 6.32
+  },
+  "rail": {
+   "name": "Budvel",
+   "km": 4.04
+  },
+  "green_pct": 33.6,
+  "built_pct": 57.1
+ },
+ {
+  "name": "Budvel",
+  "zone": "South",
+  "lat": 17.333,
+  "lon": 78.4062,
+  "counts": {
+   "schools": 18,
+   "healthcare": 13,
+   "daily": 26
+  },
+  "metro": {
+   "name": "Gandhi Bhavan",
+   "km": 9.24
+  },
+  "rail": {
+   "name": "Budvel",
+   "km": 3.26
+  },
+  "green_pct": 50.2,
+  "built_pct": 32.3
  }
 ]

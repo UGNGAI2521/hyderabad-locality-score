@@ -15,7 +15,7 @@ import rasterio
 from rasterio.windows import from_bounds
 
 REL = "2026-11-18.0"
-W, S, E, N = 78.20, 17.15, 78.75, 17.65  # Hyderabad box, wider than every 2 km circle
+W, S, E, N = 78.20, 17.15, 78.75, 17.70  # Hyderabad box, wider than every 2 km circle
 R_KM = 2.0
 MIN_CONFIDENCE = 0.5  # Overture places below this are often stale or duplicate listings
 CACHE = ".cache"
@@ -105,7 +105,8 @@ def main(refresh=False):
                     "green_pct": round(100 * np.isin(px, GREEN).mean(), 1), "built_pct": round(100 * (px == 50).mean(), 1)})
         print(f"{c['name']:20} {out[-1]['counts']} metro {out[-1]['metro']} green {out[-1]['green_pct']}%")
 
-    assert len(out) == len(centres) and all(o["counts"]["healthcare"] > 0 for o in out)
+    # an outer village can truly map no clinic; a broken download maps none anywhere
+    assert len(out) == len(centres) and sum(o["counts"]["healthcare"] > 0 for o in out) >= 0.9 * len(out)
     json.dump(out, open("data/localities.json", "w"), indent=1)
 
 

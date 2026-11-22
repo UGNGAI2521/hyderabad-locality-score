@@ -6,7 +6,7 @@
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Hyderabad Locality Score</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Choose where to live or work in Hyderabad: 50 localities compared on schools, healthcare, metro access, green cover and daily needs, scored from open data.">
+<meta name="description" content="Choose where to live or work in Hyderabad: 88 localities compared on schools, healthcare, metro access, green cover and daily needs, scored from open data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -606,7 +606,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <h3>What is counted</h3>
       <ul>
         <li><b>Area:</b> a 2 km circle around each locality's centre point. This is not an official ward boundary. The new 300-ward map has no published boundaries yet, so every locality gets the same size circle. We will switch once official boundaries are out.</li>
-        <li><b>Schools, healthcare, daily needs:</b> places from Overture Maps (release of 18 Nov 2026) inside the circle. Daily needs means groceries, supermarkets, pharmacies, banks and ATMs. Places marked closed, or listed with confidence below 0.5, are left out. Counts show how many places there are, not how good they are.</li>
+        <li><b>Schools, healthcare, daily needs:</b> places from Overture Maps (release of 18 Nov 2026) inside the circle. Daily needs means groceries, supermarkets, pharmacies, banks and ATMs. Places marked closed, or listed with confidence below 0.5, are left out. Counts show how many places are mapped in open data, not how good they are. Outer areas are mapped less fully, so their counts can run low.</li>
         <li><b>Metro access:</b> straight-line distance to the nearest operating metro station. Stations still under construction are left out.</li>
         <li><b>Green cover:</b> share of land in the circle under trees, shrubs, grass or wetland, from ESA WorldCover 2021 satellite land cover at 10 m.</li>
       </ul>
@@ -1001,7 +1001,7 @@ function scorePanel(L) {
     ${radar(L)}
     <div class="bars">${Object.entries(FACTORS).map(([k, f]) => `<div class="barrow"><span>${f.label}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span><span class="num">${f.show(L.vals[k])}</span></div>`).join("")}</div>
     <p class="fine">Within 2 km of the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools; ${L.counts.healthcare} hospitals and clinics; ${L.counts.daily} groceries, pharmacies, banks and ATMs. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Rank ${L.rank} of ${Object.keys(locs).length}.</p>
-    <p class="fine">This is an early score from ${PARTIAL}. It uses a 2 km circle around a centre point we picked, not an official ward boundary: official boundaries for the new 300 wards aren't published yet. Counts show how many schools and clinics there are, not how good they are.</p>
+    <p class="fine">This is an early score from ${PARTIAL}. It uses a 2 km circle around a centre point we picked, not an official ward boundary: official boundaries for the new 300 wards aren't published yet. Counts show how many schools and clinics are mapped in open data, not how good they are, and outer areas are mapped less fully.</p>
     ${L.parts.transport < 30 ? `<p class="fine"><b>Read with care:</b> this score is held down mainly by the distance to the nearest operating metro station (${L.metro.km.toFixed(1)} km). Metro Phase 2 isn't approved yet, and future infrastructure is not yet scored.</p>` : ""}
     <p class="fine">${SOURCES} Places listed with low confidence are left out. <a href="#method" data-close>How the score works</a>.</p>
     <details class="nd"><summary>${NO_DATA.length} of ${NO_DATA.length + Object.keys(FACTORS).length} measures: not enough data yet</summary>
