@@ -3,35 +3,36 @@
 <meta name="description" content="Choose where to live or work in Hyderabad: 50 localities compared on schools, healthcare, metro access, green cover and daily needs, scored from open data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Atkinson+Hyperlegible+Next:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="vendor/maplibre-gl.css">
 <style>
 /* Layout: a video-led hero holding the search console, then a split explore view (filters | listings | map) on a cool granite ground */
 :root {
-  --paper: #f3f5f2; --surface: #ffffff; --ink: #12201f; --muted: #586664; --line: #d9dfdc;
-  --lake: #0d6a66; --lake-soft: #dcefec; --marigold: #e29a1f; --marigold-ink: #1b1204; --marigold-soft: #fbefd8;
-  --scrim: rgba(5, 16, 15, .58); --on-media: #ffffff; --night: #0a1312; --shadow: 0 1px 2px rgba(18, 32, 31, .06), 0 8px 28px rgba(18, 32, 31, .08);
-  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --body: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* slate neutrals and an amber accent after the HydScore reference; emerald marks good scores */
+  --paper: #f8fafc; --surface: #ffffff; --ink: #0f172a; --muted: #475569; --line: #e2e8f0;
+  --lake: #047857; --lake-soft: #ecfdf5; --marigold: #f59e0b; --marigold-ink: #1c1003; --marigold-soft: #fef3c7; --brand: #d97706;
+  --scrim: rgba(15, 23, 42, .58); --on-media: #ffffff; --night: #0f172a; --shadow: 0 1px 2px rgba(15, 23, 42, .05), 0 8px 24px rgba(15, 23, 42, .07);
+  --display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --r: 14px; --wrap: 1280px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0b1413; --surface: #13201e; --ink: #e6eeec; --muted: #94a5a2; --line: #23332f;
-    --lake: #45bdb2; --lake-soft: #133431; --marigold: #f2b149; --marigold-ink: #1b1204; --marigold-soft: #3a2c12;
-    --scrim: rgba(3, 10, 9, .62); --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 32px rgba(0, 0, 0, .35); color-scheme: dark;
+    --paper: #0b1120; --surface: #111a2e; --ink: #e2e8f0; --muted: #94a3b8; --line: #1e293b;
+    --lake: #34d399; --lake-soft: #0d2b24; --marigold: #fbbf24; --marigold-ink: #1c1003; --marigold-soft: #3a2a0c; --brand: #f59e0b;
+    --scrim: rgba(2, 6, 23, .62); --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 32px rgba(0, 0, 0, .35); color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0b1413; --surface: #13201e; --ink: #e6eeec; --muted: #94a5a2; --line: #23332f;
-  --lake: #45bdb2; --lake-soft: #133431; --marigold: #f2b149; --marigold-ink: #1b1204; --marigold-soft: #3a2c12;
-  --scrim: rgba(3, 10, 9, .62); --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 32px rgba(0, 0, 0, .35); color-scheme: dark;
+  --paper: #0b1120; --surface: #111a2e; --ink: #e2e8f0; --muted: #94a3b8; --line: #1e293b;
+  --lake: #34d399; --lake-soft: #0d2b24; --marigold: #fbbf24; --marigold-ink: #1c1003; --marigold-soft: #3a2a0c; --brand: #f59e0b;
+  --scrim: rgba(2, 6, 23, .62); --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 32px rgba(0, 0, 0, .35); color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { background: var(--paper); color: var(--ink); font: 15px/1.55 var(--body); }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--surface); }
-h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -.02em; line-height: 1.08; margin: 0; text-wrap: balance; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -.025em; line-height: 1.08; margin: 0; text-wrap: balance; }
 p { margin: 0; }
 a { color: var(--lake); }
 button, input, select, textarea { font: inherit; color: inherit; }
@@ -290,6 +291,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .sheet .foot { display: flex; justify-content: space-between; gap: 8px; }
 /* property search ships later: .lo shows only with data-listings="on", .co only without */
 :root:not([data-listings="on"]) .lo, :root[data-listings="on"] .co { display: none !important; }
+:root:not([data-community="on"]) .cm, :root[data-community="on"] .ncm { display: none !important; }
 .pick { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px; }
 .pick-h { font-weight: 600; font-size: 15px; width: 100%; }
 .pick .chips { flex: 1; min-width: 0; }
@@ -320,9 +322,9 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
 
 /* ---- directory, weights, reviews, waitlist (layout and interactions after the HydScore reference) ---- */
-:root { --amber-ink: #a9560a; }
-:root[data-theme="dark"] { --amber-ink: #f2b149; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --amber-ink: #f2b149; } }
+:root { --amber-ink: #b45309; }
+:root[data-theme="dark"] { --amber-ink: #fbbf24; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --amber-ink: #fbbf24; } }
 .btn.dark { background: var(--ink); border-color: var(--ink); color: var(--surface); font-weight: 600; text-decoration: none; }
 .btn.dark:hover { filter: brightness(1.15); }
 .btn.amber { background: var(--marigold-soft); border-color: color-mix(in srgb, var(--marigold) 55%, transparent); color: var(--amber-ink); font-weight: 600; }
@@ -336,10 +338,10 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .band.tint { background: color-mix(in srgb, var(--surface) 55%, var(--paper)); border-block: 1px solid var(--line); }
 .sub { color: var(--muted); max-width: 52ch; margin-top: 10px; }
 /* hero */
-.hero2 { background: linear-gradient(180deg, var(--marigold-soft) 0%, var(--paper) 100%); border-bottom: 1px solid var(--line); }
+.hero2 { background: linear-gradient(180deg, color-mix(in srgb, var(--marigold-soft) 55%, var(--paper)) 0%, var(--paper) 100%); border-bottom: 1px solid var(--line); }
 .hero2-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(24px, 4vw, 56px); align-items: center; padding-block: clamp(36px, 6vw, 80px); }
 .hero2-text { display: grid; gap: 22px; justify-items: start; }
-.hero2 h1 { font-size: clamp(36px, 5.2vw, 62px); max-width: 14ch; font-weight: 700; }
+.hero2 h1 { font-size: clamp(36px, 5.2vw, 60px); max-width: 14ch; font-weight: 800; letter-spacing: -.035em; }
 .hero2 h1 em { font-style: normal; color: var(--amber-ink); }
 .hero2 .lede { color: var(--muted); font-size: clamp(16px, 1.5vw, 18px); max-width: 54ch; }
 .hero2 .facts { color: var(--muted); border-top: 1px solid var(--line); opacity: 1; width: 100%; max-width: none; }
@@ -362,11 +364,11 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 .tcredit { margin: 0; padding-inline: 6px; }
 @media (max-width: 860px) { .hero2-grid { grid-template-columns: 1fr; } }
 /* directory */
-.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 10px; margin-bottom: 12px; }
+.dtools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 10px; margin-bottom: 12px; }
 .search { position: relative; flex: 1 1 260px; display: block; }
 .search svg { position: absolute; left: 12px; top: 50%; translate: 0 -50%; width: 16px; height: 16px; stroke: var(--muted); }
 .search input { width: 100%; padding: 11px 12px 11px 36px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); font-size: 15px; }
-.toolbar .chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.dtools .chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
 .locs { grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .loc { border-radius: 18px; transition: transform .15s, box-shadow .15s; cursor: pointer; }
 .loc:hover { transform: translateY(-2px); }
@@ -434,7 +436,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Hyderabad Locality Score, home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--lake)"/><path d="M8 23V14l8-6 8 6v9" fill="none" stroke="var(--surface)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="16" cy="18" r="3.2" fill="var(--marigold)"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--brand)"/><path d="M8 23V14l8-6 8 6v9" fill="none" stroke="var(--surface)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="16" cy="18" r="3.2" fill="var(--marigold)"/></svg>
       <span>Locality Score</span>
     </a>
     <nav class="nav" aria-label="Main">
@@ -444,10 +446,10 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <a class="lo" href="#explore" data-quick="plots">Plots</a>
       <a href="#localities">Localities</a>
       <a href="#method">Scoring model</a>
-      <a href="#reviews">Community reviews</a>
+      <a class="cm" href="#reviews">Community reviews</a>
     </nav>
     <div class="actions">
-      <a class="btn dark navcta" href="#waitlist">Get early access</a>
+      <a class="btn dark navcta cm" href="#waitlist">Get early access</a><a class="btn dark navcta ncm" href="#localities">Explore localities</a>
       <button class="iconbtn" type="button" id="theme" aria-label="Switch light or dark"><svg class="icon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
       <button class="iconbtn lo" type="button" id="open-account" aria-label="Sign in"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
       <button class="iconbtn lo" type="button" id="open-short" aria-label="Shortlist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge num" id="short-count" hidden>0</span></button>
@@ -456,7 +458,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     </div>
   </div>
   <nav class="mnav" id="mobile-menu" aria-label="Menu" hidden>
-    <a href="#localities">Localities</a><a href="#weights">Set your weights</a><a href="#method">Scoring model</a><a href="#reviews">Community reviews</a><a class="btn dark" href="#waitlist">Get early access</a>
+    <a href="#localities">Localities</a><a href="#weights">Set your weights</a><a href="#method">Scoring model</a><a class="cm" href="#reviews">Community reviews</a><a class="btn dark cm" href="#waitlist">Get early access</a>
   </nav>
 </header>
 
@@ -553,8 +555,8 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
   <section class="band" id="localities" aria-labelledby="loc-h">
     <div class="wrap">
       <div class="head"><div><p class="eyebrow">Interactive directory</p><h2 id="loc-h">Hyderabad locality scores</h2><p>Every locality gets an early score out of 100 from 5 of the 21 measures we plan, counted within 2 km of its centre: schools, healthcare and daily needs counted from Overture Maps, distance to the nearest metro station, and green cover measured from ESA satellite imagery. <a href="#method">How the score works</a>.</p></div>
-        <button class="btn amber" type="button" data-review-open>Add a resident note</button></div>
-      <div class="toolbar"><label class="search"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <button class="btn amber cm" type="button" data-review-open>Add a resident note</button></div>
+      <div class="dtools"><label class="search"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
         <input id="q" type="search" placeholder="Search Gachibowli, Jubilee Hills, Raidurg metro…" aria-label="Search localities" autocomplete="off"></label>
         <div class="chips" id="tags" role="group" aria-label="Filter localities"></div></div>
       <div class="loc-tools"><span class="fine">Zone:</span><div class="chips" id="zones"></div><span class="fine num" id="zone-n" aria-live="polite"></span></div>
@@ -580,33 +582,12 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
     </div>
   </section>
 
-  <section class="band" id="reviews" aria-labelledby="rv-h">
+  <section class="band cm" id="reviews" aria-labelledby="rv-h">
     <div class="wrap">
       <div class="head"><div><p class="eyebrow">Ground reality</p><h2 id="rv-h">What residents say</h2>
         <p>Notes from people who live there: water supply, traffic, street lighting, daily life. They sit beside the scores and never change them. We read every note before it appears.</p></div>
         <button class="btn dark" type="button" data-review-open>Add your note</button></div>
       <div class="revs" id="revs"></div>
-    </div>
-  </section>
-
-  <section class="band what" id="what" aria-labelledby="what-h">
-    <div class="wrap grid">
-      <div class="media">
-        <span id="what-media"></span>
-        <video id="what-video" muted loop playsinline preload="none" aria-hidden="true" hidden></video>
-        <div class="tag" id="what-credit">High-rises in Kokapet after sunset</div>
-      </div>
-      <div>
-        <h2 id="what-h" style="font-size:clamp(28px,3.6vw,42px)">What we do</h2>
-        <p style="color:var(--muted);margin-top:10px;font-size:17px">We help you choose the right area to live, work or buy property in Hyderabad, whether it's a flat, an independent house or a commercial space. The right area matters more than the right flat.</p>
-        <div class="points">
-          <div class="point lo"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></div><div><h3>Every kind of property</h3><p>Flats, independent houses, villas, plots, offices and shops. Rent or buy, filtered by budget, rate per sq ft, bedrooms, locality and locality score.</p></div></div>
-          <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div><div><h3>A score for every locality</h3><p>See how a neighbourhood compares on schools, healthcare, transport, parks and daily needs before you visit.</p></div></div>
-          <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><div><h3>Ranked on what matters to you</h3><p>Tell us what you care about most, from schools to metro access, and the ranking changes to match.</p></div></div>
-          <div class="point lo"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10M9 20v-6h6v6"/></svg></div><div><h3>Straight from owners</h3><p>Owners list directly. No broker calls, no spam.</p></div></div>
-          <div class="point"><div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div><div><h3>Sources on every number</h3><p>Each figure shows where it came from and when. Where we have no reliable source, we say "not enough data" instead of guessing.</p></div></div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -652,7 +633,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       </div>
     </div>
   </section>
-  <section class="dark-band" id="waitlist" aria-labelledby="wl-h">
+  <section class="dark-band cm" id="waitlist" aria-labelledby="wl-h">
     <div class="wrap narrow">
       <span class="pillbadge dk">Early access</span>
       <h2 id="wl-h">Get notified when more measures go live.</h2>
@@ -710,7 +691,10 @@ const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? 
 const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 // Property search (listings, sign-in, posting) is built and tested but switched off until launch; set true to bring it back.
 const LISTINGS = false;
+// resident notes and the early-access list stay hidden until supabase/community.sql has been run; then set this to true
+const COMMUNITY = false;
 if (LISTINGS) document.documentElement.dataset.listings = "on";
+if (COMMUNITY) document.documentElement.dataset.community = "on";
 
 const TYPES = { flat: "Flat", house: "Independent house", villa: "Villa", plot: "Plot", office: "Office", shop: "Shop" };
 const CATS = [
@@ -1300,7 +1284,8 @@ const revCard = r => `<article class="rev"><div class="rv-top"><button class="ta
   <p>“${esc(r.body)}”</p><small>${esc(r.author)} · ${new Date(r.created_at).toLocaleDateString("en-IN", { month: "short", year: "numeric" })}</small></article>`;
 const noNotes = `<div class="empty-note"><b>No resident notes yet</b><span>Be the first to say what daily life is like in your area.</span><button class="btn" type="button" data-review-open>Add your note</button></div>`;
 function drawReviews() { $("revs").innerHTML = REVIEWS.length ? REVIEWS.slice(0, 6).map(revCard).join("") : noNotes; }
-const notesFor = name => { const l = REVIEWS.filter(r => r.locality === name); return `<div class="panel"><h3>Resident notes</h3>${l.length ? `<div class="lrevs">${l.slice(0, 3).map(revCard).join("")}</div>` : `<p class="fine">No resident notes yet for ${esc(name)}.</p>`}<div><button class="btn" type="button" data-review-open="${esc(name)}">Add a note about ${esc(name)}</button></div></div>`; };
+const notesFor = name => COMMUNITY ? notesHTML(name) : "";
+const notesHTML = name => { const l = REVIEWS.filter(r => r.locality === name); return `<div class="panel"><h3>Resident notes</h3>${l.length ? `<div class="lrevs">${l.slice(0, 3).map(revCard).join("")}</div>` : `<p class="fine">No resident notes yet for ${esc(name)}.</p>`}<div><button class="btn" type="button" data-review-open="${esc(name)}">Add a note about ${esc(name)}</button></div></div>`; };
 async function loadReviews() {
   if (sb) { const { data, error } = await sb.from("locality_reviews").select("locality,rating,body,author,created_at").eq("status", "live").order("created_at", { ascending: false }).limit(60); if (!error && data) REVIEWS = data.filter(r => locs[r.locality]); }
   drawReviews();
@@ -1469,7 +1454,7 @@ $("theme").onclick = () => { document.documentElement.dataset.theme = dark() ? "
 
 /* videos play only while on screen, and never when the viewer prefers less motion */
 const vio = new IntersectionObserver(es => es.forEach(en => { const v = en.target; if (calm) return; if (en.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }), { threshold: .15 });
-["what-video"].forEach(id => vio.observe($(id)));
+document.querySelectorAll("video").forEach(v => vio.observe(v));
 
 /* ---------- boot ---------- */
 Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/listings.json").then(r => r.json()), fetch("data/photos.json").then(r => r.ok ? r.json() : {}).catch(() => ({}))])
@@ -1485,14 +1470,6 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   $("f-type").innerHTML = Object.entries(TYPES).map(([v, t]) => `<button class="chip" type="button" data-v="${v}" aria-pressed="false">${t}</button>`).join("");
   const list = Object.entries(credits).filter(([k]) => !k.startsWith("_"));
   if (list.length) $("credits").innerHTML = list.map(([, c]) => `<li>${esc(c.file.replace(/^File:/, "").replace(/\.\w+$/, ""))}: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a></li>`).join("");
-  // use the Kokapet video when its photo is licensed and present, else the bridge photo
-  const whatKey = credits._videos?.what ? "loc-kokapet" : credits["loc-raidurg"] ? "loc-raidurg" : "";
-  if (whatKey) {
-    const kok = whatKey === "loc-kokapet", c = credits[whatKey];
-    $("what-media").innerHTML = `<img data-fb src="${kok ? "media/what-poster.jpg" : img(whatKey)}" alt="${kok ? "High-rise towers in Kokapet after sunset" : "The cable bridge over Durgam Cheruvu lit up at night"}">`;
-    if (kok) { const v = $("what-video"); v.poster = "media/what-poster.jpg"; v.innerHTML = '<source src="media/what.mp4" type="video/mp4">'; v.hidden = false; v.load(); }
-    $("what-credit").textContent = `${kok ? "High-rises in Kokapet after sunset" : "Durgam Cheruvu cable bridge, between Madhapur and Raidurg"}. Photo: ${c.author || "Unknown"}, ${c.license}.`;
-  }
   const ctaKey = ["amenity-park", "loc-gachibowli", "loc-raidurg"].find(k => HAVE.has(k));
   if (ctaKey) $("cta-media").innerHTML = imgTag(ctaKey, "", false, true);
   drawHow(LISTINGS ? "seek" : "choose"); drawPri(); drawWeights(); drawTags(); drawZones();
@@ -1501,7 +1478,7 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   drawCounts(); render();
   if (LISTINGS && matchMedia("(min-width: 1181px)").matches) initMap();
   initLocMap();
-  routeFromHash(); addEventListener("hashchange", routeFromHash); loadReviews();
+  routeFromHash(); addEventListener("hashchange", routeFromHash); if (COMMUNITY) loadReviews();
   if (sb && LISTINGS) {
     sb.auth.onAuthStateChange((ev, session) => { me = session?.user ?? null; syncAccount(); if (ev === "SIGNED_IN" && /access_token/.test(location.hash)) { history.replaceState(null, "", location.pathname); toast("Signed in"); } });
     loadLive();
