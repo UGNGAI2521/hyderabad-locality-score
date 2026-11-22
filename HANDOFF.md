@@ -22,6 +22,8 @@ Checks and refresh (22 Nov): `.github/workflows/check.yml` runs on every push: r
 
 Green space (22 Nov): the green measure is now half green cover, half the nearest park (OSM parks via Overture land use; 100 within 250 m, 0 from 2 km). Buses were tested and left out: OSM maps only about 650 stops city-wide (20 of 88 areas show none within 1 km, Kukatpally 3), so they stay unscored until TSRTC's GTFS licence is confirmed. Still 5 of 21 measures.
 
+Distance to work (22 Nov): "Where do you work or study?" in the weights section adds a sixth, personal slider (straight-line distance to the chosen locality; 100 within 2 km, 0 from 20 km). It is remembered in the visitor's browser, changes only their ranking, and never the published scores or locality pages.
+
 Next, in order: analytics and a custom domain (need the owner's accounts), move scoring into `build_scores.py`, one static page per locality, then new measures (bus stops, parks).
 
 ## The idea

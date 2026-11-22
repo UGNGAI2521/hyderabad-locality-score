@@ -401,6 +401,8 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 620px) { .locs { grid-template-columns: 1fr; } }
 /* weights and live ranking */
 .wgrid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+.workpick { display: grid; gap: 2px; margin-bottom: 6px; }
+#work { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); font-size: 15px; margin-bottom: 12px; }
 .wbox2 { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); padding: 14px 16px; margin-top: 16px; }
 .rankcard { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); padding: 18px; }
 .rc-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
@@ -566,7 +568,10 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
         <p class="eyebrow">Transparent algorithm</p>
         <h2 id="w-h">Customise what matters most</h2>
         <p class="sub">By default every measure weighs the same, 20% each. Drag a slider to say what matters to you and the ranking, the map and every score re-order as you drag. <a href="#method">How the score works</a>.</p>
-        <div class="wbox2"><div id="wt"></div></div>
+        <div class="wbox2">
+          <label class="workpick" for="work"><b>Where do you work or study?</b><span class="fine">Adds a distance-to-work slider that changes only your ranking. Straight-line distance, not travel time: there is no free traffic data.</span></label>
+          <select id="work"></select>
+          <div id="wt"></div></div>
         <div class="loc-tools" style="margin:14px 0 0"><span class="fine">Quick presets, one measure counts three times:</span><div class="chips" id="pri-locs"></div></div>
       </div>
       <div class="rankcard"><div class="rc-h"><b>Live weighted ranking</b><span class="rc-pill">Top 10 · score out of 100</span></div><ol id="rank-bars"></ol></div>
@@ -615,6 +620,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
         <li><b>Counts</b> use a log scale against the locality with the most, so one very large count doesn't flatten the rest. The best locality gets 100.</li>
         <li><b>Metro access</b> gets 100 within 500 m of a station, falling in a straight line to 0 at 5 km or more.</li>
         <li><b>Green space</b> is the average of its two parts: green cover scaled against the greenest locality (which gets 100), and the nearest park, which gets 100 within 250 m, falling in a straight line to 0 at 2 km or more.</li>
+        <li><b>Distance to work</b> appears only if you choose where you work or study: 100 within 2 km, falling in a straight line to 0 at 20 km. It is straight-line distance, not travel time, and it changes only your own ranking, never the published scores.</li>
         <li><b>The score</b> is the average of the five. By default every measure weighs the same. Choosing a quick preset counts that measure three times, and the sliders under "Customise what matters most" let you choose any mix. The default weights are <b>provisional, awaiting the owner's approval</b>.</li>
       </ul>
       <p>Scores are relative: each locality is compared with the others on this site, so adding a locality can change everyone's numbers. Metro distance moves the ranking a lot. Localities far from an operating station, such as Kokapet and Financial District, score low mainly for that reason. Planned lines aren't counted because Metro Phase 2 isn't approved yet.</p>
@@ -809,16 +815,28 @@ function scoreLocalities(raw) {
 // a measure the visitor picked counts three times as much as the others
 const PRI = new Set();
 // the visitor's weights, 0 to 100 per measure; equal by default. A chip sets 60 against 20; the sliders set any mix.
-const WT = Object.fromEntries(Object.keys(FACTORS).map(k => [k, 20]));
-const EQUAL = () => Object.values(WT).every(v => v === 20);
+const WT = Object.fromEntries([...Object.keys(FACTORS), "commute"].map(k => [k, 20]));
+// optional "where do you work or study": a sixth, personal slider; straight-line distance, 100 within 2 km, 0 from 20 km
+let WORK = "";
+const WORK_HUBS = ["HITEC City", "Financial District", "Gachibowli", "Madhapur", "Kondapur", "Nanakramguda", "Kokapet", "Raidurg", "Secunderabad", "Ameerpet", "Begumpet", "Banjara Hills", "Uppal", "Shamshabad"];
+const keysNow = () => [...Object.keys(FACTORS), ...(WORK ? ["commute"] : [])];
+const EQUAL = () => keysNow().every(k => WT[k] === 20);
+const kmTo = (a, b) => { const p = Math.PI / 180, x = Math.sin((b.lat - a.lat) * p / 2) ** 2 + Math.cos(a.lat * p) * Math.cos(b.lat * p) * Math.sin((b.lon - a.lon) * p / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+function setWork(name) {
+  WORK = locs[name] ? name : "";
+  try { store.set("work", WORK); } catch {}
+  for (const r of Object.values(locs)) { const d = WORK ? kmTo(r, locs[WORK]) : 0; r.commute = { km: d, part: Math.round(100 * Math.min(1, Math.max(0, (20 - d) / 18))) }; }
+}
+const partOf = (r, k) => k === "commute" ? r.commute.part : r.parts[k];
 function rank() {
-  const keys = Object.keys(FACTORS), all0 = keys.every(k => WT[k] === 0), w = k => all0 ? 1 : WT[k], total = keys.reduce((t, k) => t + w(k), 0), rows = Object.values(locs);
-  for (const r of rows) r.score = Math.round(keys.reduce((t, k) => t + r.parts[k] * w(k), 0) / total);
+  const keys = keysNow(), all0 = keys.every(k => WT[k] === 0), w = k => all0 ? 1 : WT[k], total = keys.reduce((t, k) => t + w(k), 0), rows = Object.values(locs);
+  for (const r of rows) r.score = Math.round(keys.reduce((t, k) => t + partOf(r, k) * w(k), 0) / total);
   rows.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)).forEach((r, i) => r.rank = i + 1);
 }
-const pct = k => { const t = Object.values(WT).reduce((a, b) => a + b, 0); return t ? Math.round(100 * WT[k] / t) : 20; };
+const pct = k => { const ks = keysNow(), t = ks.reduce((a, j) => a + WT[j], 0); return t ? Math.round(100 * WT[k] / t) : Math.round(100 / ks.length); };
 function drawWeights() {
-  $("wt").innerHTML = Object.entries(FACTORS).map(([k, f]) => `<div class="wrow"><label for="w-${k}">${f.label}</label>
+  const rows = [...Object.entries(FACTORS), ...(WORK ? [["commute", { label: `Distance to ${esc(WORK)}` }]] : [])];
+  $("wt").innerHTML = rows.map(([k, f]) => `<div class="wrow"><label for="w-${k}">${f.label}</label>
     <input id="w-${k}" type="range" min="0" max="100" step="5" value="${WT[k]}" data-w="${k}" aria-describedby="w-${k}-v"><output id="w-${k}-v" class="num">${pct(k)}%</output></div>`).join("")
     + `<div class="wfoot"><span class="fine">Shares are normalised to 100%. ${EQUAL() ? "Equal weights (the default)." : "Your own mix."}</span><button class="btn" type="button" data-wreset ${EQUAL() ? "disabled" : ""}>Reset to equal</button></div>`;
 }
@@ -839,7 +857,7 @@ const ZONES = ["All", "West", "Central", "North", "East", "South"];
 function drawZones() {
   $("zones").innerHTML = ZONES.map(z => `<button class="chip" type="button" data-zone="${z}" aria-pressed="${z === ZONE}">${z === "All" ? "All zones" : z}</button>`).join("");
   const n = Object.values(locs).filter(visible).length, all = Object.keys(locs).length;
-  $("zone-n").textContent = n === all ? `${n} localities` : `${n} of ${all} localities`;
+  $("zone-n").textContent = (n === all ? `${n} localities` : `${n} of ${all} localities`) + (WORK ? ` · ranked with distance to ${WORK}` : "");
 }
 function initLocMap() {
   if (locMap || !window.maplibregl) return;
@@ -998,7 +1016,7 @@ function scorePanel(L) {
       <h3>${esc(L.name)} early score</h3><span class="price num" style="color:var(--lake)">${L.score}<small> / 100</small></span></div>
     ${radar(L)}
     <div class="bars">${Object.entries(FACTORS).map(([k, f]) => `<div class="barrow"><span>${f.label}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span><span class="num">${f.show(L.vals[k])}</span></div>`).join("")}</div>
-    <p class="fine">Around the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools within 1 km; ${L.counts.healthcare} hospitals and clinics within 2 km; ${L.counts.daily} groceries, pharmacies, banks and ATMs within 1 km. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Nearest mapped park: ${esc(L.park.name || "an unnamed park")}, ${L.park.km.toFixed(1)} km. Rank ${L.rank} of ${Object.keys(locs).length}.</p>
+    <p class="fine">Around the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools within 1 km; ${L.counts.healthcare} hospitals and clinics within 2 km; ${L.counts.daily} groceries, pharmacies, banks and ATMs within 1 km. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Nearest mapped park: ${esc(L.park.name || "an unnamed park")}, ${L.park.km.toFixed(1)} km. Rank ${L.rank} of ${Object.keys(locs).length}${WORK ? `, counting distance to ${esc(WORK)}: ${L.commute.km.toFixed(1)} km in a straight line, not travel time` : ""}.</p>
     <p class="fine">This is an early score from ${PARTIAL}. It uses circles around a centre point we picked (1 km for schools and daily needs, 2 km for clinics and green cover), not an official ward boundary: official boundaries for the new 300 wards aren't published yet. Counts show how many schools and clinics are mapped in open data, not how good they are, and outer areas are mapped less fully.</p>
     ${L.parts.transport < 30 ? `<p class="fine"><b>Read with care:</b> this score is held down mainly by the distance to the nearest operating metro station (${L.metro.km.toFixed(1)} km). Metro Phase 2 isn't approved yet, and future infrastructure is not yet scored.</p>` : ""}
     <p class="fine">${SOURCES} Places listed with low confidence are left out. <a href="#method" data-close>How the score works</a>.</p>
@@ -1067,7 +1085,8 @@ function openCompare() {
       <tbody>${line(`Early score <small>out of 100</small>`, L => L.score, L => `<b class="num">${L.score}</b>`)}
         ${line("Rank", L => -L.rank, L => `${L.rank} of ${Object.keys(locs).length}`)}
         ${Object.entries(FACTORS).map(([k, f]) => line(f.label, L => L.parts[k], L => `<span class="num">${f.show(L.vals[k])}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span>`)).join("")}
-        ${line("Nearest metro", L => -L.metro.km, L => `${esc(L.metro.name)}, ${L.metro.km.toFixed(1)} km`)}</tbody></table></div>
+        ${line("Nearest metro", L => -L.metro.km, L => `${esc(L.metro.name)}, ${L.metro.km.toFixed(1)} km`)}
+        ${WORK ? line(`Distance to ${esc(WORK)}`, L => -L.commute.km, L => `${L.commute.km.toFixed(1)} km`) : ""}</tbody></table></div>
       <p class="fine">The best value in each row is highlighted. Schools and daily needs are counted within 1 km of each centre, clinics within 2 km; counts show how many places are mapped, not how good they are. This is an early score from ${PARTIAL}. <a href="#method" data-close>How the score works</a>.</p>
       <p class="fine">${SOURCES}</p>
       <div class="acts"><button class="btn" type="button" data-share>Copy link to this comparison</button></div></div>`;
@@ -1272,7 +1291,7 @@ function drawTop() {
     card.dataset.loc = L.name; $("top-ph").innerHTML = imgTag(key, CREDITS[key]?.caption || L.name);
     $("top-credit").innerHTML = creditLine(key);
   }
-  $("top-name").textContent = L.name; $("top-sub").textContent = `${L.zone} zone · nearest metro ${L.metro.km.toFixed(1)} km`; $("top-score").textContent = L.score;
+  $("top-name").textContent = L.name; $("top-sub").textContent = WORK ? `${L.zone} zone · ${L.commute.km.toFixed(1)} km to ${WORK}` : `${L.zone} zone · nearest metro ${L.metro.km.toFixed(1)} km`; $("top-score").textContent = L.score;
 }
 function radar(L) {
   const keys = Object.keys(FACTORS), n = keys.length, c = 110, R = 80, f = x => x.toFixed(1);
@@ -1338,7 +1357,7 @@ function drawCounts() {
   $("locs").innerHTML = list.slice(0, SHOW).map(L => { const key = locImg(L.name), n = listings.filter(l => l.locality === L.name).length;
     return `<button class="loc" type="button" data-loc="${esc(L.name)}"><span class="ph"><span class="init">${esc(L.name.slice(0, 2))}</span>${imgTag(key, "", true, true)}</span>
       <span class="body"><span class="row"><span><span class="eyebrow">${esc(L.zone)} zone</span><b>${esc(L.name)}</b></span><span class="sbadge ${L.score >= 80 ? "t1" : L.score >= 60 ? "t2" : "t3"}"><b class="num">${L.score}</b><i>Score</i></span></span>
-        <small class="lead">Nearest metro: ${esc(L.metro.name)}, ${L.metro.km.toFixed(1)} km${LISTINGS ? ` · ${n} ${n === 1 ? "listing" : "listings"}` : ""}</small>
+        <small class="lead">${WORK ? `${L.commute.km.toFixed(1)} km to ${esc(WORK)} · ` : ""}Nearest metro: ${esc(L.metro.name)}, ${L.metro.km.toFixed(1)} km${LISTINGS ? ` · ${n} ${n === 1 ? "listing" : "listings"}` : ""}</small>
         <span class="stats">${Object.entries(FACTORS).map(([k, f]) => `<span>${f.label} <b class="num">${L.parts[k]}</b></span>`).join("")}</span>
         <span class="foot"><span class="tags">${tagsOf(L).slice(0, 2).map(t => `<em>${t}</em>`).join("")}</span><span class="more">Breakdown →</span></span></span></button>`; }).join("");
   $("empty-dir").hidden = list.length > 0;
@@ -1442,7 +1461,7 @@ document.addEventListener("input", e => {
   const k = e.target.dataset?.w; if (!k) return;
   WT[k] = +e.target.value; PRI.clear(); rank(); drawPri(); drawCounts(); drawPins();
   // update the readouts in place so the slider being dragged keeps focus
-  for (const j in WT) { const o = $(`w-${j}-v`); if (o) o.textContent = pct(j) + "%"; }
+  for (const j of keysNow()) { const o = $(`w-${j}-v`); if (o) o.textContent = pct(j) + "%"; }
   const f = document.querySelector("#wt .wfoot"); if (f) { f.querySelector("span").textContent = `Shares are normalised to 100%. ${EQUAL() ? "Equal weights (the default)." : "Your own mix."}`; f.querySelector("button").disabled = EQUAL(); }
 });
 $("f-score").oninput = e => { S.minScore = +e.target.value; render(); };
@@ -1468,6 +1487,7 @@ document.querySelectorAll("video").forEach(v => vio.observe(v));
 Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/listings.json").then(r => r.json()), fetch("data/photos.json").then(r => r.ok ? r.json() : {}).catch(() => ({}))])
 .then(([raw, ls, credits]) => {
   locs = scoreLocalities(raw); rank();
+  setWork(store.get("work", "")); rank();
   TH = { schools: q75(raw.map(d => d.counts.schools)), healthcare: q75(raw.map(d => d.counts.healthcare)) }; listings = EXAMPLES = ls.map(l => ({ ...l, example: true })); CREDITS = credits; HAVE = new Set(Object.keys(credits).filter(k => !k.startsWith("_")));
   $("fact-listings").textContent = ls.length;
   const names = Object.keys(locs).sort();
@@ -1480,7 +1500,9 @@ Promise.all([fetch("data/localities.json").then(r => r.json()), fetch("data/list
   if (list.length) $("credits").innerHTML = list.map(([, c]) => `<li>${esc(c.file.replace(/^File:/, "").replace(/\.\w+$/, ""))}: ${esc(c.author || "Unknown")}, <a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.license)}</a></li>`).join("");
   const ctaKey = ["amenity-park", "loc-gachibowli", "loc-raidurg"].find(k => HAVE.has(k));
   if (ctaKey) $("cta-media").innerHTML = imgTag(ctaKey, "", false, true);
-  drawHow(LISTINGS ? "seek" : "choose"); drawPri(); drawWeights(); drawTags(); drawZones();
+  drawHow(LISTINGS ? "seek" : "choose"); $("work").innerHTML = `<option value="">No preference</option><optgroup label="Popular work areas">${WORK_HUBS.filter(n => locs[n]).map(n => `<option>${esc(n)}</option>`).join("")}</optgroup><optgroup label="All localities">${names.map(n => `<option>${esc(n)}</option>`).join("")}</optgroup>`;
+  $("work").value = WORK; $("work").onchange = e => { setWork(e.target.value); weightsChanged(); drawZones(); };
+  drawPri(); drawWeights(); drawTags(); drawZones();
   $("wl-loc").innerHTML = ["Not sure yet", ...names].map(n => `<option>${esc(n)}</option>`).join("");
   document.querySelectorAll(".loc-n").forEach(e => e.textContent = Object.keys(locs).length);
   drawCounts(); render();
