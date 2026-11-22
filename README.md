@@ -17,7 +17,7 @@ When `LISTINGS` is on, owners sign in by email and post listings with photos; bu
 | `src/page.html` | The site source (HTML, CSS and JS in one file), written for the claude.ai artifact viewer |
 | `index.html` | Standalone build of `src/page.html` for any static host. Regenerate with `python3 scripts/build_site.py` |
 | `data/centres.json` | 88 localities in 5 zones and their centre points (`scripts/geocode.py`, hand-checked) |
-| `data/localities.json` | Measures for each locality: place counts, nearest metro and MMTS station, green cover |
+| `data/localities.json` | Measures for each locality: place counts, nearest metro and MMTS station, green cover, nearest park, measure scores and rank |
 | `data/basemap.geojson` | Main roads, metro and rail lines, lakes: the map draws this itself (`scripts/build_basemap.py`) |
 | `data/listings.json` | Example listings, shown only while no owner listing is live |
 | `supabase/schema.sql` | Tables, row-level security and photo storage for owner listings and enquiries |
@@ -29,7 +29,7 @@ When `LISTINGS` is on, owners sign in by email and post listings with photos; bu
 | `data/photos.json` | Each photo's author, licence, Wikimedia address, and whether a local copy exists |
 | `media/` | Web-sized photos and the two looping videos |
 | `vendor/maplibre-gl.css` | Map library stylesheet |
-| `scripts/build_scores.py` | Builds `data/localities.json` from Overture Maps, OpenStreetMap stations and ESA WorldCover |
+| `scripts/build_scores.py` | Builds `data/localities.json` from Overture Maps, OpenStreetMap stations and parks, and ESA WorldCover |
 | `scripts/make_examples.py` | Builds the example listings |
 | `scripts/process_media.py` | Resizes photos and renders the videos with ffmpeg |
 | `scripts/build_site.py` | Builds `index.html` from `src/page.html` |

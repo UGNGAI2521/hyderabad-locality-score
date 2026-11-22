@@ -13,6 +13,9 @@ import numpy as np
 import pyarrow.compute as pc, pyarrow.dataset as ds, pyarrow.fs as fs, pyarrow.parquet as pq
 import rasterio
 from rasterio.windows import from_bounds
+from shapely import wkb
+from shapely.geometry import Point
+from shapely.ops import nearest_points
 
 REL = "2026-11-18.0"
 W, S, E, N = 78.20, 17.15, 78.75, 17.70  # Hyderabad box, wider than every 2 km circle
@@ -73,7 +76,9 @@ def score(out):
     for o in out:
         p = {k: half_up(100 * clip(math.log1p(o["counts"][k]) / math.log1p(mx[k]) if mx[k] else 0)) for k in mx}
         p["transport"] = half_up(100 * clip((5 - o["metro"]["km"]) / 4.5))
-        p["green"] = half_up(100 * clip(o["green_pct"] / green_max))
+        # green space: half green cover (against the greenest), half the nearest park (100 within 250 m, 0 from 2 km)
+        o["green_parts"] = {"cover": half_up(100 * clip(o["green_pct"] / green_max)), "park": half_up(100 * clip((2 - o["park"]["km"]) / 1.75))}
+        p["green"] = half_up(sum(o["green_parts"].values()) / 2)
         o["parts"], o["score"] = p, half_up(sum(p.values()) / len(p))
     for i, o in enumerate(sorted(out, key=lambda o: (-o["score"], o["name"].lower()))):
         o["rank"] = i + 1
@@ -88,6 +93,15 @@ def main(refresh=False):
               if p["confidence"] >= MIN_CONFIDENCE and p["operating_status"] not in ("permanently_closed", "temporarily_closed")]
     infra = overture("base", "infrastructure", ["names", "class", "bbox"], refresh)
     cover, tr = worldcover(refresh)
+    # public parks (OpenStreetMap leisure=park, via Overture land use); geometry kept so distance is to the park's edge
+    parks = [(wkb.loads(r["geometry"]), (r["names"] or {}).get("primary") or "") for r in overture("base", "land_use", ["names", "class", "geometry", "bbox"], refresh) if r["class"] == "park"]
+    assert len(parks) > 300, len(parks)
+
+    def nearest_park(c):  # straight-line distance to the nearest park's edge, 0 if the centre is inside one
+        p = Point(c["lon"], c["lat"])
+        g, name = min(parks, key=lambda t: t[0].distance(p))
+        a, _ = nearest_points(g, p)
+        return {"name": name, "km": round(km(c["lat"], c["lon"], a.y, a.x), 2)}
 
     def where(b): return (b["ymin"] + b["ymax"]) / 2, (b["xmin"] + b["xmax"]) / 2
     def label(n): return n.title() if n.islower() else n
@@ -122,7 +136,7 @@ def main(refresh=False):
         out.append({**c,
                     "counts": {"schools": count(SCHOOLS.__contains__), "healthcare": sum(1 for p in wide if cat(p) in HEALTH),
                                "daily": count(lambda t: t in DAILY or t.endswith("grocery_store"))},
-                    "metro": nearest(metro), "rail": nearest(rail),
+                    "metro": nearest(metro), "rail": nearest(rail), "park": nearest_park(c),
                     "green_pct": round(100 * np.isin(px, GREEN).mean(), 1), "built_pct": round(100 * (px == 50).mean(), 1)})
         print(f"{c['name']:20} {out[-1]['counts']} metro {out[-1]['metro']} green {out[-1]['green_pct']}%")
 

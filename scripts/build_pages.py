@@ -12,9 +12,10 @@ SOURCES = re.search(r"const SOURCES = '(.*?)';", page).group(1)
 NO_DATA = re.findall(r'\["([^"]+)", "([^"]+)"\]', page[page.index("const NO_DATA = ["):page.index("];", page.index("const NO_DATA = ["))])
 DATA_DATE = re.search(r"Data last updated (\d{1,2} \w+ \d{4})", page).group(1)
 assert len(NO_DATA) == 16 and "Overture" in SOURCES
-LABELS = {"schools": "Schools", "healthcare": "Healthcare", "daily": "Daily needs", "transport": "Metro access", "green": "Green cover"}
+LABELS = {"schools": "Schools", "healthcare": "Healthcare", "daily": "Daily needs", "transport": "Metro access", "green": "Green space"}
 esc = html.escape
 slug = lambda n: re.sub(r"[^a-z0-9]+", "-", n.lower())
+pct = lambda x: math.floor(x + 0.5)  # round halves up, as the main page does
 
 CSS = """
 :root{--paper:#f8fafc;--surface:#fff;--ink:#0f172a;--muted:#475569;--line:#e2e8f0;--lake:#047857;--lake-soft:#ecfdf5;--marigold:#f59e0b;--marigold-soft:#fef3c7;--amber-ink:#b45309;--brand:#d97706;color-scheme:light}
@@ -79,13 +80,13 @@ def locality_page(L, all_locs, photos):
             ("healthcare", f'{c["healthcare"]} hospitals and clinics', "within 2 km"),
             ("daily", f'{c["daily"]} groceries, pharmacies, banks and ATMs', "within 1 km"),
             ("transport", f'Nearest operating metro: {esc(L["metro"]["name"])}, {L["metro"]["km"]:.1f} km. Nearest MMTS station: {esc(L["rail"]["name"])}, {L["rail"]["km"]:.1f} km', "straight-line distance"),
-            ("green", f'{L["green_pct"]:.0f}% of land under trees, shrubs, grass or wetland; {L["built_pct"]:.0f}% built up', "within 2 km")]
+            ("green", f'{pct(L["green_pct"])}% of land under trees, shrubs, grass or wetland ({L["green_parts"]["cover"]}/100); nearest mapped park: {esc(L["park"]["name"] or "an unnamed park")}, {L["park"]["km"]:.1f} km ({L["green_parts"]["park"]}/100)', "green cover within 2 km; park by distance")]
     ph = photos.get("loc-" + s)
     figure = (f'<figure><img src="../../media/loc-{s}.jpg" alt="{esc(ph.get("caption") or n)}" width="1280" height="800">'
               f'<figcaption>{esc(ph.get("caption") or "")}. Photo: {esc(ph.get("author") or "Unknown")}, <a href="{esc(ph["page"])}" rel="noopener">{esc(ph["license"])}</a>, via Wikimedia Commons.</figcaption></figure>') if ph and ph.get("local") else ""
     total = len(all_locs)
     desc = (f'{n} ({L["zone"]} zone, Hyderabad): early score {L["score"]}/100, rank {L["rank"]} of {total}. {c["schools"]} schools within 1 km, '
-            f'{c["healthcare"]} clinics within 2 km, nearest metro {L["metro"]["km"]:.1f} km, {L["green_pct"]:.0f}% green cover. Open data, every source cited.')
+            f'{c["healthcare"]} clinics within 2 km, nearest metro {L["metro"]["km"]:.1f} km, {pct(L["green_pct"])}% green cover, nearest park {L["park"]["km"]:.1f} km. Open data, every source cited.')
     body = f"""
 <nav class="crumbs"><a href="../../">Home</a> › <a href="../">All localities</a> › {esc(n)}</nav>
 <div class="hero"><div>

@@ -20,6 +20,7 @@ for o in locs:
     check(set(p) == MEASURES and all(isinstance(v, int) and 0 <= v <= 100 for v in p.values()), f"{n}: measure scores missing or outside 0-100")
     check(o.get("score") == math.floor(sum(p.values()) / len(MEASURES) + 0.5), f"{n}: score is not the average of its five measures")
     check(all(o["counts"][k] >= 0 for k in ("schools", "healthcare", "daily")) and 0 <= o["green_pct"] <= 100 and o["metro"]["km"] >= 0, f"{n}: impossible raw value")
+    check(o.get("park", {}).get("km", -1) >= 0 and set(o.get("green_parts", {})) == {"cover", "park"}, f"{n}: nearest park or green-space parts missing")
     check(17.0 < o["lat"] < 17.9 and 78.0 < o["lon"] < 79.0, f"{n}: centre is outside Hyderabad")
 check(sum(o["counts"]["healthcare"] > 0 for o in locs) >= 0.9 * len(locs), "most localities map no clinic: the places download is probably broken")
 

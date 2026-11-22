@@ -1,6 +1,6 @@
 <title>Hyderabad Locality Score</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Choose where to live or work in Hyderabad: 88 localities compared on schools, healthcare, metro access, green cover and daily needs, scored from open data.">
+<meta name="description" content="Choose where to live or work in Hyderabad: 88 localities compared on schools, healthcare, metro access, green space and daily needs, scored from open data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -470,7 +470,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <span class="pillbadge co"><i></i>Built for renters, buyers and residents in Hyderabad</span>
       <h1>Know every Hyderabad locality <em>before you move.</em></h1>
       <p class="lede lo">Flats, houses, villas, plots and workspaces to rent or buy, with a score for every locality built from open map data.</p>
-      <p class="lede co">Stop relying on broker pitches. Compare <span class="loc-n">50</span> localities on schools, healthcare, daily needs, metro access and green cover. Every number comes from open data with its source and date, and you choose what matters.</p>
+      <p class="lede co">Stop relying on broker pitches. Compare <span class="loc-n">50</span> localities on schools, healthcare, daily needs, metro access and green space. Every number comes from open data with its source and date, and you choose what matters.</p>
       <div class="cta-row co"><a class="btn primary big" href="#localities">Explore locality scores <span aria-hidden="true">→</span></a><a class="btn big" href="#weights">Set your own weights</a></div>
       <form class="console lo" id="console">
         <div class="tabs" role="tablist" aria-label="What are you looking for">
@@ -600,14 +600,14 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
       <ul>
         <li><b>Area:</b> circles around each locality's centre point: 1 km (roughly a 12 to 15 minute walk) for schools and daily needs, and 2 km for clinics and green cover, which people travel a little further for. These are not official ward boundaries. The new 300-ward map has no published boundaries yet, so every locality gets the same size circles. We will switch once official boundaries are out.</li>
         <li><b>Schools, healthcare, daily needs:</b> places from Overture Maps (release of 18 Nov 2026) inside the circle. Daily needs means groceries, supermarkets, pharmacies, banks and ATMs. Places marked closed, or listed with confidence below 0.5, are left out. Counts show how many places are mapped in open data, not how good they are. Outer areas are mapped less fully, so their counts can run low.</li>
-        <li><b>Metro access:</b> straight-line distance to the nearest operating metro station. Stations still under construction are left out.</li>
-        <li><b>Green cover:</b> share of land in the circle under trees, shrubs, grass or wetland, from ESA WorldCover 2021 satellite land cover at 10 m.</li>
+        <li><b>Metro access:</b> straight-line distance to the nearest operating metro station. Stations still under construction are left out. Bus stops are not counted yet: OpenStreetMap maps only about 650 for the whole city, so many well-served areas would wrongly show none. We will add buses once the licence of TSRTC's official route data is confirmed.</li>
+        <li><b>Green space:</b> two parts. Green cover is the share of land within 2 km under trees, shrubs, grass or wetland, from ESA WorldCover 2021 satellite land cover at 10 m. The nearest park is the straight-line distance to the edge of the closest public park mapped in OpenStreetMap.</li>
       </ul>
       <h3>From numbers to 0 to 100</h3>
       <ul>
         <li><b>Counts</b> use a log scale against the locality with the most, so one very large count doesn't flatten the rest. The best locality gets 100.</li>
         <li><b>Metro access</b> gets 100 within 500 m of a station, falling in a straight line to 0 at 5 km or more.</li>
-        <li><b>Green cover</b> is scaled against the greenest locality, which gets 100.</li>
+        <li><b>Green space</b> is the average of its two parts: green cover scaled against the greenest locality (which gets 100), and the nearest park, which gets 100 within 250 m, falling in a straight line to 0 at 2 km or more.</li>
         <li><b>The score</b> is the average of the five. By default every measure weighs the same. Choosing a quick preset counts that measure three times, and the sliders under "Customise what matters most" let you choose any mix. The default weights are <b>provisional, awaiting the owner's approval</b>.</li>
       </ul>
       <p>Scores are relative: each locality is compared with the others on this site, so adding a locality can change everyone's numbers. Metro distance moves the ranking a lot. Localities far from an operating station, such as Kokapet and Financial District, score low mainly for that reason. Planned lines aren't counted because Metro Phase 2 isn't approved yet.</p>
@@ -666,6 +666,7 @@ footer li { min-width: 0; overflow-wrap: anywhere; }
         <li>Places: <a href="https://overturemaps.org" target="_blank" rel="noopener">Overture Maps</a>, release of 18 Nov 2026 (CDLA Permissive 2.0), retrieved 21 Nov 2026</li>
         <li>Metro and rail stations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), via the Overture release of 18 Nov 2026, retrieved 21 Nov 2026</li>
         <li>Green cover: <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (CC BY 4.0), retrieved 21 Nov 2026</li>
+        <li>Parks: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), via the Overture land-use release of 18 Nov 2026, retrieved 22 Nov 2026</li>
         <li>Locality centre points: <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap Nominatim</a> (ODbL), checked by hand</li>
         <li>Base map: roads, lakes and metro lines from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>, via the Overture release of 18 Nov 2026</li>
         <li>Early scores cover 5 of 21 planned measures. <a href="#method">How the score works</a></li>
@@ -720,15 +721,14 @@ const TYPE_IMG = { flat: "cat-flat", house: "", villa: "", plot: "cat-plot", off
 // every locality photo is keyed "loc-<name in lower case, dashes>" in data/photos.json
 const slugOf = name => name.toLowerCase().replace(/[^a-z0-9]+/g, "-");  // also the locality page's folder (scripts/build_pages.py)
 const locImg = name => "loc-" + slugOf(name);
-// counts score on a log scale against the best locality; metro gets full marks within 500 m and none beyond 5 km; green cover scales against the greenest
 const FACTORS = {
   schools: { label: "Schools", value: d => d.counts.schools, show: v => v },
   healthcare: { label: "Healthcare", value: d => d.counts.healthcare, show: v => v },
   daily: { label: "Daily needs", value: d => d.counts.daily, show: v => v },
   transport: { label: "Metro access", value: d => d.metro.km, show: v => v.toFixed(1) + " km", score: v => (5 - v) / 4.5 },
-  green: { label: "Green cover", value: d => d.green_pct, show: v => Math.round(v) + "%", score: (v, max) => v / max },
+  green: { label: "Green space", value: d => d, show: d => `${Math.round(d.green_pct)}% green · park ${d.park.km.toFixed(1)} km` },
 };
-const SOURCES = 'Places: <a href="https://overturemaps.org" target="_blank" rel="noopener">Overture Maps</a> release of 18 Nov 2026 (CDLA Permissive 2.0), retrieved 21 Nov 2026. Stations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), as carried in the same Overture release of 18 Nov 2026, retrieved 21 Nov 2026. Green cover: <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a>, 10 m satellite land cover (CC BY 4.0), retrieved 21 Nov 2026.';
+const SOURCES = 'Places: <a href="https://overturemaps.org" target="_blank" rel="noopener">Overture Maps</a> release of 18 Nov 2026 (CDLA Permissive 2.0), retrieved 21 Nov 2026. Stations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), as carried in the same Overture release of 18 Nov 2026, retrieved 21 Nov 2026. Green cover: <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a>, 10 m satellite land cover (CC BY 4.0), retrieved 21 Nov 2026. Parks: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL), via the Overture land-use release of 18 Nov 2026, retrieved 22 Nov 2026.';
 // why each measure isn't scored yet, from the source register (21 Nov 2026)
 const NO_DATA = [
   ["Water", "No locality-level supply data is published. Groundwater depth would only be a proxy."],
@@ -991,7 +991,7 @@ function scorePanel(L) {
       <h3>${esc(L.name)} early score</h3><span class="price num" style="color:var(--lake)">${L.score}<small> / 100</small></span></div>
     ${radar(L)}
     <div class="bars">${Object.entries(FACTORS).map(([k, f]) => `<div class="barrow"><span>${f.label}</span><span class="track"><i style="width:${L.parts[k]}%"></i></span><span class="num">${f.show(L.vals[k])}</span></div>`).join("")}</div>
-    <p class="fine">Around the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools within 1 km; ${L.counts.healthcare} hospitals and clinics within 2 km; ${L.counts.daily} groceries, pharmacies, banks and ATMs within 1 km. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Rank ${L.rank} of ${Object.keys(locs).length}.</p>
+    <p class="fine">Around the locality centre (<span class="mono">${L.lat.toFixed(4)}° N, ${L.lon.toFixed(4)}° E</span>): ${L.counts.schools} schools and preschools within 1 km; ${L.counts.healthcare} hospitals and clinics within 2 km; ${L.counts.daily} groceries, pharmacies, banks and ATMs within 1 km. Nearest metro: ${esc(L.metro.name)}, ${L.metro.km} km. Nearest MMTS station: ${esc(L.rail.name)}, ${L.rail.km} km. Green cover is the share of land under trees, shrubs, grass or wetland; ${Math.round(L.built_pct)}% is built up. Nearest mapped park: ${esc(L.park.name || "an unnamed park")}, ${L.park.km.toFixed(1)} km. Rank ${L.rank} of ${Object.keys(locs).length}.</p>
     <p class="fine">This is an early score from ${PARTIAL}. It uses circles around a centre point we picked (1 km for schools and daily needs, 2 km for clinics and green cover), not an official ward boundary: official boundaries for the new 300 wards aren't published yet. Counts show how many schools and clinics are mapped in open data, not how good they are, and outer areas are mapped less fully.</p>
     ${L.parts.transport < 30 ? `<p class="fine"><b>Read with care:</b> this score is held down mainly by the distance to the nearest operating metro station (${L.metro.km.toFixed(1)} km). Metro Phase 2 isn't approved yet, and future infrastructure is not yet scored.</p>` : ""}
     <p class="fine">${SOURCES} Places listed with low confidence are left out. <a href="#method" data-close>How the score works</a>.</p>
@@ -1358,7 +1358,7 @@ async function loadLive() {
 
 /* ---------- how it works ---------- */
 const HOW = {
-  choose: [["Pick what matters", "Choose the measures you care about most: schools, healthcare, metro access, green cover or daily needs."], ["Compare localities", "The ranking updates straight away, and the map shows every locality with its score."], ["Check the details", "Open a locality for its numbers: schools and shops within 1 km, clinics within 2 km, the nearest metro, how green it is, and where each figure comes from."]],
+  choose: [["Pick what matters", "Choose the measures you care about most: schools, healthcare, metro access, green space or daily needs."], ["Compare localities", "The ranking updates straight away, and the map shows every locality with its score."], ["Check the details", "Open a locality for its numbers: schools and shops within 1 km, clinics within 2 km, the nearest metro, how green it is, and where each figure comes from."]],
   seek: [["Search", "Pick buy or rent and the kind of property, then filter by budget, rate per sq ft, bedrooms, locality and locality score."], ["Compare localities", "Check each locality's score and what's nearby before you shortlist."], ["Contact the owner", "Message owners directly and arrange a visit. No broker in between."]],
   own: [["Describe your property", "Type, locality, size and price. It takes a few minutes."], ["Add photos", "Clear photos of every room get far more enquiries."], ["Hear from people", "Enquiries come straight to you from people looking in your locality."]],
 };
