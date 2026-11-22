@@ -2,6 +2,19 @@
 
 As of 21 Nov 2026. Read this first in a new session.
 
+## Update, 22 Nov 2026 (read this first)
+
+Merged to `main` and live:
+- Open items 1–5 below are done. Rajendranagar now uses the old Ward 60 centroid, but that still sits on the university campuses; a better hand-picked point is still needed.
+- Honesty fixes: "early score, 5 of 21 measures" everywhere, the 2 km circle is stated as not an official boundary, retrieved-on dates, a Method section, a metro-distance note on low scores.
+- Photos for 46 of 50 localities, stored in `media/loc-*.jpg` and credited in `data/photos.json` (with captions). No suitable photo yet: Kompally, Bowenpally, Nagole, Rajendranagar.
+- New look after a Gemini "HydScore" mock-up (layout only, none of its invented data): split hero with a live top-locality card, search and data-based filter chips, richer cards (12 at a time), weight sliders with a live top-10 chart, radar chart in each panel, compare up to 3, shareable `#loc=` and `#compare=` links, map bands and legend, mobile menu, About and feedback link in the footer.
+- `const COMMUNITY = false;` hides resident notes and the early-access list. Run `supabase/community.sql` in the Supabase SQL editor (not yet done), then set it to `true`.
+- "Data last updated" in the footer is typed by hand; change it when the data is rebuilt.
+- The `hyderabad-locality-score` environment now also allows share.gemini.google, gemini.google.com, www.gstatic.com, gemini.gstatic.com and one *.scf.usercontent.goog host (added once to read the mock-up); they can be removed.
+
+Next, in order: analytics and a custom domain (need the owner's accounts), move scoring into `build_scores.py`, one static page per locality, then new measures (bus stops, parks).
+
 ## The idea
 
 We help people choose the right **area** in Hyderabad to live, work, buy property or open a business, whether it's a flat, an independent house or a commercial space. The right area matters more than the right flat. **For now the site is locality comparison only**, scored from honest open data. No posting, no listings.
